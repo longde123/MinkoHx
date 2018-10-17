@@ -1,0 +1,10 @@
+{
+    "states" : {
+        "target" : { "name" : "test-render-target", "size" : 1024 }
+    },
+	
+	"techniques" : [{ "passes" : [{
+      "vertexShader" : "#pragma include \"../../../dummy.glsl\"",
+      "fragmentShader" : "#pragma include \"../../../dummy.glsl\""
+  }] }]
+}

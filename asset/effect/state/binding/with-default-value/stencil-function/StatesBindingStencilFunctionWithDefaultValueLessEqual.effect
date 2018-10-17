@@ -1,0 +1,10 @@
+{
+    "states" : {
+        "stencilFunction" : { "binding" : "material[@{materialUuid}].stencilFunction", "default" : "less_equal" }
+    },
+
+    "techniques" : [{ "passes" : [{
+      "vertexShader" : "#pragma include \"../../../../dummy.glsl\"",
+      "fragmentShader" : "#pragma include \"../../../../dummy.glsl\""
+  }] }]
+}

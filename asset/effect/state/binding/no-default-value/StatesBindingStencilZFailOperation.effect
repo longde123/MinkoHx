@@ -1,0 +1,10 @@
+{
+    "states" : {
+        "stencilZFailOperation" : { "binding" : "material[@{materialUuid}].stencilZFailOperation" }
+    },
+
+    "techniques" : [{ "passes" : [{
+        "vertexShader" : "#pragma include \"../../../dummy.glsl\"",
+        "fragmentShader" : "#pragma include \"../../../dummy.glsl\""
+    }] }]
+}

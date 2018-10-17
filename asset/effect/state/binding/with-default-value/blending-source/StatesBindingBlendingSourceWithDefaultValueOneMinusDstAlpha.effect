@@ -1,0 +1,10 @@
+{
+    "states" : {
+        "blendingSource" : { "binding" : "material[@{materialUuid}].blendingSource", "default" : "one_minus_dst_alpha" }
+    },
+
+    "techniques" : [{ "passes" : [{
+      "vertexShader" : "#pragma include \"../../../../dummy.glsl\"",
+      "fragmentShader" : "#pragma include \"../../../../dummy.glsl\""
+  }] }]
+}

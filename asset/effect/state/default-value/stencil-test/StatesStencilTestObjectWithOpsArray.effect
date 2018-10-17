@@ -1,0 +1,15 @@
+{
+    "states" : {
+        "stencilTest" : {
+			"stencilFunction" : "equal", 
+			"stencilReference" : 1, 
+			"stencilMask" : 0, 
+			"stencilOps" : ["zero", "replace", "incr"]
+		}
+    },
+
+    "techniques" : [{ "passes" : [{
+      "vertexShader" : "#pragma include \"../../../dummy.glsl\"",
+      "fragmentShader" : "#pragma include \"../../../dummy.glsl\""
+  }] }]
+}
