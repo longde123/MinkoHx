@@ -1,0 +1,3377 @@
+
+
+Object.defineProperty($hx_exports["glm"]["Mat2Util"] ,"r0c0", {
+    get: function(){ return get_r0c0();},
+    set: function(v){ set_r0c0(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat2Util"] ,"r1c0", {
+    get: function(){ return get_r1c0();},
+    set: function(v){ set_r1c0(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat2Util"] ,"r0c1", {
+    get: function(){ return get_r0c1();},
+    set: function(v){ set_r0c1(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat2Util"] ,"r1c1", {
+    get: function(){ return get_r1c1();},
+    set: function(v){ set_r1c1(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["glm"]["Mat3Util"] ,"r0c0", {
+    get: function(){ return get_r0c0();},
+    set: function(v){ set_r0c0(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat3Util"] ,"r1c0", {
+    get: function(){ return get_r1c0();},
+    set: function(v){ set_r1c0(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat3Util"] ,"r2c0", {
+    get: function(){ return get_r2c0();},
+    set: function(v){ set_r2c0(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat3Util"] ,"r0c1", {
+    get: function(){ return get_r0c1();},
+    set: function(v){ set_r0c1(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat3Util"] ,"r1c1", {
+    get: function(){ return get_r1c1();},
+    set: function(v){ set_r1c1(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat3Util"] ,"r2c1", {
+    get: function(){ return get_r2c1();},
+    set: function(v){ set_r2c1(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat3Util"] ,"r0c2", {
+    get: function(){ return get_r0c2();},
+    set: function(v){ set_r0c2(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat3Util"] ,"r1c2", {
+    get: function(){ return get_r1c2();},
+    set: function(v){ set_r1c2(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat3Util"] ,"r2c2", {
+    get: function(){ return get_r2c2();},
+    set: function(v){ set_r2c2(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r0c0", {
+    get: function(){ return get_r0c0();},
+    set: function(v){ set_r0c0(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r1c0", {
+    get: function(){ return get_r1c0();},
+    set: function(v){ set_r1c0(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r2c0", {
+    get: function(){ return get_r2c0();},
+    set: function(v){ set_r2c0(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r3c0", {
+    get: function(){ return get_r3c0();},
+    set: function(v){ set_r3c0(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r0c1", {
+    get: function(){ return get_r0c1();},
+    set: function(v){ set_r0c1(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r1c1", {
+    get: function(){ return get_r1c1();},
+    set: function(v){ set_r1c1(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r2c1", {
+    get: function(){ return get_r2c1();},
+    set: function(v){ set_r2c1(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r3c1", {
+    get: function(){ return get_r3c1();},
+    set: function(v){ set_r3c1(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r0c2", {
+    get: function(){ return get_r0c2();},
+    set: function(v){ set_r0c2(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r1c2", {
+    get: function(){ return get_r1c2();},
+    set: function(v){ set_r1c2(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r2c2", {
+    get: function(){ return get_r2c2();},
+    set: function(v){ set_r2c2(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r3c2", {
+    get: function(){ return get_r3c2();},
+    set: function(v){ set_r3c2(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r0c3", {
+    get: function(){ return get_r0c3();},
+    set: function(v){ set_r0c3(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r1c3", {
+    get: function(){ return get_r1c3();},
+    set: function(v){ set_r1c3(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r2c3", {
+    get: function(){ return get_r2c3();},
+    set: function(v){ set_r2c3(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Mat4Util"] ,"r3c3", {
+    get: function(){ return get_r3c3();},
+    set: function(v){ set_r3c3(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["glm"]["QuatUtil"] ,"x", {
+    get: function(){ return get_x();},
+    set: function(v){ set_x(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["QuatUtil"] ,"y", {
+    get: function(){ return get_y();},
+    set: function(v){ set_y(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["QuatUtil"] ,"z", {
+    get: function(){ return get_z();},
+    set: function(v){ set_z(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["QuatUtil"] ,"w", {
+    get: function(){ return get_w();},
+    set: function(v){ set_w(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["glm"]["Vec2Util"] ,"x", {
+    get: function(){ return get_x();},
+    set: function(v){ set_x(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec2Util"] ,"y", {
+    get: function(){ return get_y();},
+    set: function(v){ set_y(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec2Util"] ,"i", {
+    get: function(){ return get_i();},
+    set: function(v){ set_i(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec2Util"] ,"j", {
+    get: function(){ return get_j();},
+    set: function(v){ set_j(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["glm"]["Vec3Util"] ,"x", {
+    get: function(){ return get_x();},
+    set: function(v){ set_x(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec3Util"] ,"y", {
+    get: function(){ return get_y();},
+    set: function(v){ set_y(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec3Util"] ,"z", {
+    get: function(){ return get_z();},
+    set: function(v){ set_z(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec3Util"] ,"r", {
+    get: function(){ return get_r();},
+    set: function(v){ set_r(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec3Util"] ,"g", {
+    get: function(){ return get_g();},
+    set: function(v){ set_g(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec3Util"] ,"b", {
+    get: function(){ return get_b();},
+    set: function(v){ set_b(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["glm"]["Vec4Util"] ,"x", {
+    get: function(){ return get_x();},
+    set: function(v){ set_x(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec4Util"] ,"y", {
+    get: function(){ return get_y();},
+    set: function(v){ set_y(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec4Util"] ,"z", {
+    get: function(){ return get_z();},
+    set: function(v){ set_z(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec4Util"] ,"w", {
+    get: function(){ return get_w();},
+    set: function(v){ set_w(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec4Util"] ,"r", {
+    get: function(){ return get_r();},
+    set: function(v){ set_r(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec4Util"] ,"g", {
+    get: function(){ return get_g();},
+    set: function(v){ set_g(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec4Util"] ,"b", {
+    get: function(){ return get_b();},
+    set: function(v){ set_b(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["glm"]["Vec4Util"] ,"a", {
+    get: function(){ return get_a();},
+    set: function(v){ set_a(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"framerate", {
+    get: function(){ return this.get_framerate();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"active", {
+    get: function(){ return this.get_active();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"x", {
+    get: function(){ return this.get_x();},
+    set: function(v){ this.set_x(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"y", {
+    get: function(){ return this.get_y();},
+    set: function(v){ this.set_y(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"width", {
+    get: function(){ return this.get_width();},
+    set: function(v){ this.set_width(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"height", {
+    get: function(){ return this.get_height();},
+    set: function(v){ this.set_height(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"aspectRatio", {
+    get: function(){ return this.get_aspectRatio();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"context", {
+    get: function(){ return this.get_context();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"mouse", {
+    get: function(){ return this.get_mouse();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"keyboard", {
+    get: function(){ return this.get_keyboard();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"touch", {
+    get: function(){ return this.get_touch();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"numJoysticks", {
+    get: function(){ return this.get_numJoysticks();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"enterFrame", {
+    get: function(){ return this.get_enterFrame();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"resized", {
+    get: function(){ return this.get_resized();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"joystickAdded", {
+    get: function(){ return this.get_joystickAdded();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"joystickRemoved", {
+    get: function(){ return this.get_joystickRemoved();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"suspended", {
+    get: function(){ return this.get_suspended();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"].prototype,"resumed", {
+    get: function(){ return this.get_resumed();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["AbstractCanvas"] ,"defaultCanvas", {
+    get: function(){ return get_defaultCanvas();},
+    set: function(v){ set_defaultCanvas(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["Has_uuid"].prototype,"uuid", {
+    get: function(){ return this.get_uuid();},
+    set: function(v){ this.set_uuid(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["animation"]["AbstractTimeline"].prototype,"propertyName", {
+    get: function(){ return this.get_propertyName();},
+    set: function(v){ this.set_propertyName(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["animation"]["AbstractTimeline"].prototype,"duration", {
+    get: function(){ return this.get_duration();},
+    set: function(v){ this.set_duration(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["animation"]["AbstractTimeline"].prototype,"isLocked", {
+    get: function(){ return this.get_isLocked();},
+    set: function(v){ this.set_isLocked(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["animation"]["Matrix4x4Timeline"].prototype,"matrices", {
+    get: function(){ return this.get_matrices();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["animation"]["Matrix4x4Timeline"].prototype,"interpolate", {
+    get: function(){ return this.get_interpolate();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["async"]["Worker"].prototype,"message", {
+    get: function(){ return this.get_message();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["async"]["WorkerImpl"].prototype,"message", {
+    get: function(){ return this.get_message();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractComponent"].prototype,"target", {
+    get: function(){ return this.get_target();},
+    set: function(v){ this.set_target(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractComponent"].prototype,"layoutMask", {
+    get: function(){ return this.get_layoutMask();},
+    set: function(v){ this.set_layoutMask(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractComponent"].prototype,"layoutMaskChanged", {
+    get: function(){ return this.get_layoutMaskChanged();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractScript"].prototype,"enabled", {
+    get: function(){ return this.get_enabled();},
+    set: function(v){ this.set_enabled(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractScript"].prototype,"time", {
+    get: function(){ return this.get_time();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractScript"].prototype,"deltaTime", {
+    get: function(){ return this.get_deltaTime();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractScript"].prototype,"ready", {
+    get: function(){ return this.get_ready();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractScript"].prototype,"priority", {
+    get: function(){ return this.get_priority();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["audio"]["PositionalSound"].prototype,"audibilityCurve", {
+    get: function(){ return this.get_audibilityCurve();},
+    set: function(v){ this.set_audibilityCurve(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["audio"]["SoundChannel"].prototype,"complete", {
+    get: function(){ return this.get_complete();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["audio"]["SoundChannel"].prototype,"sound", {
+    get: function(){ return this.get_sound();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["audio"]["SoundChannel"].prototype,"transform", {
+    get: function(){ return this.get_transform();},
+    set: function(v){ this.set_transform(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["audio"]["SoundChannel"].prototype,"playing", {
+    get: function(){ return this.get_playing();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["audio"]["SoundTransform"].prototype,"volume", {
+    get: function(){ return this.get_volume();},
+    set: function(v){ this.set_volume(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["audio"]["SoundTransform"].prototype,"left", {
+    get: function(){ return this.get_left();},
+    set: function(v){ this.set_left(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["audio"]["SoundTransform"].prototype,"right", {
+    get: function(){ return this.get_right();},
+    set: function(v){ this.set_right(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"currentTime", {
+    get: function(){ return this.get_currentTime();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"loopStartTime", {
+    get: function(){ return this.get_loopStartTime();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"loopEndTime", {
+    get: function(){ return this.get_loopEndTime();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"numLabels", {
+    get: function(){ return this.get_numLabels();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"isPlaying", {
+    get: function(){ return this.get_isPlaying();},
+    set: function(v){ this.set_isPlaying(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"isLooping", {
+    get: function(){ return this.get_isLooping();},
+    set: function(v){ this.set_isLooping(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"isReversed", {
+    get: function(){ return this.get_isReversed();},
+    set: function(v){ this.set_isReversed(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"maxTime", {
+    get: function(){ return this.get_maxTime();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"timeFunction", {
+    
+    set: function(v){ this.set_timeFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"started", {
+    get: function(){ return this.get_started();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"looped", {
+    get: function(){ return this.get_looped();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"stopped", {
+    get: function(){ return this.get_stopped();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractAnimation"].prototype,"labelHit", {
+    get: function(){ return this.get_labelHit();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractRootDataComponent"].prototype,"provider", {
+    get: function(){ return this.get_provider();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractRootDataComponent"].prototype,"root", {
+    get: function(){ return this.get_root();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractLight"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractLight"].prototype,"color", {
+    get: function(){ return this.get_color();},
+    set: function(v){ this.set_color(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractDiscreteLight"].prototype,"diffuse", {
+    get: function(){ return this.get_diffuse();},
+    set: function(v){ this.set_diffuse(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["AbstractDiscreteLight"].prototype,"specular", {
+    get: function(){ return this.get_specular();},
+    set: function(v){ this.set_specular(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["AmbientLight"].prototype,"ambient", {
+    get: function(){ return this.get_ambient();},
+    set: function(v){ this.set_ambient(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["Animation"].prototype,"numTimelines", {
+    get: function(){ return this.get_numTimelines();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["BoundingBox"].prototype,"shape", {
+    get: function(){ return this.get_shape();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["BoundingBox"].prototype,"box", {
+    get: function(){ return this.get_box();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["BoundingBox"].prototype,"modelSpaceBox", {
+    get: function(){ return this.get_modelSpaceBox();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["Culling"].prototype,"worldSize", {
+    get: function(){ return this.get_worldSize();},
+    set: function(v){ this.set_worldSize(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Culling"].prototype,"maxDepth", {
+    get: function(){ return this.get_maxDepth();},
+    set: function(v){ this.set_maxDepth(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Culling"].prototype,"octTree", {
+    get: function(){ return this.get_octTree();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["DirectionalLight"].prototype,"shadowMap", {
+    get: function(){ return this.get_shadowMap();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["DirectionalLight"].prototype,"shadowSpread", {
+    
+    set: function(v){ this.set_shadowSpread(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["DirectionalLight"].prototype,"shadowProjections", {
+    get: function(){ return this.get_shadowProjections();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["DirectionalLight"].prototype,"shadowMappingEnabled", {
+    get: function(){ return this.get_shadowMappingEnabled();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["DirectionalLight"].prototype,"numShadowCascades", {
+    get: function(){ return this.get_numShadowCascades();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["FrustumDisplay"].prototype,"material", {
+    get: function(){ return this.get_material();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["ImageBasedLight"].prototype,"diffuse", {
+    get: function(){ return this.get_diffuse();},
+    set: function(v){ this.set_diffuse(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["ImageBasedLight"].prototype,"specular", {
+    get: function(){ return this.get_specular();},
+    set: function(v){ this.set_specular(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["ImageBasedLight"].prototype,"irradianceMap", {
+    get: function(){ return this.get_irradianceMap();},
+    set: function(v){ this.set_irradianceMap(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["ImageBasedLight"].prototype,"radianceMap", {
+    get: function(){ return this.get_radianceMap();},
+    set: function(v){ this.set_radianceMap(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["ImageBasedLight"].prototype,"brightness", {
+    get: function(){ return this.get_brightness();},
+    set: function(v){ this.set_brightness(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["ImageBasedLight"].prototype,"orientation", {
+    get: function(){ return this.get_orientation();},
+    set: function(v){ this.set_orientation(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["Job"].prototype,"complete", {
+    get: function(){ return this.get_complete();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Job"].prototype,"priority", {
+    get: function(){ return this.get_priority();},
+    set: function(v){ this.set_priority(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Job"].prototype,"running", {
+    get: function(){ return this.get_running();},
+    set: function(v){ this.set_running(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Job"].prototype,"jobManager", {
+    get: function(){ return this.get_jobManager();},
+    set: function(v){ this.set_jobManager(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Job"].prototype,"priorityChanged", {
+    get: function(){ return this.get_priorityChanged();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["Metadata"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["MouseManager"].prototype,"mouse", {
+    get: function(){ return this.get_mouse();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["MousePicking"].prototype,"move", {
+    get: function(){ return this.get_move();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["MousePicking"].prototype,"over", {
+    get: function(){ return this.get_over();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["PerspectiveCamera"].prototype,"fieldOfView", {
+    get: function(){ return this.get_fieldOfView();},
+    set: function(v){ this.set_fieldOfView(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["PerspectiveCamera"].prototype,"aspectRatio", {
+    get: function(){ return this.get_aspectRatio();},
+    set: function(v){ this.set_aspectRatio(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["PerspectiveCamera"].prototype,"zNear", {
+    get: function(){ return this.get_zNear();},
+    set: function(v){ this.set_zNear(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["PerspectiveCamera"].prototype,"zFar", {
+    get: function(){ return this.get_zFar();},
+    set: function(v){ this.set_zFar(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["PerspectiveCamera"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["PerspectiveCamera"].prototype,"viewMatrix", {
+    get: function(){ return this.get_viewMatrix();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["PerspectiveCamera"].prototype,"projectionMatrix", {
+    get: function(){ return this.get_projectionMatrix();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["PerspectiveCamera"].prototype,"viewProjectionMatrix", {
+    get: function(){ return this.get_viewProjectionMatrix();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"mouseOver", {
+    get: function(){ return this.get_mouseOver();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"mouseRightDown", {
+    get: function(){ return this.get_mouseRightDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"mouseRightUp", {
+    get: function(){ return this.get_mouseRightUp();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"mouseDown", {
+    get: function(){ return this.get_mouseDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"mouseUp", {
+    get: function(){ return this.get_mouseUp();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"mouseRightClick", {
+    get: function(){ return this.get_mouseRightClick();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"mouseClick", {
+    get: function(){ return this.get_mouseClick();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"mouseOut", {
+    get: function(){ return this.get_mouseOut();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"mouseMove", {
+    get: function(){ return this.get_mouseMove();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"mouseWheel", {
+    get: function(){ return this.get_mouseWheel();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"touchDown", {
+    get: function(){ return this.get_touchDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"touchMove", {
+    get: function(){ return this.get_touchMove();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"touchUp", {
+    get: function(){ return this.get_touchUp();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"touchTap", {
+    get: function(){ return this.get_touchTap();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"touchDoubleTap", {
+    get: function(){ return this.get_touchDoubleTap();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"touchLongHold", {
+    get: function(){ return this.get_touchLongHold();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"pickedSurface", {
+    get: function(){ return this.get_pickedSurface();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"renderDepth", {
+    get: function(){ return this.get_renderDepth();},
+    set: function(v){ this.set_renderDepth(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"pickedDepth", {
+    get: function(){ return this.get_pickedDepth();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"pickedMergingMask", {
+    get: function(){ return this.get_pickedMergingMask();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"debug", {
+    
+    set: function(v){ this.set_debug(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Picking"].prototype,"enabled", {
+    
+    set: function(v){ this.set_enabled(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["PointLight"].prototype,"attenuationEnabled", {
+    get: function(){ return this.get_attenuationEnabled();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["PointLight"].prototype,"attenuationCoefficients", {
+    get: function(){ return this.get_attenuationCoefficients();},
+    set: function(v){ this.set_attenuationCoefficients(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["PointLight"].prototype,"position", {
+    get: function(){ return this.get_position();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["Reflection"].prototype,"renderTarget", {
+    get: function(){ return this.get_renderTarget();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"effect", {
+    get: function(){ return this.get_effect();},
+    set: function(v){ this.set_effect(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"numDrawCalls", {
+    get: function(){ return this.get_numDrawCalls();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"numTriangles", {
+    get: function(){ return this.get_numTriangles();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"backgroundColor", {
+    get: function(){ return this.get_backgroundColor();},
+    set: function(v){ this.set_backgroundColor(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"name", {
+    get: function(){ return this.get_name();},
+    set: function(v){ this.set_name(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"priority", {
+    get: function(){ return this.get_priority();},
+    set: function(v){ this.set_priority(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"viewport", {
+    
+    set: function(v){ this.set_viewport(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"renderTarget", {
+    get: function(){ return this.get_renderTarget();},
+    set: function(v){ this.set_renderTarget(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"clearBeforeRender", {
+    get: function(){ return this.get_clearBeforeRender();},
+    set: function(v){ this.set_clearBeforeRender(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"effectVariables", {
+    get: function(){ return this.get_effectVariables();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"effectTechnique", {
+    get: function(){ return this.get_effectTechnique();},
+    set: function(v){ this.set_effectTechnique(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"enabled", {
+    get: function(){ return this.get_enabled();},
+    set: function(v){ this.set_enabled(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"drawCallPool", {
+    get: function(){ return this.get_drawCallPool();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"renderingBegin", {
+    get: function(){ return this.get_renderingBegin();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"beforePresent", {
+    get: function(){ return this.get_beforePresent();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Renderer"].prototype,"renderingEnd", {
+    get: function(){ return this.get_renderingEnd();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["SceneManager"].prototype,"canvas", {
+    get: function(){ return this.get_canvas();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SceneManager"].prototype,"frameId", {
+    get: function(){ return this.get_frameId();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SceneManager"].prototype,"assets", {
+    get: function(){ return this.get_assets();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SceneManager"].prototype,"frameBegin", {
+    get: function(){ return this.get_frameBegin();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SceneManager"].prototype,"frameEnd", {
+    get: function(){ return this.get_frameEnd();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SceneManager"].prototype,"cullingBegin", {
+    get: function(){ return this.get_cullingBegin();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SceneManager"].prototype,"cullingEnd", {
+    get: function(){ return this.get_cullingEnd();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SceneManager"].prototype,"renderingBegin", {
+    get: function(){ return this.get_renderingBegin();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SceneManager"].prototype,"renderingEnd", {
+    get: function(){ return this.get_renderingEnd();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SceneManager"].prototype,"time", {
+    get: function(){ return this.get_time();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["Skinning"].prototype,"skin", {
+    get: function(){ return this.get_skin();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["SpotLight"].prototype,"innerConeAngle", {
+    get: function(){ return this.get_innerConeAngle();},
+    set: function(v){ this.set_innerConeAngle(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SpotLight"].prototype,"outerConeAngle", {
+    get: function(){ return this.get_outerConeAngle();},
+    set: function(v){ this.set_outerConeAngle(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SpotLight"].prototype,"attenuationEnabled", {
+    get: function(){ return this.get_attenuationEnabled();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SpotLight"].prototype,"attenuationCoefficients", {
+    get: function(){ return this.get_attenuationCoefficients();},
+    set: function(v){ this.set_attenuationCoefficients(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["SpotLight"].prototype,"position", {
+    get: function(){ return this.get_position();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["Surface"].prototype,"name", {
+    get: function(){ return this.get_name();},
+    set: function(v){ this.set_name(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Surface"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Surface"].prototype,"geometry", {
+    get: function(){ return this.get_geometry();},
+    set: function(v){ this.set_geometry(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Surface"].prototype,"firstIndex", {
+    
+    set: function(v){ this.set_firstIndex(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Surface"].prototype,"numIndices", {
+    
+    set: function(v){ this.set_numIndices(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Surface"].prototype,"material", {
+    get: function(){ return this.get_material();},
+    set: function(v){ this.set_material(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Surface"].prototype,"effect", {
+    get: function(){ return this.get_effect();},
+    set: function(v){ this.set_effect(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Surface"].prototype,"technique", {
+    get: function(){ return this.get_technique();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Surface"].prototype,"geometryChanged", {
+    get: function(){ return this.get_geometryChanged();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Surface"].prototype,"materialChanged", {
+    get: function(){ return this.get_materialChanged();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Surface"].prototype,"effectChanged", {
+    get: function(){ return this.get_effectChanged();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["component"]["Transform"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Transform"].prototype,"dirty", {
+    get: function(){ return this.get_dirty();},
+    set: function(v){ this.set_dirty(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Transform"].prototype,"matrix", {
+    get: function(){ return this.get_matrix();},
+    set: function(v){ this.set_matrix(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["component"]["Transform"].prototype,"modelToWorldMatrix", {
+    get: function(){ return this.get_modelToWorldMatrix();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["data"]["AbstractFilter"].prototype,"currentSurface", {
+    get: function(){ return this.get_currentSurface();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["AbstractFilter"].prototype,"changed", {
+    get: function(){ return this.get_changed();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["data"]["Collection"].prototype,"name", {
+    get: function(){ return this.get_name();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["Collection"].prototype,"items", {
+    get: function(){ return this.get_items();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["Collection"].prototype,"itemAdded", {
+    get: function(){ return this.get_itemAdded();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["Collection"].prototype,"itemRemoved", {
+    get: function(){ return this.get_itemRemoved();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["Collection"].prototype,"front", {
+    get: function(){ return this.get_front();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["Collection"].prototype,"back", {
+    get: function(){ return this.get_back();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["data"]["Provider"].prototype,"values", {
+    get: function(){ return this.get_values();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["Provider"].prototype,"propertyAdded", {
+    get: function(){ return this.get_propertyAdded();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["Provider"].prototype,"propertyChanged", {
+    get: function(){ return this.get_propertyChanged();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["Provider"].prototype,"propertyRemoved", {
+    get: function(){ return this.get_propertyRemoved();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["data"]["Store"].prototype,"propertyAdded", {
+    get: function(){ return this.get_propertyAdded();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["Store"].prototype,"propertyRemoved", {
+    get: function(){ return this.get_propertyRemoved();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["Store"].prototype,"propertyChanged", {
+    get: function(){ return this.get_propertyChanged();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["Store"].prototype,"providers", {
+    get: function(){ return this.get_providers();},
+    set: function(v){ this.set_providers(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["data"]["Store"].prototype,"collections", {
+    get: function(){ return this.get_collections();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["file"]["AbstractAssetDescriptor"].prototype,"location", {
+    get: function(){ return this.get_location();},
+    set: function(v){ this.set_location(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["file"]["AbstractParser"].prototype,"progress", {
+    get: function(){ return this.get_progress();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AbstractParser"].prototype,"complete", {
+    get: function(){ return this.get_complete();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AbstractParser"].prototype,"error", {
+    get: function(){ return this.get_error();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["file"]["AbstractProtocol"].prototype,"file", {
+    get: function(){ return this.get_file();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AbstractProtocol"].prototype,"options", {
+    get: function(){ return this.get_options();},
+    set: function(v){ this.set_options(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AbstractProtocol"].prototype,"progress", {
+    get: function(){ return this.get_progress();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AbstractProtocol"].prototype,"complete", {
+    get: function(){ return this.get_complete();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AbstractProtocol"].prototype,"error", {
+    get: function(){ return this.get_error();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AbstractProtocol"].prototype,"resolvedFilename", {
+    get: function(){ return this.get_resolvedFilename();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AbstractProtocol"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    set: function(v){ this.set_data(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["file"]["AssetLibrary"].prototype,"numGeometries", {
+    get: function(){ return this.get_numGeometries();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AssetLibrary"].prototype,"numMaterials", {
+    get: function(){ return this.get_numMaterials();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AssetLibrary"].prototype,"numEffects", {
+    get: function(){ return this.get_numEffects();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AssetLibrary"].prototype,"numTextures", {
+    get: function(){ return this.get_numTextures();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AssetLibrary"].prototype,"context", {
+    get: function(){ return this.get_context();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["AssetLibrary"].prototype,"loader", {
+    get: function(){ return this.get_loader();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["file"]["EffectParser"].prototype,"effect", {
+    get: function(){ return this.get_effect();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["EffectParser"].prototype,"effectName", {
+    get: function(){ return this.get_effectName();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["file"]["File"].prototype,"filename", {
+    get: function(){ return this.get_filename();},
+    set: function(v){ this.set_filename(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["File"].prototype,"resolvedFilename", {
+    get: function(){ return this.get_resolvedFilename();},
+    set: function(v){ this.set_resolvedFilename(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["File"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["file"]["Loader"].prototype,"options", {
+    get: function(){ return this.get_options();},
+    set: function(v){ this.set_options(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Loader"].prototype,"complete", {
+    get: function(){ return this.get_complete();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Loader"].prototype,"progress", {
+    get: function(){ return this.get_progress();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Loader"].prototype,"parsingProgress", {
+    get: function(){ return this.get_parsingProgress();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Loader"].prototype,"error", {
+    get: function(){ return this.get_error();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Loader"].prototype,"filesQueue", {
+    get: function(){ return this.get_filesQueue();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Loader"].prototype,"loading", {
+    get: function(){ return this.get_loading();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Loader"].prototype,"files", {
+    get: function(){ return this.get_files();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"context", {
+    get: function(){ return this.get_context();},
+    set: function(v){ this.set_context(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"assetLibrary", {
+    get: function(){ return this.get_assetLibrary();},
+    set: function(v){ this.set_assetLibrary(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"includePaths", {
+    get: function(){ return this.get_includePaths();},
+    set: function(v){ this.set_includePaths(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"platforms", {
+    get: function(){ return this.get_platforms();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"userFlags", {
+    get: function(){ return this.get_userFlags();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"optimizeForRendering", {
+    get: function(){ return this.get_optimizeForRendering();},
+    set: function(v){ this.set_optimizeForRendering(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"generateMipmaps", {
+    get: function(){ return this.get_generateMipmaps();},
+    set: function(v){ this.set_generateMipmaps(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"parseMipMaps", {
+    get: function(){ return this.get_parseMipMaps();},
+    set: function(v){ this.set_parseMipMaps(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"includeAnimation", {
+    get: function(){ return this.get_includeAnimation();},
+    set: function(v){ this.set_includeAnimation(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"startAnimation", {
+    get: function(){ return this.get_startAnimation();},
+    set: function(v){ this.set_startAnimation(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"loadAsynchronously", {
+    get: function(){ return this.get_loadAsynchronously();},
+    set: function(v){ this.set_loadAsynchronously(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"resizeSmoothly", {
+    get: function(){ return this.get_resizeSmoothly();},
+    set: function(v){ this.set_resizeSmoothly(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"isCubeTexture", {
+    get: function(){ return this.get_isCubeTexture();},
+    set: function(v){ this.set_isCubeTexture(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"isRectangleTexture", {
+    get: function(){ return this.get_isRectangleTexture();},
+    set: function(v){ this.set_isRectangleTexture(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"generateSmoothNormals", {
+    get: function(){ return this.get_generateSmoothNormals();},
+    set: function(v){ this.set_generateSmoothNormals(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"normalMaxSmoothingAngle", {
+    get: function(){ return this.get_normalMaxSmoothingAngle();},
+    set: function(v){ this.set_normalMaxSmoothingAngle(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"disposeIndexBufferAfterLoading", {
+    get: function(){ return this.get_disposeIndexBufferAfterLoading();},
+    set: function(v){ this.set_disposeIndexBufferAfterLoading(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"disposeVertexBufferAfterLoading", {
+    get: function(){ return this.get_disposeVertexBufferAfterLoading();},
+    set: function(v){ this.set_disposeVertexBufferAfterLoading(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"disposeTextureAfterLoading", {
+    get: function(){ return this.get_disposeTextureAfterLoading();},
+    set: function(v){ this.set_disposeTextureAfterLoading(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"storeDataIfNotParsed", {
+    get: function(){ return this.get_storeDataIfNotParsed();},
+    set: function(v){ this.set_storeDataIfNotParsed(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"preserveMaterials", {
+    get: function(){ return this.get_preserveMaterials();},
+    set: function(v){ this.set_preserveMaterials(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"trackAssetDescriptor", {
+    get: function(){ return this.get_trackAssetDescriptor();},
+    set: function(v){ this.set_trackAssetDescriptor(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"skinningFramerate", {
+    get: function(){ return this.get_skinningFramerate();},
+    set: function(v){ this.set_skinningFramerate(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"skinningMethod", {
+    get: function(){ return this.get_skinningMethod();},
+    set: function(v){ this.set_skinningMethod(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"effect", {
+    get: function(){ return this.get_effect();},
+    set: function(v){ this.set_effect(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"material", {
+    get: function(){ return this.get_material();},
+    set: function(v){ this.set_material(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"protocolFunction", {
+    get: function(){ return this.get_protocolFunction();},
+    set: function(v){ this.set_protocolFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"parserFunction", {
+    get: function(){ return this.get_parserFunction();},
+    set: function(v){ this.set_parserFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"materialFunction", {
+    get: function(){ return this.get_materialFunction();},
+    set: function(v){ this.set_materialFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"textureFunction", {
+    get: function(){ return this.get_textureFunction();},
+    set: function(v){ this.set_textureFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"geometryFunction", {
+    get: function(){ return this.get_geometryFunction();},
+    set: function(v){ this.set_geometryFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"uriFunction", {
+    get: function(){ return this.get_uriFunction();},
+    set: function(v){ this.set_uriFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"nodeFunction", {
+    get: function(){ return this.get_nodeFunction();},
+    set: function(v){ this.set_nodeFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"effectFunction", {
+    get: function(){ return this.get_effectFunction();},
+    set: function(v){ this.set_effectFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"textureFormatFunction", {
+    get: function(){ return this.get_textureFormatFunction();},
+    set: function(v){ this.set_textureFormatFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"attributeFunction", {
+    get: function(){ return this.get_attributeFunction();},
+    set: function(v){ this.set_attributeFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"fileStatusFunction", {
+    get: function(){ return this.get_fileStatusFunction();},
+    set: function(v){ this.set_fileStatusFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"preventLoadingFunction", {
+    get: function(){ return this.get_preventLoadingFunction();},
+    set: function(v){ this.set_preventLoadingFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"seekingOffset", {
+    get: function(){ return this.get_seekingOffset();},
+    set: function(v){ this.set_seekingOffset(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["file"]["Options"].prototype,"seekedLength", {
+    get: function(){ return this.get_seekedLength();},
+    set: function(v){ this.set_seekedLength(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["geometry"]["Bone"].prototype,"node", {
+    get: function(){ return this.get_node();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Bone"].prototype,"offsetMatrix", {
+    get: function(){ return this.get_offsetMatrix();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Bone"].prototype,"vertexIds", {
+    get: function(){ return this.get_vertexIds();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Bone"].prototype,"vertexWeights", {
+    get: function(){ return this.get_vertexWeights();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["geometry"]["Geometry"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Geometry"].prototype,"vertexBuffers", {
+    get: function(){ return this.get_vertexBuffers();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Geometry"].prototype,"name", {
+    get: function(){ return this.get_name();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Geometry"].prototype,"indices", {
+    get: function(){ return this.get_indices();},
+    set: function(v){ this.set_indices(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Geometry"].prototype,"numVertices", {
+    get: function(){ return this.get_numVertices();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Geometry"].prototype,"vertexSize", {
+    get: function(){ return this.get_vertexSize();},
+    set: function(v){ this.set_vertexSize(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["geometry"]["LineGeometry"].prototype,"currentXYZ", {
+    get: function(){ return this.get_currentXYZ();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["LineGeometry"].prototype,"numLines", {
+    get: function(){ return this.get_numLines();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["geometry"]["Skin"].prototype,"numBones", {
+    get: function(){ return this.get_numBones();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Skin"].prototype,"maxNumVertexBones", {
+    get: function(){ return this.get_maxNumVertexBones();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Skin"].prototype,"bones", {
+    get: function(){ return this.get_bones();},
+    set: function(v){ this.set_bones(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Skin"].prototype,"duration", {
+    get: function(){ return this.get_duration();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Skin"].prototype,"numFrames", {
+    get: function(){ return this.get_numFrames();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Skin"].prototype,"boneMatricesPerFrame", {
+    get: function(){ return this.get_boneMatricesPerFrame();},
+    set: function(v){ this.set_boneMatricesPerFrame(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Skin"].prototype,"numVertices", {
+    get: function(){ return this.get_numVertices();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["geometry"]["Skin"].prototype,"lastVertexId", {
+    get: function(){ return this.get_lastVertexId();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["input"]["Joystick"].prototype,"joystickId", {
+    get: function(){ return this.get_joystickId();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Joystick"].prototype,"joystickAxisMotion", {
+    get: function(){ return this.get_joystickAxisMotion();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Joystick"].prototype,"joystickHatMotion", {
+    get: function(){ return this.get_joystickHatMotion();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Joystick"].prototype,"joystickButtonDown", {
+    get: function(){ return this.get_joystickButtonDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Joystick"].prototype,"joystickButtonUp", {
+    get: function(){ return this.get_joystickButtonUp();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["input"]["Keyboard"].prototype,"keyDown", {
+    get: function(){ return this.get_keyDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Keyboard"].prototype,"textInput", {
+    get: function(){ return this.get_textInput();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Keyboard"].prototype,"keyUp", {
+    get: function(){ return this.get_keyUp();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"x", {
+    get: function(){ return this.get_x();},
+    set: function(v){ this.set_x(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"y", {
+    get: function(){ return this.get_y();},
+    set: function(v){ this.set_y(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"dX", {
+    get: function(){ return this.get_dX();},
+    set: function(v){ this.set_dX(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"dY", {
+    get: function(){ return this.get_dY();},
+    set: function(v){ this.set_dY(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"leftButtonIsDown", {
+    get: function(){ return this.get_leftButtonIsDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"rightButtonIsDown", {
+    get: function(){ return this.get_rightButtonIsDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"middleButtonIsDown", {
+    get: function(){ return this.get_middleButtonIsDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"normalizedX", {
+    get: function(){ return this.get_normalizedX();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"normalizedY", {
+    get: function(){ return this.get_normalizedY();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"move", {
+    get: function(){ return this.get_move();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"wheel", {
+    get: function(){ return this.get_wheel();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"leftButtonDown", {
+    get: function(){ return this.get_leftButtonDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"leftButtonUp", {
+    get: function(){ return this.get_leftButtonUp();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"leftButtonClick", {
+    get: function(){ return this.get_leftButtonClick();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"rightButtonDown", {
+    get: function(){ return this.get_rightButtonDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"rightButtonUp", {
+    get: function(){ return this.get_rightButtonUp();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"rightButtonClick", {
+    get: function(){ return this.get_rightButtonClick();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"middleButtonDown", {
+    get: function(){ return this.get_middleButtonDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"middleButtonUp", {
+    get: function(){ return this.get_middleButtonUp();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Mouse"].prototype,"middleButtonClick", {
+    get: function(){ return this.get_middleButtonClick();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"touches", {
+    get: function(){ return this.get_touches();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"identifiers", {
+    get: function(){ return this.get_identifiers();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"numTouches", {
+    get: function(){ return this.get_numTouches();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"touchMove", {
+    get: function(){ return this.get_touchMove();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"touchDown", {
+    get: function(){ return this.get_touchDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"touchUp", {
+    get: function(){ return this.get_touchUp();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"swipeLeft", {
+    get: function(){ return this.get_swipeLeft();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"swipeRight", {
+    get: function(){ return this.get_swipeRight();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"swipeUp", {
+    get: function(){ return this.get_swipeUp();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"swipeDown", {
+    get: function(){ return this.get_swipeDown();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"pinchZoom", {
+    get: function(){ return this.get_pinchZoom();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"tap", {
+    get: function(){ return this.get_tap();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"doubleTap", {
+    get: function(){ return this.get_doubleTap();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"longHold", {
+    get: function(){ return this.get_longHold();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"averageX", {
+    get: function(){ return this.get_averageX();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"averageY", {
+    get: function(){ return this.get_averageY();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"averageDX", {
+    get: function(){ return this.get_averageDX();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["input"]["Touch"].prototype,"averageDY", {
+    get: function(){ return this.get_averageDY();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["material"]["Material"].prototype,"name", {
+    get: function(){ return this.get_name();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["Material"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"diffuseColor", {
+    get: function(){ return this.get_diffuseColor();},
+    set: function(v){ this.set_diffuseColor(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"uvScale", {
+    get: function(){ return this.get_uvScale();},
+    set: function(v){ this.set_uvScale(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"uvOffset", {
+    get: function(){ return this.get_uvOffset();},
+    set: function(v){ this.set_uvOffset(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"diffuseMap", {
+    get: function(){ return this.get_diffuseMap();},
+    set: function(v){ this.set_diffuseMap(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"fogColor", {
+    get: function(){ return this.get_fogColor();},
+    set: function(v){ this.set_fogColor(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"fogStart", {
+    get: function(){ return this.get_fogStart();},
+    set: function(v){ this.set_fogStart(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"fogEnd", {
+    get: function(){ return this.get_fogEnd();},
+    set: function(v){ this.set_fogEnd(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"fogTechnique", {
+    get: function(){ return this.get_fogTechnique();},
+    set: function(v){ this.set_fogTechnique(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"blendingMode", {
+    
+    set: function(v){ this.set_blendingMode(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"blendingSourceFactor", {
+    get: function(){ return this.get_blendingSourceFactor();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"blendingDestinationFactor", {
+    get: function(){ return this.get_blendingDestinationFactor();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"colorMask", {
+    get: function(){ return this.get_colorMask();},
+    set: function(v){ this.set_colorMask(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"depthMask", {
+    get: function(){ return this.get_depthMask();},
+    set: function(v){ this.set_depthMask(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"depthFunction", {
+    get: function(){ return this.get_depthFunction();},
+    set: function(v){ this.set_depthFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"triangleCulling", {
+    get: function(){ return this.get_triangleCulling();},
+    set: function(v){ this.set_triangleCulling(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"stencilFunction", {
+    get: function(){ return this.get_stencilFunction();},
+    set: function(v){ this.set_stencilFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"stencilReference", {
+    get: function(){ return this.get_stencilReference();},
+    set: function(v){ this.set_stencilReference(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"stencilMask", {
+    get: function(){ return this.get_stencilMask();},
+    set: function(v){ this.set_stencilMask(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"stencilFailOperation", {
+    get: function(){ return this.get_stencilFailOperation();},
+    set: function(v){ this.set_stencilFailOperation(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"stencilZFailOperation", {
+    get: function(){ return this.get_stencilZFailOperation();},
+    set: function(v){ this.set_stencilZFailOperation(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"stencilZPassOperation", {
+    get: function(){ return this.get_stencilZPassOperation();},
+    set: function(v){ this.set_stencilZPassOperation(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"priority", {
+    get: function(){ return this.get_priority();},
+    set: function(v){ this.set_priority(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["BasicMaterial"].prototype,"zSorted", {
+    get: function(){ return this.get_zSorted();},
+    set: function(v){ this.set_zSorted(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["material"]["PhongMaterial"].prototype,"specularColor", {
+    get: function(){ return this.get_specularColor();},
+    set: function(v){ this.set_specularColor(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["PhongMaterial"].prototype,"shininess", {
+    get: function(){ return this.get_shininess();},
+    set: function(v){ this.set_shininess(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["PhongMaterial"].prototype,"normalMap", {
+    get: function(){ return this.get_normalMap();},
+    set: function(v){ this.set_normalMap(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["PhongMaterial"].prototype,"specularMap", {
+    get: function(){ return this.get_specularMap();},
+    set: function(v){ this.set_specularMap(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["PhongMaterial"].prototype,"environmentAlpha", {
+    get: function(){ return this.get_environmentAlpha();},
+    set: function(v){ this.set_environmentAlpha(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["PhongMaterial"].prototype,"environmentCubemap", {
+    get: function(){ return this.get_environmentCubemap();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["PhongMaterial"].prototype,"environmentMap", {
+    
+    set: function(v){ this.set_environmentMap(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["PhongMaterial"].prototype,"environmentMap2d", {
+    get: function(){ return this.get_environmentMap2d();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["material"]["PhongMaterial"].prototype,"alphaMap", {
+    get: function(){ return this.get_alphaMap();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["math"]["Box"].prototype,"topRight", {
+    get: function(){ return this.get_topRight();},
+    set: function(v){ this.set_topRight(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["math"]["Box"].prototype,"bottomLeft", {
+    get: function(){ return this.get_bottomLeft();},
+    set: function(v){ this.set_bottomLeft(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["math"]["Box"].prototype,"width", {
+    get: function(){ return this.get_width();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["math"]["Box"].prototype,"height", {
+    get: function(){ return this.get_height();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["math"]["Box"].prototype,"depth", {
+    get: function(){ return this.get_depth();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["math"]["OctTree"].prototype,"edgeLength", {
+    get: function(){ return this.get_edgeLength();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["math"]["Ray"].prototype,"direction", {
+    get: function(){ return this.get_direction();},
+    set: function(v){ this.set_direction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["math"]["Ray"].prototype,"origin", {
+    get: function(){ return this.get_origin();},
+    set: function(v){ this.set_origin(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["net"]["HTTPOptions"].prototype,"username", {
+    get: function(){ return this.get_username();},
+    set: function(v){ this.set_username(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["net"]["HTTPOptions"].prototype,"password", {
+    get: function(){ return this.get_password();},
+    set: function(v){ this.set_password(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["net"]["HTTPOptions"].prototype,"additionalHeaders", {
+    get: function(){ return this.get_additionalHeaders();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["net"]["HTTPOptions"].prototype,"verifyPeer", {
+    get: function(){ return this.get_verifyPeer();},
+    set: function(v){ this.set_verifyPeer(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractContext"].prototype,"errorsEnabled", {
+    get: function(){ return this.get_errorsEnabled();},
+    set: function(v){ this.set_errorsEnabled(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractContext"].prototype,"driverInfo", {
+    get: function(){ return this.get_driverInfo();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractContext"].prototype,"renderTarget", {
+    get: function(){ return this.get_renderTarget();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractContext"].prototype,"viewportWidth", {
+    get: function(){ return this.get_viewportWidth();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractContext"].prototype,"viewportHeight", {
+    get: function(){ return this.get_viewportHeight();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractContext"].prototype,"currentProgram", {
+    get: function(){ return this.get_currentProgram();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractResource"].prototype,"uuid", {
+    get: function(){ return this.get_uuid();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractResource"].prototype,"context", {
+    get: function(){ return this.get_context();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractResource"].prototype,"id", {
+    get: function(){ return this.get_id();},
+    set: function(v){ this.set_id(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractResource"].prototype,"isReady", {
+    get: function(){ return this.get_isReady();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractTexture"].prototype,"sampler", {
+    get: function(){ return this.get_sampler();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractTexture"].prototype,"type", {
+    get: function(){ return this.get_type();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractTexture"].prototype,"format", {
+    get: function(){ return this.get_format();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractTexture"].prototype,"width", {
+    get: function(){ return this.get_width();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractTexture"].prototype,"height", {
+    get: function(){ return this.get_height();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractTexture"].prototype,"originalWidth", {
+    get: function(){ return this.get_originalWidth();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractTexture"].prototype,"originalHeight", {
+    get: function(){ return this.get_originalHeight();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractTexture"].prototype,"mipMapping", {
+    get: function(){ return this.get_mipMapping();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["AbstractTexture"].prototype,"optimizeForRenderToTexture", {
+    get: function(){ return this.get_optimizeForRenderToTexture();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"enabled", {
+    get: function(){ return this.get_enabled();},
+    set: function(v){ this.set_enabled(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"batchIDs", {
+    get: function(){ return this.get_batchIDs();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"pass", {
+    get: function(){ return this.get_pass();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"program", {
+    get: function(){ return this.get_program();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"variables", {
+    get: function(){ return this.get_variables();},
+    set: function(v){ this.set_variables(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"rootData", {
+    get: function(){ return this.get_rootData();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"rendererData", {
+    get: function(){ return this.get_rendererData();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"targetData", {
+    get: function(){ return this.get_targetData();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"boundBoolUniforms", {
+    get: function(){ return this.get_boundBoolUniforms();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"boundIntUniforms", {
+    get: function(){ return this.get_boundIntUniforms();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"boundFloatUniforms", {
+    get: function(){ return this.get_boundFloatUniforms();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"samplers", {
+    get: function(){ return this.get_samplers();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"priority", {
+    get: function(){ return this.get_priority();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"zSorted", {
+    get: function(){ return this.get_zSorted();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"blendingSource", {
+    get: function(){ return this.get_blendingSource();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"blendingDestination", {
+    get: function(){ return this.get_blendingDestination();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"colorMask", {
+    get: function(){ return this.get_colorMask();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"depthMask", {
+    get: function(){ return this.get_depthMask();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"depthFunction", {
+    get: function(){ return this.get_depthFunction();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"triangleCulling", {
+    get: function(){ return this.get_triangleCulling();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"stencilFunction", {
+    get: function(){ return this.get_stencilFunction();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"stencilReference", {
+    get: function(){ return this.get_stencilReference();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"stencilMask", {
+    get: function(){ return this.get_stencilMask();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"stencilFailOperation", {
+    get: function(){ return this.get_stencilFailOperation();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"stencilZFailOperation", {
+    get: function(){ return this.get_stencilZFailOperation();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"stencilZPassOperation", {
+    get: function(){ return this.get_stencilZPassOperation();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"scissorTest", {
+    get: function(){ return this.get_scissorTest();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"scissorBox", {
+    get: function(){ return this.get_scissorBox();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"target", {
+    get: function(){ return this.get_target();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCall"].prototype,"numTriangles", {
+    get: function(){ return this.get_numTriangles();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCallPool"].prototype,"drawCallsKeys", {
+    get: function(){ return this.get_drawCallsKeys();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCallPool"].prototype,"drawCalls", {
+    get: function(){ return this.get_drawCalls();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["DrawCallPool"].prototype,"numDrawCalls", {
+    get: function(){ return this.get_numDrawCalls();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["Effect"].prototype,"name", {
+    get: function(){ return this.get_name();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Effect"].prototype,"techniques", {
+    get: function(){ return this.get_techniques();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Effect"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["IndexBuffer"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    set: function(v){ this.set_data(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["IndexBuffer"].prototype,"dataPointer", {
+    get: function(){ return this.get_dataPointer();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["IndexBuffer"].prototype,"numIndices", {
+    get: function(){ return this.get_numIndices();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["IndexBuffer"].prototype,"changed", {
+    get: function(){ return this.get_changed();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["Pass"].prototype,"name", {
+    get: function(){ return this.get_name();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Pass"].prototype,"isForward", {
+    get: function(){ return this.get_isForward();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Pass"].prototype,"program", {
+    get: function(){ return this.get_program();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Pass"].prototype,"attributeBindings", {
+    get: function(){ return this.get_attributeBindings();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Pass"].prototype,"uniformBindings", {
+    get: function(){ return this.get_uniformBindings();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Pass"].prototype,"stateBindings", {
+    get: function(){ return this.get_stateBindings();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Pass"].prototype,"macroBindings", {
+    get: function(){ return this.get_macroBindings();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Pass"].prototype,"states", {
+    get: function(){ return this.get_states();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["Program"].prototype,"name", {
+    get: function(){ return this.get_name();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Program"].prototype,"vertexShader", {
+    get: function(){ return this.get_vertexShader();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Program"].prototype,"fragmentShader", {
+    get: function(){ return this.get_fragmentShader();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Program"].prototype,"setTextureNames", {
+    get: function(){ return this.get_setTextureNames();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Program"].prototype,"setAttributeNames", {
+    get: function(){ return this.get_setAttributeNames();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Program"].prototype,"setUniformNames", {
+    get: function(){ return this.get_setUniformNames();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Program"].prototype,"definedMacroNames", {
+    get: function(){ return this.get_definedMacroNames();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Program"].prototype,"inputs", {
+    get: function(){ return this.get_inputs();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["ProgramInputs"].prototype,"uniforms", {
+    get: function(){ return this.get_uniforms();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["ProgramInputs"].prototype,"attributes", {
+    get: function(){ return this.get_attributes();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["ProgramSignature"].prototype,"key", {
+    get: function(){ return this.get_key();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["RectangleTexture"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["Shader"].prototype,"type", {
+    get: function(){ return this.get_type();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["Shader"].prototype,"source", {
+    get: function(){ return this.get_source();},
+    set: function(v){ this.set_source(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    set: function(v){ this.set_data(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"priority", {
+    get: function(){ return this.get_priority();},
+    set: function(v){ this.set_priority(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"zSorted", {
+    get: function(){ return this.get_zSorted();},
+    set: function(v){ this.set_zSorted(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"blendingSourceFactor", {
+    get: function(){ return this.get_blendingSourceFactor();},
+    set: function(v){ this.set_blendingSourceFactor(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"blendingDestinationFactor", {
+    get: function(){ return this.get_blendingDestinationFactor();},
+    set: function(v){ this.set_blendingDestinationFactor(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"colorMask", {
+    get: function(){ return this.get_colorMask();},
+    set: function(v){ this.set_colorMask(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"depthMask", {
+    get: function(){ return this.get_depthMask();},
+    set: function(v){ this.set_depthMask(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"depthFunction", {
+    get: function(){ return this.get_depthFunction();},
+    set: function(v){ this.set_depthFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"triangleCulling", {
+    get: function(){ return this.get_triangleCulling();},
+    set: function(v){ this.set_triangleCulling(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"stencilFunction", {
+    get: function(){ return this.get_stencilFunction();},
+    set: function(v){ this.set_stencilFunction(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"stencilReference", {
+    get: function(){ return this.get_stencilReference();},
+    set: function(v){ this.set_stencilReference(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"stencilMask", {
+    get: function(){ return this.get_stencilMask();},
+    set: function(v){ this.set_stencilMask(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"stencilFailOperation", {
+    get: function(){ return this.get_stencilFailOperation();},
+    set: function(v){ this.set_stencilFailOperation(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"stencilZFailOperation", {
+    get: function(){ return this.get_stencilZFailOperation();},
+    set: function(v){ this.set_stencilZFailOperation(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"stencilZPassOperation", {
+    get: function(){ return this.get_stencilZPassOperation();},
+    set: function(v){ this.set_stencilZPassOperation(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"scissorTest", {
+    get: function(){ return this.get_scissorTest();},
+    set: function(v){ this.set_scissorTest(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"scissorBox", {
+    get: function(){ return this.get_scissorBox();},
+    set: function(v){ this.set_scissorBox(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["States"].prototype,"target", {
+    get: function(){ return this.get_target();},
+    set: function(v){ this.set_target(v);},
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["Texture"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["TextureFormatInfo"] ,"textureFormats", {
+    get: function(){ return get_textureFormats();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["render"]["VertexBuffer"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    set: function(v){ this.set_data(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["VertexBuffer"].prototype,"attributes", {
+    get: function(){ return this.get_attributes();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["VertexBuffer"].prototype,"vertexSize", {
+    get: function(){ return this.get_vertexSize();},
+    set: function(v){ this.set_vertexSize(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["VertexBuffer"].prototype,"vertexSizeChanged", {
+    get: function(){ return this.get_vertexSizeChanged();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["render"]["VertexBuffer"].prototype,"numVertices", {
+    get: function(){ return this.get_numVertices();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["scene"]["Node"].prototype,"name", {
+    get: function(){ return this.get_name();},
+    set: function(v){ this.set_name(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["scene"]["Node"].prototype,"layout", {
+    get: function(){ return this.get_layout();},
+    set: function(v){ this.set_layout(v);},
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["scene"]["Node"].prototype,"parent", {
+    get: function(){ return this.get_parent();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["scene"]["Node"].prototype,"root", {
+    get: function(){ return this.get_root();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["scene"]["Node"].prototype,"children", {
+    get: function(){ return this.get_children();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["scene"]["Node"].prototype,"data", {
+    get: function(){ return this.get_data();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["scene"]["Node"].prototype,"added", {
+    get: function(){ return this.get_added();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["scene"]["Node"].prototype,"removed", {
+    get: function(){ return this.get_removed();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["scene"]["Node"].prototype,"layoutChanged", {
+    get: function(){ return this.get_layoutChanged();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["scene"]["Node"].prototype,"componentAdded", {
+    get: function(){ return this.get_componentAdded();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["scene"]["Node"].prototype,"componentRemoved", {
+    get: function(){ return this.get_componentRemoved();},
+    
+    enumerable: true,
+    configurable: true
+});
+Object.defineProperty($hx_exports["minko"]["scene"]["Node"].prototype,"components", {
+    get: function(){ return this.get_components();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["scene"]["NodeSet"].prototype,"nodes", {
+    get: function(){ return this.get_nodes();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["signal"]["Signal"].prototype,"numCallbacks", {
+    get: function(){ return this.get_numCallbacks();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["signal"]["Signal2"].prototype,"numCallbacks", {
+    get: function(){ return this.get_numCallbacks();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["signal"]["Signal3"].prototype,"numCallbacks", {
+    get: function(){ return this.get_numCallbacks();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["signal"]["Signal4"].prototype,"numCallbacks", {
+    get: function(){ return this.get_numCallbacks();},
+    
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty($hx_exports["minko"]["signal"]["Signal5"].prototype,"numCallbacks", {
+    get: function(){ return this.get_numCallbacks();},
+    
+    enumerable: true,
+    configurable: true
+});

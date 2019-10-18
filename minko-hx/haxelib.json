@@ -1,0 +1,11 @@
+{
+    "name": "minko",
+    "description": "minko",
+    "url": "",
+    "license": "MIT",
+    "contributors": ["ping"],
+    "version": "0.0.1",
+    "releasenote": "Initial release",
+    "tags": ["js", "extern"],
+    "classPath": "src"
+}

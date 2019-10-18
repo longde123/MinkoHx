@@ -1,0 +1,4 @@
+-cp src
+-lib minko
+-main Main
+-js E:\minko-example\bin\Export\js\debug\Main.js

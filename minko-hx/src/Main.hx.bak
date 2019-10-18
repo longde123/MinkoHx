@@ -1,0 +1,82 @@
+package ;
+
+import minko.WebCanvas;
+import test.component.AmbientLightTest;
+import test.component.DirectionalLightTest;
+import test.component.PointLightTest;
+import test.component.RendererTest;
+import test.component.SpotLightTest;
+import test.component.SurfaceTest;
+import test.component.TransformTest;
+import test.data.CollectionTest;
+import test.data.ProviderTest;
+import test.data.StoreTest;
+import test.file.EffectParserTest;
+import test.file.EffectParserTestPass;
+import test.file.FileTest;
+import test.geometry.GeometryTest;
+import test.MinkoTests;
+import test.scene.NodeSetTest;
+import test.scene.NodeTest;
+
+class Main {
+    static public function main() {
+        //  new ExampleWater();
+      //    new WorkingSpecularMaps();
+       // new WorkingEnvironmentMaps();
+      // new WorkingPhongMaterial();
+      //new WorkingNormalMaps();
+     // new ExamplePbr();
+     // new ExampleShadowMapping();
+    ///          new ExampleCube();
+      //     new ExampleBenchmarkCube();
+
+   //    new ExamplePicking();
+   //  new ExampleSkybox();
+     //   new ExampleCube();
+     // new PostProcessingEffect();
+       // new ExampleStencil();
+      //  new ApplyingAntialiasingEffect();
+    //    new ExampleLightScattering();
+      //  new WorkingSpotlights();
+     //   new WorkingAmbientlights();
+       // new WorkingDirectionallights();
+      //  new WorkingPointlights();
+     //   return;
+
+        var canvas = WebCanvas.create("Minko Tests", 640, 480);
+
+
+
+        MinkoTests.canvas=(canvas);
+
+        var r = new haxe.unit.TestRunner();
+       // r.add(new EffectParserTest());
+        r.add(new DirectionalLightTest());
+         // r.add(new RendererTest());
+//        r.add(new TransformTest());
+//
+//       r.add(new CollectionTest());
+//       r.add(new ProviderTest());
+//       r.add(new StoreTest());
+//       r.add(new FileTest());
+//
+//   r.add(new EffectParserTestPass());
+//       r.add(new NodeTest());
+//       r.add(new NodeSetTest());
+//
+//       r.add(new GeometryTest());
+//
+//
+//       r.add(new SurfaceTest());
+//       // add other TestCases here
+//       r.add(new SpotLightTest());
+//       r.add(new PointLightTest());
+//       r.add(new AmbientLightTest());
+
+
+       // finally, run the tests
+        r.run();
+
+    }
+}

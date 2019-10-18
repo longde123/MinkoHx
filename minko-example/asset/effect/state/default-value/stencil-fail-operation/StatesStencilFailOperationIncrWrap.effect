@@ -1,0 +1,10 @@
+{
+    "states" : {
+        "stencilFailOperation" : "incr_wrap"
+    },
+
+    "techniques" : [{ "passes" : [{
+      "vertexShader" : "#pragma include \"../../../dummy.glsl\"",
+      "fragmentShader" : "#pragma include \"../../../dummy.glsl\""
+  }] }]
+}

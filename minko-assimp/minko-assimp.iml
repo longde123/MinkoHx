@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="HAXE_MODULE" version="4">
+  <component name="HaxeModuleSettingsStorage">
+    <option name="arguments" value="-D source-map-content -D js-es=6" />
+    <option name="haxeTarget" value="JavaScript" />
+    <option name="keepSynchronizedWithProjectFile" value="false" />
+    <option name="mainClass" value="Main" />
+    <option name="outputFileName" value="Main.js" />
+    <option name="outputFolder" value="E:/minko-example/bin" />
+  </component>
+  <component name="NewModuleRootManager">
+    <output url="file://E:/minko-example/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <excludePattern pattern="elm-stuff" />
+    </content>
+    <orderEntry type="jdk" jdkName="Haxe 3.4.7" jdkType="Haxe toolkit" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="minko-hx" />
+  </component>
+</module>

@@ -1,0 +1,215 @@
+{
+    "name" : "pbr-mr-sg",
+	"techniques" : [
+        {
+            "name" : "pbr-mr-sg",
+    		"passes" : [
+                {
+                    "name" : "pbr-mr-sg-pass",
+                    "attributes" : {
+                        "a_Position" : "geometry[@{geometryUuid}].position",
+                        "a_Normal" : "geometry[@{geometryUuid}].normal",
+                        "a_Tangent" : "geometry[@{geometryUuid}].tangent",
+                        "a_UV1"       : "geometry[@{geometryUuid}].uv"
+                        "a_UV2"         : "geometry[@{geometryUuid}].uv1",
+                        "a_Joint1"       : "geometry[@{geometryUuid}].boneIdsA",
+                        "a_Joint2"       : "geometry[@{geometryUuid}].boneIdsB",
+                        "a_Weight1"   : "geometry[@{geometryUuid}].boneWeightsA",
+                        "a_Weight2"   : "geometry[@{geometryUuid}].boneWeightsB",
+                        "a_Color"       : "geometry[@{geometryUuid}].color",
+                    },
+                    "uniforms"   : {
+
+                        "u_ModelMatrix"   : "modelToWorldMatrix",
+                        "u_ViewProjectionMatrix"  : { "binding" : { "property" : "worldToScreenMatrix", "source" : "renderer" } },
+
+                        "u_Gamma"  : { "binding" : { "property" : "gamma", "source" : "renderer" } },
+                        "u_Exposure"  : { "binding" : { "property" : "exposure", "source" : "renderer" } },
+                        "u_Camera"  : { "binding" : { "property" : "eyePosition", "source" : "renderer" } },
+
+                        "u_BaseColorFactor"         :{ "binding" : "material[@{materialUuid}].baseColorFactor", "default" : [[ 1.0, 1.0, 1.0  ]] },
+                        "u_MetallicFactor"          : { "binding" : "material[@{materialUuid}].metallicFactor", "default" : 1 },
+                        "u_RoughnessFactor"         : { "binding" : "material[@{materialUuid}].roughnessFactor", "default" : 1},
+
+                        "u_DiffuseFactor"         :{ "binding" : "material[@{materialUuid}].diffuseFactor", "default" : [[ 1.0, 1.0, 1.0 , 1.0  ]] },
+                        "u_SpecularFactor"          : { "binding" : "material[@{materialUuid}].specularFactor", "default" : [[ 1.0, 1.0, 1.0  ]]},
+                        "u_GlossinessFactor"         : { "binding" : "material[@{materialUuid}].glossinessFactor", "default" : 1},
+
+
+                        "u_NormalUVTransform"               :   "material[@{materialUuid}].normalTexture.uvMatrix" ,
+                        "u_OcclusionUVTransform"            :   "material[@{materialUuid}].occlusionTexture.uvMatrix" ,
+                        "u_EmissiveUVTransform"             :   "material[@{materialUuid}].emissiveTexture.uvMatrix" ,
+                        "u_BaseColorUVTransform"            :   "material[@{materialUuid}].baseColorTexture.uvMatrix" ,
+                        "u_MetallicRoughnessUVTransform"    :   "material[@{materialUuid}].metallicRoughnessTexture.uvMatrix" ,
+                        "u_DiffuseUVTransform"              :   "material[@{materialUuid}].diffuseTexture.uvMatrix" ,
+                        "u_SpecularGlossinessUVTransform"   :   "material[@{materialUuid}].specularGlossinessTexture.uvMatrix" ,
+
+                        "u_NormalScale"               :   "material[@{materialUuid}].normalTexture.scale" ,
+                        "u_NormalUVSet"               :   "material[@{materialUuid}].normalTexture.texCoord" ,
+                        "u_NormalSampler"           : {
+                                                        "binding"       : "material[@{materialUuid}].normalTexture",
+                                                        "wrapMode"      : "repeat",
+                                                        "textureFilter" : "linear",
+                                                        "mipFilter"     : "linear"
+                                                    },
+
+                        "u_OcclusionStrength"               :   "material[@{materialUuid}].occlusionTexture.strength" ,
+                        "u_OcclusionUVSet"               :   "material[@{materialUuid}].occlusionTexture.texCoord" ,
+                        "u_OcclusionSampler"        : {
+                                                        "binding"       : "material[@{materialUuid}].occlusionTexture",
+                                                        "wrapMode"      : "repeat",
+                                                        "textureFilter" : "linear",
+                                                        "mipFilter"     : "linear"
+                                                    },
+                        "u_EmissiveFactor"               :   "material[@{materialUuid}].emissiveFactor" ,
+                        "u_EmissiveUVSet"               :   "material[@{materialUuid}].emissiveTexture.texCoord" ,
+                        "u_EmissiveSampler"        : {
+                                                        "binding"       : "material[@{materialUuid}].emissiveTexture",
+                                                        "wrapMode"      : "repeat",
+                                                        "textureFilter" : "linear",
+                                                        "mipFilter"     : "linear"
+                                                    },
+                        "u_BaseColorUVSet"               :   "material[@{materialUuid}].baseColorTexture.texCoord" ,
+                        "u_BaseColorSampler"        : {
+                                                        "binding"       : "material[@{materialUuid}].baseColorTexture",
+                                                        "wrapMode"      : "repeat",
+                                                        "textureFilter" : "linear",
+                                                        "mipFilter"     : "linear"
+                                                    },
+                        "u_MetallicRoughnessUVSet"               :   "material[@{materialUuid}].metallicRoughnessTexture.texCoord" ,
+                        "u_MetallicRoughnessSampler"        : {
+                                                        "binding"       : "material[@{materialUuid}].metallicRoughnessTexture",
+                                                        "wrapMode"      : "repeat",
+                                                        "textureFilter" : "linear",
+                                                        "mipFilter"     : "linear"
+                                                    },
+                        "u_DiffuseUVSet"               :   "material[@{materialUuid}].diffuseTexture.texCoord" ,
+                        "u_DiffuseSampler"        : {
+                                                                     "binding"       : "material[@{materialUuid}].diffuseTexture",
+                                                                     "wrapMode"      : "repeat",
+                                                                     "textureFilter" : "linear",
+                                                                     "mipFilter"     : "linear"
+                                                                 },
+                        "u_SpecularGlossinessUVSet"               :   "material[@{materialUuid}].specularGlossinessTexture.texCoord" ,
+                        "u_SpecularGlossinessSampler"        : {
+                                                        "binding"       : "material[@{materialUuid}].specularGlossinessTexture",
+                                                        "wrapMode"      : "repeat",
+                                                        "textureFilter" : "linear",
+                                                        "mipFilter"     : "linear"
+                                                    },
+                        "u_AlphaCutoff"               :   "material[@{materialUuid}].alphaCutoff" ,
+                        "u_Lights"            : { "binding" : { "property" : "uniformLights", "source" : "renderer" } },
+
+                        "u_DiffuseEnvSampler"            : {
+                                                                "binding" : { "property" : "diffuseEnvMap", "source" : "renderer" },
+                                                                "wrapMode" : "clamp",
+                                                                "textureFilter" : "linear",
+                                                                "mipFilter": "linear"
+                                                            },
+                        "u_SpecularEnvSampler"            : {
+                                                                  "binding" : { "property" : "specularEnvMap", "source" : "renderer" },
+                                                                  "wrapMode" : "clamp",
+                                                                  "textureFilter" : "linear",
+                                                                  "mipFilter": "linear"
+                                                              },
+                        "u_brdfLUT"            : {
+                                                           "binding" : { "property" : "lut", "source" : "renderer" },
+                                                           "wrapMode" : "clamp",
+                                                           "textureFilter" : "linear",
+                                                           "mipFilter": "linear"
+                                                       },
+                        "u_MipCount"            : { "binding" : { "property" : "mipCount", "source" : "renderer" } },
+
+                        "u_jointMatrix[0]"          : "geometry[@{geometryUuid}].boneMatrices",
+                        "u_jointNormalMatrix[0]"    : "geometry[@{geometryUuid}].boneNormalMatrices",
+
+
+                    },
+                    "macros" : {
+                        "MODEL_TO_WORLD"        : "modelToWorldMatrix",
+                        "USE_SKINNING"        : "geometry[@{geometryUuid}].numBones",
+                        "JOINT_COUNT"    : { "binding" : "geometry[@{geometryUuid}].numBones", "type" : "int" },
+
+                        "POSITION" : "geometry[@{geometryUuid}].position",
+                        "NORMAL" : "geometry[@{geometryUuid}].normal",
+                        "TANGENT" : "geometry[@{geometryUuid}].tangent",
+                        "TEXCOORD_0"       : "geometry[@{geometryUuid}].uv"
+                        "TEXCOORD_1"         : "geometry[@{geometryUuid}].uv1",
+                        "HAS_VERTEX_COLOR_VEC3"       : "geometry[@{geometryUuid}].color",
+                        "HAS_JOINT_SET1"       : "geometry[@{geometryUuid}].boneIdsA",
+                        "HAS_JOINT_SET2"       : "geometry[@{geometryUuid}].boneIdsB",
+                        "HAS_WEIGHT_SET1"   : "geometry[@{geometryUuid}].boneWeightsA",
+                        "HAS_WEIGHT_SET2"   : "geometry[@{geometryUuid}].boneWeightsB",
+
+                        "HAS_NORMAL_MAP"                : "material[@{materialUuid}].normalTexture",
+                        "HAS_OCCLUSION_MAP"             : "material[@{materialUuid}].occlusionTexture",
+                        "HAS_EMISSIVE_MAP"              : "material[@{materialUuid}].emissiveTexture",
+                        "HAS_BASE_COLOR_MAP"            : "material[@{materialUuid}].baseColorTexture",
+                        "HAS_METALLIC_ROUGHNESS_MAP"    : "geometry[@{geometryUuid}].metallicRoughnessTexture",
+                        "HAS_DIFFUSE_MAP"               : "material[@{materialUuid}].diffuseTexture",
+                        "HAS_SPECULAR_GLOSSINESS_MAP"   : "material[@{materialUuid}].specularGlossinessTexture",
+
+                        "HAS_NORMAL_UV_TRANSFORM"                : "material[@{materialUuid}].normalTexture.uvMatrix",
+                        "HAS_OCCLUSION_UV_TRANSFORM"             : "material[@{materialUuid}].occlusionTexture.uvMatrix",
+                        "HAS_EMISSIVE_UV_TRANSFORM"              : "material[@{materialUuid}].emissiveTexture.uvMatrix",
+                        "HAS_BASE_COLOR_UV_TRANSFORM"            : "material[@{materialUuid}].baseColorTexture.uvMatrix",
+                        "HAS_METALLIC_ROUGHNESS_UV_TRANSFORM"    : "geometry[@{geometryUuid}].metallicRoughnessTexture.uvMatrix",
+                        "HAS_DIFFUSE_UV_TRANSFORM"               : "material[@{materialUuid}].diffuseTexture.uvMatrix",
+                        "HAS_SPECULAR_GLOSSINESS_UV_TRANSFORM"   : "material[@{materialUuid}].specularGlossinessTexture.uvMatrix",
+
+                        "ALPHAMODE_MASK"   : "material[@{materialUuid}].alphaCutoff",
+                        "ALPHAMODE_OPAQUE"   : "material[@{materialUuid}].alphaOpaque",
+                        "MATERIAL_UNLIT"   : "material[@{materialUuid}].unlit",
+
+                        "MATERIAL_SPECULARGLOSSINESS"              : "material[@{materialUuid}].pbrSpecularGlossiness"
+                        "MATERIAL_METALLICROUGHNESS"              : "material[@{materialUuid}].pbrMetallicRoughness"
+
+
+                        "USE_PUNCTUAL"  : { "binding" : { "property" : "usePunctual", "source" : "renderer" } },
+                        "LIGHT_COUNT"  : { "binding" : { "property" : "visibleLights.length", "source" : "renderer" } },
+                        "USE_IBL"  : { "binding" : { "property" : "useIBL", "source" : "renderer" } },
+                        "USE_TEX_LOD"  : { "binding" : { "property" : "useShaderLoD", "source" : "renderer" } },
+                        "USE_HDR"  : { "binding" : { "property" : "useHDR", "source" : "renderer" } },
+                        "TONEMAP_UNCHARTED"  : { "binding" : { "property" : "useTonemapUncharted", "source" : "renderer" } },
+                        "TONEMAP_HEJLRICHARD"  : { "binding" : { "property" : "useTonemapHejlrichard", "source" : "renderer" } },
+                        "TONEMAP_ACES"  : { "binding" : { "property" : "useTonemapAces", "source" : "renderer" } },
+
+                        "DEBUG_OUTPUT"  : { "binding" : { "property" : "DEBUG_OUTPUT", "source" : "renderer" } },
+
+                        "DEBUG_METALLIC"  : { "binding" : { "property" : "DEBUG_METALLIC", "source" : "renderer" } },
+                        "DEBUG_ROUGHNESS"  : { "binding" : { "property" : "DEBUG_ROUGHNESS", "source" : "renderer" } },
+                        "DEBUG_NORMAL"  : { "binding" : { "property" : "DEBUG_NORMAL", "source" : "renderer" } },
+                        "DEBUG_BASECOLOR"  : { "binding" : { "property" : "DEBUG_BASECOLOR", "source" : "renderer" } },
+                        "DEBUG_OCCLUSION"  : { "binding" : { "property" : "DEBUG_OCCLUSION", "source" : "renderer" } },
+                        "DEBUG_EMISSIVE"  : { "binding" : { "property" : "DEBUG_EMISSIVE", "source" : "renderer" } },
+                        "DEBUG_F0"  : { "binding" : { "property" : "DEBUG_F0", "source" : "renderer" } },
+                        "DEBUG_ALPHA"  : { "binding" : { "property" : "DEBUG_ALPHA", "source" : "renderer" } },
+
+
+                    },
+                    "states" : {
+                        "priority"                  : { "binding" : "material[@{materialUuid}].priority" },
+                        "zSorted"                   : { "binding" : "material[@{materialUuid}].zSorted" },
+                        "blendingSource"            : { "binding" : "material[@{materialUuid}].blendingSource" },
+                        "blendingDestination"       : { "binding" : "material[@{materialUuid}].blendingDestination" },
+                        "colorMask"                 : { "binding" : "material[@{materialUuid}].colorMask" },
+                        "depthMask"                 : { "binding" : "material[@{materialUuid}].depthMask" },
+                        "depthFunction"             : { "binding" : "material[@{materialUuid}].depthFunction" },
+                        "triangleCulling"           : { "binding" : "material[@{materialUuid}].triangleCulling" },
+                        "stencilFunction"           : { "binding" : "material[@{materialUuid}].stencilFunction" },
+                        "stencilReference"          : { "binding" : "material[@{materialUuid}].stencilReference" },
+                        "stencilMask"               : { "binding" : "material[@{materialUuid}].stencilMask" },
+                        "stencilFailOperation"      : { "binding" : "material[@{materialUuid}].stencilFailOperation" },
+                        "stencilZFailOperation"     : { "binding" : "material[@{materialUuid}].stencilZFailOperation" },
+                        "stencilZPassOperation"     : { "binding" : "material[@{materialUuid}].stencilZPassOperation" },
+                        "scissorTest"               : { "binding" : "material[@{materialUuid}].scissorTest" },
+                        "scissorBox"                : { "binding" : "material[@{materialUuid}].scissorBox" },
+                        "target"                    : { "binding" : "material[@{materialUuid}].target" }
+                    },
+                    "vertexShader"      : "#pragma include \"shader/primitive.vert\"",
+                    "fragmentShader"    : "#pragma include \"shader/metallic-roughness.frag\""
+        		}
+            ]
+    	}
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "states" : {
+        "colorMask" : { "binding" : "material[@{materialUuid}].colorMask", "default" : true }
+    },
+
+    "techniques" : [{ "passes" : [{
+      "vertexShader" : "#pragma include \"../../../../dummy.glsl\"",
+      "fragmentShader" : "#pragma include \"../../../../dummy.glsl\""
+  }] }]
+}

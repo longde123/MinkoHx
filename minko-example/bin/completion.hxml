@@ -1,0 +1,4 @@
+-cp src
+-lib minko
+-main Main
+-js bin/Main.js

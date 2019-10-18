@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/minko-assimp.iml" filepath="$PROJECT_DIR$/minko-assimp.iml" />
+      <module fileurl="file://E:/minko-example/minko-example.iml" filepath="E:/minko-example/minko-example.iml" />
+      <module fileurl="file://E:/minko-hx/minko-hx.iml" filepath="E:/minko-hx/minko-hx.iml" />
+      <module fileurl="file://E:/minko-particle/minko-particle.iml" filepath="E:/minko-particle/minko-particle.iml" />
+      <module fileurl="file://E:/minko-serialize/minko-serialize.iml" filepath="E:/minko-serialize/minko-serialize.iml" />
+    </modules>
+  </component>
+</project>
