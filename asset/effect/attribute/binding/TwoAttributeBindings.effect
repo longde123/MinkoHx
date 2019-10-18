@@ -1,8 +1,0 @@
-{
-    "attributes" : {
-        "aPosition" : "geometry[@{geometryUuid}].position",
-        "aUv" : "geometry[@{geometryUuid}].uv"
-    },
-
-    "techniques" : [{ "passes" : [{ "vertexShader" : "", "fragmentShader" : "" }] }]
-}
