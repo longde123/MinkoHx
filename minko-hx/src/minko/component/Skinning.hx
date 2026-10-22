@@ -55,7 +55,7 @@ class Skinning extends AbstractAnimation {
     }
 
     override public function clone(option:CloneOption) {
-        var skin:Skinning = create(null, null, null, null).copyFromSkinning(this, option);
+        var skin:Skinning = create(null, SkinningMethod.SOFTWARE, null, null).copyFromSkinning(this, option);
 
         skin.initialize();
 

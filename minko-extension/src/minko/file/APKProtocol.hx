@@ -46,7 +46,7 @@ class APKProtocol extends FileProtocol {
             if (_options.loadAsynchronously && AbstractCanvas.defaultCanvas != null && AbstractCanvas.defaultCanvas.isWorkerRegistered("apk-protocol")) {
                 file.close();
 
-                var worker = AbstractCanvas.defaultCanvas.getWorker("apk-protocol");
+                var worker:Worker = cast AbstractCanvas.defaultCanvas.getWorker("apk-protocol");
                 var instance:APKProtocol = (this);
                 _activeInstances.push(this);
 

@@ -1,0 +1,8 @@
+-cp src
+-cp ../minko-glm/src
+-cp ../minko-core/src
+-cp ../minko-backend/src
+-cp ../minko-hx/src
+-lib hx3compat
+-main TestMain
+-js bin/Tests.js

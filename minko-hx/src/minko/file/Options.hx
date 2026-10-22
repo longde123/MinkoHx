@@ -10,6 +10,9 @@ import minko.render.AbstractTexture;
 import minko.render.Effect;
 import minko.render.TextureFormat;
 import minko.scene.Node;
+#if js
+import minko.net.WebHTTPProtocol;
+#end
 @:expose("minko.file.FileStatus")
 @:enum abstract FileStatus(Int) from Int to Int{
     var Pending = 0;
@@ -720,22 +723,26 @@ class Options {
         }
 
         if (!_defaultProtocols.exists("file")) {
+            #if js
+            registerDefaultProtocol("file", function() return new WebHTTPProtocol());
+            #else
             registerDefaultProtocol("file", function() return new FileProtocol());
+            #end
         }
     }
 
     private function initializePlatforms() {
 #if MINKO_PLATFORM & MINKO_PLATFORM_WINDOWS
 				_platforms.AddLast("windows");
-#elif MINKO_PLATFORM & MINKO_PLATFORM_OSX
+#elseif MINKO_PLATFORM & MINKO_PLATFORM_OSX
 				_platforms.AddLast("osx");
-#elif MINKO_PLATFORM & MINKO_PLATFORM_LINUX
+#elseif MINKO_PLATFORM & MINKO_PLATFORM_LINUX
 				_platforms.AddLast("linux");
-#elif MINKO_PLATFORM & MINKO_PLATFORM_IOS
+#elseif MINKO_PLATFORM & MINKO_PLATFORM_IOS
 				_platforms.AddLast("ios");
-#elif MINKO_PLATFORM & MINKO_PLATFORM_ANDROID
+#elseif MINKO_PLATFORM & MINKO_PLATFORM_ANDROID
 				_platforms.AddLast("android");
-#elif MINKO_PLATFORM & MINKO_PLATFORM_HTML5
+#elseif MINKO_PLATFORM & MINKO_PLATFORM_HTML5
 				_platforms.AddLast("html5");
 				if (testUserAgentPlatform("Windows"))
 				{

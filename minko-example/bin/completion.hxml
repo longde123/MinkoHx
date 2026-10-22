@@ -1,4 +1,7 @@
--cp src
--lib minko
--main Main
--js bin/Main.js
+-cp ../src
+-cp ../../minko-glm/src
+-cp ../../minko-core/src
+-cp ../../minko-backend/src
+-cp ../../minko-hx/src
+-main ExampleMain
+-js Main.js

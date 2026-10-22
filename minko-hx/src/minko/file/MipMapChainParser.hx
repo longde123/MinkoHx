@@ -110,7 +110,7 @@ class MipMapChainParser {
                 var face = faces[i];
                 var level = 1;
                 var dataOffset = width * faceSize * 3 * bytesPerPixel;
-                var size = faceSize / 2;
+                var size = faceSize >> 1;
                 while (size >= 1) {
                     var offset = Vec2.multiplyScalar(faceOffset[i], size,new Vec2());
                     // incomplete mipmap chain
@@ -132,7 +132,7 @@ class MipMapChainParser {
 
                     texture.uploadMipLevel(level, rgba, face);
                     dataOffset += Math.floor(width * size * 3 * bytesPerPixel);
-                    size /= 2;
+                    size >>= 1;
                     ++level;
                 }
             }

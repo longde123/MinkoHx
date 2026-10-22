@@ -1,4 +1,6 @@
 -cp src
--lib minko
+-cp ../minko-core/src
+-cp ../minko-backend/src
+-cp ../minko-glm/src
 -main Main
 -js E:\minko-example\bin\Export\js\debug\Main.js

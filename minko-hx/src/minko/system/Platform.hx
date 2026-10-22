@@ -14,7 +14,7 @@ class Platform {
     }
 
     return _isMobile;
-#elif MINKO_PLATFORM_ANDROID || MINKO_PLATFORM_IOS
+#elseif MINKO_PLATFORM_ANDROID || MINKO_PLATFORM_IOS
     return true;
 #else
         return false;

@@ -1,0 +1,11 @@
+{
+    "name": "minko-glm",
+    "description": "GLM math library for Minko Haxe (derived from haxe-glm)",
+    "url": "",
+    "license": "Apache-2.0",
+    "contributors": ["Kenton Hamaluik", "ping"],
+    "version": "0.0.1",
+    "releasenote": "Extracted from minko-hx",
+    "tags": ["glm", "math"],
+    "classPath": "src"
+}

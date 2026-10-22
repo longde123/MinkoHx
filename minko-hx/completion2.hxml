@@ -1,4 +1,7 @@
 -cp src
+-cp ../minko-core/src
+-cp ../minko-backend/src
+-cp ../minko-glm/src
 #-lib hxtsdgen
 -js bin/minko.js
 glm.GLM
@@ -54,7 +57,7 @@ minko.data.AbstractFilter
 minko.data.Binding
 minko.data.BindingMap
 minko.data.Collection
-minko.data.PixelData
+minko.file.PixelData
 minko.data.Provider
 minko.data.ResolvedBinding
 minko.data.Store

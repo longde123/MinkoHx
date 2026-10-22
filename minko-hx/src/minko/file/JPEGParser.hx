@@ -2,7 +2,6 @@ package minko.file;
 import glm.Vec4;
 import glm.Vec4;
 import glm.Vec3;
-import js.html.svg.Rect;
 import minko.render.Texture;
 import glm.Vec2;
 import minko.file.MaxRectPacker.AtlasBuilder;
@@ -11,7 +10,10 @@ import minko.math.Rect;
 import haxe.io.Bytes;
 import minko.render.AbstractTexture;
 import minko.render.TextureFormat;
+#if js
+import js.html.svg.Rect;
 import minko.utils.WebNodeTools;
+#end
 typedef AtlasMipMaps={
     var uv:Array<Vec4>;
     var data:PixelData;
@@ -22,10 +24,41 @@ class JPEGParser extends AbstractParser {
 
     override public function parse(filename:String, resolvedFilename:String, options:Options, data:Bytes, assetLibrary:AssetLibrary) {
 
+#if js
         WebNodeTools.loadFromBytes("jpg", data, function(pd:PixelData) {
             pd.bytesPerPixel = 4 ;
             __parse(filename, resolvedFilename, options, pd, assetLibrary);
         });
+#else
+        try {
+            var decoded = NanoJpeg.decodeFast(data);
+            var width = decoded.width;
+            var height = decoded.height;
+            var bgra = decoded.pixels;
+            var rgba = Bytes.alloc(width * height * 4);
+            var numPixels = width * height;
+            for (i in 0...numPixels) {
+                var o = i * 4;
+                rgba.set(o, bgra.get(o + 2));
+                rgba.set(o + 1, bgra.get(o + 1));
+                rgba.set(o + 2, bgra.get(o));
+                rgba.set(o + 3, bgra.get(o + 3));
+            }
+
+            var targetWidth = Math.floor(Math.min(MathUtil.clp2(width), 4096));
+            var targetHeight = Math.floor(Math.min(MathUtil.clp2(height), 4096));
+            if (targetWidth != width || targetHeight != height) {
+                rgba = AbstractTexture.resizeData(width, height, rgba, targetWidth, targetHeight, true);
+            }
+
+            var pd = new PixelData(targetWidth, targetHeight, rgba);
+            pd.bytesPerPixel = 4;
+            __parse(filename, resolvedFilename, options, pd, assetLibrary);
+        }
+        catch (e:Dynamic) {
+            _error.execute(this, Std.string(e));
+        }
+#end
     }
 
     public function __parse(filename:String, resolvedFilename:String, options:Options, data:PixelData, assetLibrary:AssetLibrary) {

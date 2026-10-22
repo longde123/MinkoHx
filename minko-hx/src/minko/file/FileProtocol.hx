@@ -37,7 +37,7 @@ class FileProtocol extends AbstractProtocol {
         //异步加载逻辑
         if (_options.loadAsynchronously && AbstractCanvas.defaultCanvas != null && AbstractCanvas.defaultCanvas.isWorkerRegistered("file-protocol")) {
 
-            var worker:Worker = AbstractCanvas.defaultCanvas.getWorker("file-protocol");
+            var worker:Worker = cast AbstractCanvas.defaultCanvas.getWorker("file-protocol");
             _workerSlots.set(worker, worker.message.connect(function(UnnamedParameter1:Worker, message:Message) {
                 if (message.type == "complete") {
                     var bytes = message.data ;
@@ -81,7 +81,7 @@ class FileProtocol extends AbstractProtocol {
                 //同步加载逻辑 todo
                 var file = sys.io.File.read(cleanFilename, true);
                 file.seek(offset, sys.io.FileSeek.SeekBegin);
-                data = file.read(length);
+                data = length > 0 ? file.read(length) : file.readAll();
                 file.close();
 
                 // FIXME: use fixed size buffers and call _progress accordin
@@ -99,19 +99,25 @@ class FileProtocol extends AbstractProtocol {
     }
 
     public override function fileExists(filename) {
-
-
+#if sys
+        return sys.FileSystem.exists(File.sanitizeFilename(filename));
+#else
         return false;
+#end
     }
 
     public override function isAbsolutePath(filename) {
         var cleanFilename:String = File.sanitizeFilename(filename);
 
-#if MINKO_PLATFORM == MINKO_PLATFORM_WINDOWS
-				return cleanFilename.indexOf(":/") != -1;
-#else
-        return cleanFilename.indexOf("/") == 0;
+#if sys
+        if (Sys.systemName() == "Windows") {
+            return cleanFilename.indexOf(":/") != -1
+                || cleanFilename.substr(0, 2) == "//"
+                || cleanFilename.substr(0, 2) == "\\\\"
+                || cleanFilename.charAt(0) == "/";
+        }
 #end
+        return cleanFilename.charAt(0) == "/";
     }
 
     public function new() {

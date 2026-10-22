@@ -72,7 +72,7 @@ class AbstractAnimation extends AbstractComponent {
 
     }
 
-    override public function clone(option:CloneOption) {
+    override public function clone(option:CloneOption):Dynamic {
         return null;
     }
     public function seekLabel(labelName)  :Void{
@@ -515,7 +515,7 @@ class AbstractAnimation extends AbstractComponent {
         }
         else { // reversed animation
             if (newTime <= previousTime) {
-                if ((newTime == nextLabelTime) || (newTime <= nextLabelTime != null && nextLabelTime < previousTime)) {
+                if ((newTime == nextLabelTime) || (newTime <= nextLabelTime && nextLabelTime < previousTime)) {
                     trigger = true;
                 }
             }

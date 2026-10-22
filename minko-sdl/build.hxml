@@ -1,0 +1,10 @@
+-cp ../minko-glm/src
+-cp ../minko-core/src
+-cp ../minko-backend/src
+-cp ../minko-hx/src
+-cp src
+-lib hlsdl
+-lib hlopenal
+-lib format
+-main Main
+-hl bin/Main.hl

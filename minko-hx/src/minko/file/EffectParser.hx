@@ -949,30 +949,28 @@ class EffectParser extends AbstractParser {
     private function parseBinding(node:Dynamic, scope:Scope, binding:Binding) {
         binding.source = Source.TARGET;
 
-        if (Std.is(node, String)) {
-            binding.propertyName = node ;
-
+        if (Std.isOfType(node, String)) {
+            binding.propertyName = Std.string(node);
             return true;
         }
         else {
-            var bindingNode = Reflect.field(node, "binding");
+            var bindingNode:Dynamic = Reflect.field(node, "binding");
 
-            if (Std.is(bindingNode, String)) {
-                binding.propertyName = bindingNode;
-
+            if (Std.isOfType(bindingNode, String)) {
+                binding.propertyName = Std.string(bindingNode);
                 return true;
             }
             else if (isDynamic(bindingNode)) {
-                var propertyNode = Reflect.field(bindingNode, "property");
-                var sourceNode = Reflect.field(bindingNode, "source");
+                var propertyNode:Dynamic = Reflect.field(bindingNode, "property");
+                var sourceNode:Dynamic = Reflect.field(bindingNode, "source");
 
-                if (Std.is(propertyNode, String)) {
-                    binding.propertyName = propertyNode;
+                if (Std.isOfType(propertyNode, String)) {
+                    binding.propertyName = Std.string(propertyNode);
                 }
                 // FIXME: throw otherwise
 
-                if (Std.is(sourceNode, String)) {
-                    var sourceStr = sourceNode;
+                if (Std.isOfType(sourceNode, String)) {
+                    var sourceStr:String = Std.string(sourceNode);
 
                     if (sourceStr == "target") {
                         binding.source = Source.TARGET;

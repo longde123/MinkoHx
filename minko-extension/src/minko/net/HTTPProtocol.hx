@@ -57,7 +57,7 @@ class HTTPProtocol extends AbstractProtocol {
             additionalHeaders.push(new Tuple<String, String>( "Range", "bytes=" + rangeMin + "-" + rangeMax ));
         }
         if (options.loadAsynchronously) {
-            var worker = AbstractCanvas.defaultCanvas.getWorker("http");
+            var worker:Worker = cast AbstractCanvas.defaultCanvas.getWorker("http");
 
             _workerSlots.push(worker.message.connect(function(w:Worker, message:Message) {
                 if (message.type == "complete") {

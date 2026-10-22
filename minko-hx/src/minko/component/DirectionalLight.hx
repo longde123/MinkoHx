@@ -360,12 +360,12 @@ class DirectionalLight extends AbstractDiscreteLight {
         var invProj = _view * (Mat4.invert(projection * view, new Mat4()));
 
         var center:Vec4 = invProj * (new Vec4(0.0, 0.0, 0.0, 1.0));
-        center = center * (1 / center.w);
+        center = Vec4.multiplyScalar(center, 1 / center.w, new Vec4());
 
         var max:Vec4 = invProj * (new Vec4(1.0, 1.0, 1.0, 1.0));
         var min:Vec4 = invProj * (new Vec4( -1.0, -1.0, -1.0, 1.0));
-        max = max * (1 / max.w);
-        min = min * (1 / min.w);
+        max = Vec4.multiplyScalar(max, 1 / max.w, new Vec4());
+        min = Vec4.multiplyScalar(min, 1 / min.w, new Vec4());
 
         var radius = Math.max(Vec4.distanceSquared(max, center), Vec4.distanceSquared(min, center));
 

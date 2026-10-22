@@ -21,7 +21,7 @@ class AbstractComponent extends Enable_uuid {
         _target = null;
     }
 
-    public function clone(option:CloneOption) {
+    public function clone(option:CloneOption):Dynamic {
         throw ("Missing clone function for a component.");
         return null;
     }
