@@ -25,4 +25,11 @@ class Binding extends Enable_uuid {
         this.source = (source);
         return this;
     }
+
+    public function clone():Binding {
+        var copy = new Binding();
+        copy.propertyName = propertyName;
+        copy.source = source;
+        return copy;
+    }
 }

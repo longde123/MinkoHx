@@ -1,4 +1,5 @@
 package minko.data;
+import Lambda;
 import haxe.ds.StringMap;
 import minko.signal.Signal2;
 import minko.Uuid.Enable_uuid;
@@ -30,6 +31,9 @@ class Provider extends Enable_uuid {
         _propertyRemoved=null;
     }
     public function front() :UnsafePointer<Dynamic>{
+        if (_values == null || Lambda.count(_values) == 0) {
+            return null;
+        }
         return _values.iterator().next();
     }
 
@@ -118,7 +122,7 @@ class Provider extends Enable_uuid {
 
     public function setProvider(values:StringMap<Dynamic>) :Void{
         for (p in values.keys()) {
-            setValue(p, values.get(p));
+            set(p, values.get(p));
         }
 
     }
@@ -129,8 +133,13 @@ class Provider extends Enable_uuid {
     }
 
     public function clear():Void {
-        _values = new StringMap<UnsafePointer<Dynamic>>();
-
+        var propertyNames = [];
+        for (propertyName in _values.keys()) {
+            propertyNames.push(propertyName);
+        }
+        for (propertyName in propertyNames) {
+            unset(propertyName);
+        }
     }
 
     public function unset(propertyName:String) :Void{
@@ -158,10 +167,17 @@ class Provider extends Enable_uuid {
 
 
    inline function getValue(propertyName:String):Dynamic {
-        return getUnsafePointer(propertyName).value;
+        var pointer = getUnsafePointer(propertyName);
+        return pointer == null ? null : pointer.value;
     }
 
     inline function setValue(propertyName:String, value:Dynamic):Void {
-        getUnsafePointer(propertyName).value= value;
+        var pointer = getUnsafePointer(propertyName);
+        if (pointer == null) {
+            setUnsafePointer(propertyName, new UnsafePointer(value));
+        }
+        else {
+            pointer.value = value;
+        }
     }
 }

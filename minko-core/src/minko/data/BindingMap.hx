@@ -18,6 +18,15 @@ class MacroBinding extends Binding {
         maxValue = max;
     }
 
+    override public function clone():Binding {
+        var copy = new MacroBinding();
+        copy.propertyName = propertyName;
+        copy.source = source;
+        copy.minValue = minValue;
+        copy.maxValue = maxValue;
+        return copy;
+    }
+
 
     public function dispose() {
 
@@ -43,7 +52,7 @@ class BindingMapBase<T :Binding> extends Enable_uuid {
     static public function copyFrom<T:Binding>(t:BindingMapBase<T>, m:BindingMapBase<T>) {
         t.bindings = new StringMap<T>();
         for (k in m.bindings.keys()) {
-            t.bindings.set(k, m.bindings.get(k));
+            t.bindings.set(k, cast m.bindings.get(k).clone());
         }
         t.defaultValues = new Store();
         t.defaultValues.copyFrom(m.defaultValues, true);
@@ -91,6 +100,7 @@ class MacroBindingMap extends BindingMapBase<MacroBinding> {
         BindingMapBase.copyFrom(t, m);
         //todo
 
+        t.types = new StringMap<MacroType>();
         var ts = cast(m, MacroBindingMap).types;
         for (key in ts.keys()) {
             t.types.set(key, ts.get(key));
@@ -123,6 +133,12 @@ class MacroBindingMap extends BindingMapBase<MacroBinding> {
         }
         if (s == "float4") {
             return MacroType.FLOAT4;
+        }
+        if (s == "float9") {
+            return MacroType.FLOAT9;
+        }
+        if (s == "float16") {
+            return MacroType.FLOAT16;
         }
 
         if (s == "bool") {

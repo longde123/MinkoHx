@@ -52,29 +52,18 @@ class Store extends Enable_uuid {
     }
 
     public function dispose() :Void{
-        if (_collectionItemAddedSlots != null) {
-            for(c in _collectionItemAddedSlots.keys()){
-                removeCollection(c);
+        if (_collections != null) {
+            for (collection in _collections.concat([])) {
+                removeCollection(collection);
             }
         }
-        if (_collectionItemRemovedSlots != null) {
-            for(c in _collectionItemRemovedSlots.keys())
-                removeCollection(c);
-        }
-        if (_collections != null) {
-            for(c in _collections)
-                removeCollection(c);
 
-        }
-        _collectionItemRemovedSlots = null;
-        _collectionItemAddedSlots = null;
-        _collections=null;
         if (_providers != null) {
-            for(p in _providers)
-                removeProvider(p);
-
-
+            for (provider in _providers.concat([])) {
+                removeProvider(provider);
+            }
         }
+
         if (_propertyNameToChangedSignal != null) {
             for (it in _propertyNameToChangedSignal) {
                 if (it != null) {
@@ -97,19 +86,29 @@ class Store extends Enable_uuid {
             }
         }
         if (_propertySlots != null) {
-
-            for(_ps in _propertySlots)
-                for(_p in _ps)
-                    _p.dispose();
-
+            for (slots in _propertySlots) {
+                for (slot in slots) {
+                    slot.dispose();
+                }
+            }
         }
-        _propertyNameToChangedSignal=null;
-        _propertyNameToAddedSignal=null;
-        _propertyNameToRemovedSignal=null;
+
+        if (_propertyAdded != null) _propertyAdded.dispose();
+        if (_propertyRemoved != null) _propertyRemoved.dispose();
+        if (_propertyChanged != null) _propertyChanged.dispose();
+
+        _collectionItemAddedSlots = null;
+        _collectionItemRemovedSlots = null;
+        _collections = null;
+        _providers = null;
+        _lengthProvider = null;
+        _propertyNameToChangedSignal = null;
+        _propertyNameToAddedSignal = null;
+        _propertyNameToRemovedSignal = null;
         _propertySlots = null;
-        _providers=null;
-
-
+        _propertyAdded = null;
+        _propertyRemoved = null;
+        _propertyChanged = null;
     }
 
     public function propertyHasType(propertyName):Bool {
@@ -117,7 +116,7 @@ class Store extends Enable_uuid {
         var provider = providerAndToken.first;
 
         if (provider == null) {
-            throw "";
+            throw "Store.propertyHasType(): unknown property '" + propertyName + "'";
         }
 
         return provider.propertyHasType(providerAndToken.second);
@@ -128,7 +127,7 @@ class Store extends Enable_uuid {
         var provider = providerAndToken.first;
 
         if (provider == null) {
-            throw "";
+            throw "Store.get(): unknown property '" + propertyName + "'";
         }
 
         return provider.get(providerAndToken.second);
@@ -152,7 +151,7 @@ class Store extends Enable_uuid {
         var provider = providerAndToken.first;
 
         if (provider == null) {
-            throw "";
+            throw "Store.set(): unknown property '" + propertyName + "'";
         }
 
 
@@ -209,6 +208,9 @@ class Store extends Enable_uuid {
     }
 
     public function addProvider(provider:Provider):Void {
+        if (provider == null) {
+            return;
+        }
         doAddProvider(provider);
     }
 
@@ -217,6 +219,9 @@ class Store extends Enable_uuid {
     }
 
     public function removeProvider(provider:Provider):Void {
+        if (provider == null || _providers.indexOf(provider) == -1) {
+            return;
+        }
         doRemoveProvider(provider);
     }
 
@@ -225,6 +230,9 @@ class Store extends Enable_uuid {
     }
 
     public function addCollection(collection:Collection) {
+        if (collection == null) {
+            return;
+        }
         _collections.push(collection);
 
         _collectionItemAddedSlots.set(collection, collection.itemAdded.connect(function(UnnamedParameter1, provider) {
@@ -245,16 +253,33 @@ class Store extends Enable_uuid {
     }
 
     public function removeCollection(collection:Collection):Void {
+        if (collection == null || _collections.indexOf(collection) == -1) {
+            return;
+        }
+
         _collections.remove(collection);
 
+        var addedSlot = _collectionItemAddedSlots.get(collection);
+        if (addedSlot != null) {
+            addedSlot.dispose();
+            _collectionItemAddedSlots.remove(collection);
+        }
+        var removedSlot = _collectionItemRemovedSlots.get(collection);
+        if (removedSlot != null) {
+            removedSlot.dispose();
+            _collectionItemRemovedSlots.remove(collection);
+        }
 
-        _collectionItemAddedSlots.get(collection).dispose();
-        _collectionItemAddedSlots.remove(collection);
-        _collectionItemRemovedSlots.get(collection).dispose();
-        _collectionItemRemovedSlots.remove(collection);
-
-        for (provider in collection.items) {
+        for (provider in collection.items.concat([])) {
             doRemoveProvider(provider, collection);
+        }
+
+        if (_lengthProvider != null) {
+            _lengthProvider.unset(collection.name + ".length");
+            if (!_lengthProvider.keys().hasNext()) {
+                removeProvider(_lengthProvider);
+                _lengthProvider = null;
+            }
         }
     }
 
@@ -277,62 +302,59 @@ class Store extends Enable_uuid {
     }
 
     static public function getActualPropertyName(vars:Array<Tuple<String, String>>, propertyName:String) {
+        var sortedVars = vars.concat([]);
+        sortedVars.sort(function(a, b) {
+            return b.first.length - a.first.length;
+        });
+
         var s = propertyName;
-
-        // FIXME: order vars keys from longer to shorter in order to match the longest matching var name
-        // or use regex_replace
-
-        for (variableName in vars) {
-            var pos = propertyName.indexOf("@{" + variableName.first + "}");
-
-            if (pos != -1) {
-                s = s.substr(0, pos) + variableName.second + s.substr(pos + variableName.first.length + 3);
-                break;
-            }
-            else if ((pos = propertyName.indexOf("@" + variableName.first)) != -1) {
-                s = s.substr(0, pos) + variableName.second + s.substr(pos + variableName.first.length + 1);
-                break;
-            }
+        for (variableName in sortedVars) {
+            s = StringTools.replace(s, "@{" + variableName.first + "}", variableName.second);
+            s = StringTools.replace(s, "@" + variableName.first, variableName.second);
         }
 
         return s;
     }
 
     private function getProviderByPropertyName(propertyName:String):ProviderAndToken {
-        var pos = propertyName.indexOf("[") ;
+        var pos = propertyName.indexOf("[");
 
         if (pos != -1) {
+            var pos2 = propertyName.indexOf("]", pos);
+            if (pos2 == -1) {
+                return new ProviderAndToken(null, propertyName);
+            }
+
             var collectionName = propertyName.substr(0, pos);
+            var indexStr = propertyName.substr(pos + 1, pos2 - pos - 1);
+            var token = propertyName.substr(pos2 + 1);
+            if (token.charAt(0) == ".") {
+                token = token.substr(1);
+            }
 
             for (collection in _collections) {
-                if (collection.name == collectionName) {
-                    var pos2 = propertyName.indexOf("]");
-                    var indexStr = propertyName.substr(pos + 1, pos2 - pos - 1);
-                    var pos3 = indexStr.indexOf("-");
-                    var token = propertyName.substr(pos2 + 2);
-
-
-                    // fetch provider by uuid
-                    if (pos3 != -1 && pos3 < pos2) {
-                        for (provider in collection.items) {
-                            if (provider.uuid == indexStr && provider.hasProperty(token)) {
-                                return new ProviderAndToken(provider, token);
-                            }
-                        }
-                    }
-                    else { // fetch provider by index
-                        var index = Std.parseInt(indexStr);
-
-                        if (index < collection.items.length) {
-                            var provider = collection.items[index];
-
-                            if (provider.hasProperty(token)) {
-                                return new ProviderAndToken(provider, token);
-                            }
-                        }
-                    }
-                    return new ProviderAndToken(null, token);
+                if (collection.name != collectionName) {
+                    continue;
                 }
+
+                var index:Null<Int> = Std.parseInt(indexStr);
+                var isUuid = indexStr.indexOf("-") != -1 || index == null;
+
+                if (isUuid) {
+                    for (provider in collection.items) {
+                        if (provider.uuid == indexStr && provider.hasProperty(token)) {
+                            return new ProviderAndToken(provider, token);
+                        }
+                    }
+                }
+                else if (index >= 0 && index < collection.items.length) {
+                    var provider = collection.items[index];
+                    if (provider != null && provider.hasProperty(token)) {
+                        return new ProviderAndToken(provider, token);
+                    }
+                }
+
+                return new ProviderAndToken(null, token);
             }
         }
         else {
@@ -356,12 +378,18 @@ class Store extends Enable_uuid {
         // Debug.Assert(it != _providers.end());
 
         _providers.remove(provider);
-        //if (std::find(_providers.begin(), _providers.end(), provider) != _providers.end())
-        //return;
+
+        var providerIndex = -1;
+        if (collection != null) {
+            providerIndex = collection.items.indexOf(provider);
+            if (providerIndex == -1) {
+                providerIndex = collection.lastRemovedIndex;
+            }
+        }
 
         // execute all the "property removed" signals
         for (property in provider.keys()) {
-            providerPropertyRemovedHandler(provider, collection, property);
+            providerPropertyRemovedHandler(provider, collection, property, providerIndex);
         }
 
         // erase all the slots (property added, changed, removed) for this provider
@@ -437,7 +465,7 @@ class Store extends Enable_uuid {
         return collection.name + "[" + index + "]." + propertyName ;
     }
 
-    public function executePropertySignal(provider:Provider, collection:Collection, propertyName:String, anyChangedSignal:Signal3<Store, Provider, String>, propertyNameToSignal:StringMap<Signal3<Store, Provider, String>>) {
+    public function executePropertySignal(provider:Provider, collection:Collection, propertyName:String, anyChangedSignal:Signal3<Store, Provider, String>, propertyNameToSignal:StringMap<Signal3<Store, Provider, String>>, providerIndex:Int = -1) {
         anyChangedSignal.execute(this, provider, propertyName);
         if (collection != null) {
             var formattedPropertyName = formatPropertyName(collection, provider, propertyName, true);
@@ -445,7 +473,9 @@ class Store extends Enable_uuid {
                 propertyNameToSignal.get(formattedPropertyName).execute(this, provider, propertyName);
             }
 
-            formattedPropertyName = formatPropertyName(collection, provider, propertyName);
+            formattedPropertyName = (providerIndex >= 0)
+                ? formatPropertyIndexName(collection, Std.string(providerIndex), propertyName)
+                : formatPropertyName(collection, provider, propertyName);
             if (propertyNameToSignal.exists(formattedPropertyName)) {
                 propertyNameToSignal.get(formattedPropertyName).execute(this, provider, propertyName);
             }
@@ -460,11 +490,13 @@ class Store extends Enable_uuid {
         executePropertySignal(provider, collection, propertyName, _propertyChanged, _propertyNameToChangedSignal);
     }
 
-    public function providerPropertyRemovedHandler(provider:Provider, collection:Collection, propertyName:String) {
-        executePropertySignal(provider, collection, propertyName, _propertyChanged, _propertyNameToChangedSignal);
-        executePropertySignal(provider, collection, propertyName, _propertyRemoved, _propertyNameToRemovedSignal);
+    public function providerPropertyRemovedHandler(provider:Provider, collection:Collection, propertyName:String, providerIndex:Int = -1) {
+        executePropertySignal(provider, collection, propertyName, _propertyChanged, _propertyNameToChangedSignal, providerIndex);
+        executePropertySignal(provider, collection, propertyName, _propertyRemoved, _propertyNameToRemovedSignal, providerIndex);
 
-        var formattedName = formatPropertyName(collection, provider, propertyName);
+        var formattedName = (collection != null && providerIndex >= 0)
+            ? formatPropertyIndexName(collection, Std.string(providerIndex), propertyName)
+            : formatPropertyName(collection, provider, propertyName);
 
 
         //用不用 dispose?
@@ -562,30 +594,30 @@ class Store extends Enable_uuid {
     }
 
     public function copyFrom(store:Store, ?deepCopy = false) {
-        if (deepCopy) {
-            var added = new Array<Provider>();
+        if (store == null || store == this) {
+            return this;
+        }
 
-            for (collection in store._collections) {
-                added = added.concat(collection.items);
-                addCollection(Collection.createbyCollection(collection));
+        var collectionProviders = new ObjectMap<Provider, Bool>();
+        for (collection in store._collections) {
+            for (provider in collection.items) {
+                collectionProviders.set(provider, true);
             }
+            addCollection(Collection.createbyCollection(collection, deepCopy));
+        }
 
-            for (provider in store._providers) {
-                //Provider
-                var it = Lambda.has(added, provider);
-
-                if (it == false) {
-                    _providers.push(Provider.createbyProvider(provider));
-                }
+        for (provider in store._providers) {
+            if (provider == store._lengthProvider || collectionProviders.exists(provider)) {
+                continue;
+            }
+            if (deepCopy) {
+                doAddProvider(Provider.createbyProvider(provider));
+            }
+            else {
+                addProvider(provider);
             }
         }
-        else {
-            _collections = new Array<Collection>().concat(store._collections);
-            _providers = new Array<Provider>().concat(store._providers);
-            if (store._lengthProvider != null) {
-                _lengthProvider = Provider.createbyProvider(store._lengthProvider);
-            }
-        }
+
         return this;
     }
 

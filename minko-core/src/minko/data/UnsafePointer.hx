@@ -10,6 +10,10 @@ class UnsafePointerArrayBuffer<R>{
         
     }
     public function applyDone(value:Dynamic){
+        if (applyFunc == null) {
+            arrayBuffer = null;
+            return;
+        }
         arrayBuffer=applyFunc(value);
     }
     static public function vecInts1(dataValue:Int) {
@@ -117,6 +121,9 @@ class UnsafePointer<T> {
     public var value(get,set):T;
     var v:T;
     public function arrayBuffer() :Dynamic {
+        if (buffer == null) {
+            return null;
+        }
         return buffer.arrayBuffer;
     }
 

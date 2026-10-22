@@ -1,4 +1,5 @@
 package minko.data;
+import Lambda;
 import minko.signal.Signal2;
 @:expose("minko.data.Collection")
 class Collection {
@@ -8,6 +9,7 @@ class Collection {
 
     private var _itemAdded:Signal2<Collection, Provider>;
     private var _itemRemoved:Signal2<Collection, Provider>;
+    private var _lastRemovedIndex:Int;
 
     public function dispose():Void {
         if(_itemAdded!=null)_itemAdded.dispose();
@@ -30,7 +32,7 @@ class Collection {
             }
         }
         else {
-            copy._items = collection._items;
+            copy._items = collection._items.concat([]);
         }
 
         return copy;
@@ -55,19 +57,31 @@ class Collection {
     function get_itemRemoved() {
         return _itemRemoved;
     }
+
+    public var lastRemovedIndex(get, null):Int;
+
+    function get_lastRemovedIndex():Int {
+        return _lastRemovedIndex;
+    }
     public var front(get, null):Provider;
 
     function get_front() {
-        return _items[0];
+        return _items.length == 0 ? null : _items[0];
     }
     public var back(get, null):Provider;
 
     function get_back() {
-        return _items[_items.length - 1];
+        return _items.length == 0 ? null : _items[_items.length - 1];
     }
 
 
     public function insert(position, provider) {
+        if (position < 0) {
+            position = 0;
+        }
+        else if (position > _items.length) {
+            position = _items.length;
+        }
         _items.insert(position, provider);
         _itemAdded.execute(this, provider);
 
@@ -75,14 +89,20 @@ class Collection {
     }
 
     public function erase(position) {
-
-        var provider = _items[position];
-        return remove(provider);
+        if (position < 0 || position >= _items.length) {
+            return this;
+        }
+        return remove(_items[position]);
     }
 
     public function remove(provider) {
+        var index = _items.indexOf(provider);
+        if (index == -1) {
+            return this;
+        }
 
         _items.remove(provider);
+        _lastRemovedIndex = index;
         _itemRemoved.execute(this, provider);
 
         return this;
@@ -96,7 +116,13 @@ class Collection {
     }
 
     public function popBack() {
+        if (_items.length == 0) {
+            return this;
+        }
+
+        var index = _items.length - 1;
         var provider = _items.pop();
+        _lastRemovedIndex = index;
         _itemRemoved.execute(this, provider);
 
         return this;
@@ -107,5 +133,6 @@ class Collection {
         this._items = [] ;
         this._itemAdded = new Signal2<Collection, Provider>();
         this._itemRemoved = new Signal2<Collection, Provider>();
+        this._lastRemovedIndex = -1;
     }
 }
