@@ -62,15 +62,11 @@ class Shader extends AbstractResource {
     }
 
     public function define(macroName) {
-        if (!Lambda.has(_definedMacros, macroName)) {
-            _definedMacros.set(macroName, null);
-        }
+        _definedMacros.set(macroName, null);
     }
 
     public function setDefine(macroName, value) {
-        if (!Lambda.has(_definedMacros, macroName)) {
-            _definedMacros.set(macroName, value );
-        }
+        _definedMacros.set(macroName, value);
     }
 
 
