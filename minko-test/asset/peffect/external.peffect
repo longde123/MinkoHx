@@ -1,0 +1,20 @@
+{
+  "name": "external-tint",
+  "macros": {
+    "USE_GREEN": true,
+    "MAX_LIGHTS": 4
+  },
+  "techniques": [
+    {
+      "stage": "forward",
+      "vertexShader": { "file": "shaders/tint.vert" },
+      "fragmentShader": { "file": "shaders/tint.frag" },
+      "macros": {
+        "MODE": "PBR"
+      },
+      "uniforms": {
+        "uTint": { "material": "tint" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+-cp ../minko-glm/src
+-cp ../minko-backend/src
+-cp ../minko-hx/src
+-cp src
+-lib hlsdl
+-lib hlopenal
+-lib format
+-main PBRRendererMain
+-hl bin/PBRRendererMain.hl
