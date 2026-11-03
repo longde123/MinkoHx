@@ -1,5 +1,5 @@
 package minko.animation;
-import minko.data.Store;
+import minko.component.Transform;
 @:expose
 class AbstractTimeline {
 
@@ -45,7 +45,7 @@ class AbstractTimeline {
         return value;
     }
 
-    public function update(time:Int, data:Store, ?skipPropertyNameFormatting:Bool = true) {
+    public function update(time:Int, transform:Transform, ?skipPropertyNameFormatting:Bool = true) {
 
     }
 

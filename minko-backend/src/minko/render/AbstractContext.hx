@@ -61,6 +61,20 @@ class AbstractContext {
 
     }
 
+    /**
+     * Bind a framebuffer that renders into one face of a cube texture, with
+     * the viewport set to `size` and a depth buffer attached. Pair with
+     * endCubeFaceRender(). Backends that cannot render to cube faces leave
+     * this empty; callers should check capability before relying on it.
+     */
+    public function beginCubeFaceRender(cubeTexture:Int, face:CubeTexture.Face, size:Int) {
+
+    }
+
+    public function endCubeFaceRender() {
+
+    }
+
     public function clear(red:Float = 0.0, green:Float = 0.0, blue:Float = 0.0, alpha:Float = 0.0, depth:Float = 1.0, stencil:Int = 0, mask:Int = 0xffffffff) {
 
     }
@@ -105,7 +119,7 @@ class AbstractContext {
 
     }
 
-    public function createTexture(type:TextureType, width:Int, height:Int, mipMapping:Bool, optimizeForRenderToTexture:Bool = false, assertPowerOfTwoSized :Bool= true) {
+    public function createTexture(type:TextureType, width:Int, height:Int, mipMapping:Bool, optimizeForRenderToTexture:Bool = false, assertPowerOfTwoSized :Bool= true, format:TextureFormat = TextureFormat.RGBA) {
         return -1;
     }
 
@@ -238,6 +252,41 @@ class AbstractContext {
 
     public function setRenderToTexture(texture:Int, enableDepthAndStencil:Bool = false) {
 
+    }
+
+    public function createRenderTarget(colorTextures:Array<Int>, width:Int, height:Int, depthTexture:Int = -1):RenderTarget {
+        return null;
+    }
+
+    public function deleteRenderTarget(target:RenderTarget):Void {
+    }
+
+    public function blitRenderTarget(target:RenderTarget):Void {
+    }
+
+    public function detachRenderTarget(target:RenderTarget):Void {
+    }
+
+    public var supportsBlit(get, null):Bool;
+
+    function get_supportsBlit():Bool {
+        return false;
+    }
+
+    public function setRenderTarget(target:RenderTarget):Void {
+        if (target == null || target.colors == null || target.colors.length == 0) {
+            setRenderToBackBuffer();
+            return;
+        }
+        setRenderToTexture(target.colors[0], true);
+    }
+
+    public function setRenderTargets(targets:Array<RenderTarget>):Void {
+        if (targets == null || targets.length == 0) {
+            setRenderToBackBuffer();
+            return;
+        }
+        setRenderTarget(targets[0]);
     }
 
     public function generateMipmaps(texture:Int) {

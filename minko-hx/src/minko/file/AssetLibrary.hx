@@ -9,9 +9,9 @@ import minko.material.Material;
 import minko.render.AbstractContext;
 import minko.render.AbstractTexture;
 import minko.render.CubeTexture;
-import minko.render.Effect;
 import minko.render.RectangleTexture;
 import minko.render.Texture;
+import minko.render.pipeline.PipelineEffect;
 import minko.scene.Layout;
 import minko.scene.Node;
 import minko.signal.Signal2;
@@ -22,7 +22,7 @@ class AssetLibrary {
     private var _loader:Loader;
     private var _materials:StringMap< Material>;
     private var _geometries:StringMap<Geometry>;
-    private var _effects:StringMap< Effect>;
+    private var _pipelineEffects:StringMap<PipelineEffect>;
     private var _textures:StringMap<Texture>;
     private var _cubeTextures:StringMap<CubeTexture>;
     private var _rectangleTextures:StringMap<RectangleTexture>;
@@ -45,10 +45,10 @@ class AssetLibrary {
     function get_numMaterials() {
         return Lambda.count(_materials);
     }
-    public var numEffects(get, null):Int;
+    public var numPipelineEffects(get, null):Int;
 
-    function get_numEffects() {
-        return Lambda.count(_effects);
+    function get_numPipelineEffects() {
+        return Lambda.count(_pipelineEffects);
     }
     public var numTextures(get, null):Int;
 
@@ -86,8 +86,8 @@ class AssetLibrary {
         for (it in original._geometries.keys()) {
             al._geometries.set(it, original._geometries.get(it));
         }
-        for (it in original._effects.keys()) {
-            al._effects.set(it, original._effects.get(it));
+        for (it in original._pipelineEffects.keys()) {
+            al._pipelineEffects.set(it, original._pipelineEffects.get(it));
         }
         for (it in original._textures.keys()) {
             al._textures.set(it, original._textures.get(it));
@@ -131,7 +131,7 @@ class AssetLibrary {
         this._loader = Loader.create();
         this._materials = new StringMap< Material>();
         this._geometries = new StringMap<Geometry>();
-        this._effects = new StringMap< Effect>();
+        this._pipelineEffects = new StringMap<PipelineEffect>();
         this._textures = new StringMap<Texture>();
         this._cubeTextures = new StringMap<CubeTexture>();
         this._rectangleTextures = new StringMap<RectangleTexture>();
@@ -284,26 +284,25 @@ class AssetLibrary {
         throw ("AssetLibrary does not reference this material.");
     }
 
-    public function effect(name) {
-        return _effects.exists(name) ? _effects.get(name) : null;
+    public function pipelineEffect(name) {
+        return _pipelineEffects.exists(name) ? _pipelineEffects.get(name) : null;
     }
 
-    public function setEffect(name, effect) {
-        _effects.set(name, effect);
+    public function setPipelineEffect(name, effect) {
+        _pipelineEffects.set(name, effect);
 
         return this;
     }
 
-    public function effectName(effect:Effect) {
-        for (it in _effects.keys()) {
-            var itr = _effects.get(it);
+    public function pipelineEffectName(effect:PipelineEffect) {
+        for (it in _pipelineEffects.keys()) {
+            var itr = _pipelineEffects.get(it);
             if (itr == effect) {
                 return it;
             }
         }
 
-
-        throw ("AssetLibrary does not reference this effect.");
+        throw ("AssetLibrary does not reference this pipeline effect.");
     }
     public function hasDynamics(name) {
         return _dynamics.exists(name) ;

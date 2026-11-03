@@ -53,19 +53,38 @@ class NodeSet extends Node {
             result = create();
         }
 
-        var nodesStack = new Array<Node>();
-
-        for (node in _nodes) {
-            nodesStack.push(node);
-
-            while (nodesStack.length != 0) {
-                var descendant = nodesStack.shift();
-                if (descendant != node || andSelf) {
-                    result._nodes.push(descendant);
+        if (depthFirst) {
+            var stack = new Array<Node>();
+            for (node in _nodes) {
+                stack.push(node);
+                while (stack.length > 0) {
+                    var descendant = stack.pop();
+                    if (descendant != node || andSelf) {
+                        result._nodes.push(descendant);
+                    }
+                    var children = descendant.children;
+                    var i = children.length - 1;
+                    while (i >= 0) {
+                        stack.push(children[i]);
+                        --i;
+                    }
                 }
-
-
-                nodesStack = (depthFirst ? descendant.children.concat(nodesStack) : nodesStack.concat(descendant.children) );
+            }
+        }
+        else {
+            for (node in _nodes) {
+                var queue = new Array<Node>();
+                queue.push(node);
+                var index = 0;
+                while (index < queue.length) {
+                    var descendant = queue[index++];
+                    if (descendant != node || andSelf) {
+                        result._nodes.push(descendant);
+                    }
+                    for (child in descendant.children) {
+                        queue.push(child);
+                    }
+                }
             }
         }
 

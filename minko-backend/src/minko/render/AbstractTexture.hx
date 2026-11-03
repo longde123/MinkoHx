@@ -1,6 +1,5 @@
 package minko.render;
 import haxe.io.Bytes;
-import minko.utils.MathUtil;
 @:expose("minko.render.AbstractTexture")
 class AbstractTexture extends AbstractResource {
     public var MAX_SIZE = 4096;
@@ -181,8 +180,8 @@ class AbstractTexture extends AbstractResource {
         this._format = (format);
         this._width = width;
         this._height = height;
-        this._widthGPU = Math.floor(Math.min(MathUtil.clp2(width), MAX_SIZE));
-        this._heightGPU = Math.floor(Math.min(MathUtil.clp2(height), MAX_SIZE));
+        this._widthGPU = Math.floor(Math.min(TextureMath.clp2(width), MAX_SIZE));
+        this._heightGPU = Math.floor(Math.min(TextureMath.clp2(height), MAX_SIZE));
         this._mipMapping = mipMapping;
         this._resizeSmoothly = resizeSmoothly;
         this._optimizeForRenderToTexture = optimizeForRenderToTexture;
@@ -193,7 +192,7 @@ class AbstractTexture extends AbstractResource {
     public function getMipmapWidth(level) {
 //Debug.Assert(math.GlobalMembers.isp2(_widthGPU));
 
-        var p = MathUtil.getp2(_widthGPU);
+        var p = TextureMath.getp2(_widthGPU);
         return 1 << (p - level);
         // return uint(powf(2.0f, (log2f(_widthGPU) - level)))
     }
@@ -201,7 +200,7 @@ class AbstractTexture extends AbstractResource {
     public function getMipmapHeight(level) {
 //Debug.Assert(math.GlobalMembers.isp2(_heightGPU));
 
-        var p = MathUtil.getp2(_heightGPU);
+        var p = TextureMath.getp2(_heightGPU);
 
         return 1 << (p - level);
     }

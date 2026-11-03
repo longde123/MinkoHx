@@ -3,7 +3,6 @@ package minko.scene;
 import haxe.ds.ObjectMap;
 import Lambda;
 import minko.component.AbstractComponent;
-import minko.data.Store;
 import minko.scene.Layout.BuiltinLayout;
 import minko.signal.Signal2;
 import minko.signal.Signal3;
@@ -15,7 +14,6 @@ class Node extends Enable_uuid {
     private var _children:Array<Node>;
     private var _root:Node;
     private var _parent:Node;
-    private var _container:Store;
     private var _components:Array<AbstractComponent>;
     private var _layout:Layout;
     private var _added:Signal3<Node, Node, Node>;
@@ -44,7 +42,6 @@ class Node extends Enable_uuid {
         this._name = n;
         this._layout = BuiltinLayout.DEFAULT;
         _children = [];
-        _container = new Store();
         _components = [];
         _added = new Signal3<Node, Node, Node>();
         _removed = new Signal3<Node, Node, Node>();
@@ -171,11 +168,6 @@ class Node extends Enable_uuid {
     function get_children() {
         return _children;
     }
-    public var data(get, null):Store;
-
-    function get_data() {
-        return _container;
-    }
 
     public var added(get, null):Signal3<Node, Node, Node>;
 
@@ -206,6 +198,22 @@ class Node extends Enable_uuid {
     }
 
     public function addChild(child:Node):Node {
+        if (child == null) {
+            throw ("child");
+        }
+        if (_children == null || child._children == null) {
+            throw ("Cannot add a disposed node.");
+        }
+        var ancestor:Node = this;
+        while (ancestor != null) {
+            if (ancestor == child) {
+                throw ("A node cannot be added to itself or one of its descendants.");
+            }
+            ancestor = ancestor.parent;
+        }
+        if (child.parent == this || Lambda.has(_children, child)) {
+            throw ("The same child cannot be added twice.");
+        }
         if (child.parent != null) {
             child.parent.removeChild(child);
         }
@@ -377,14 +385,24 @@ class Node extends Enable_uuid {
     }
 
     public function dispose():Void {
-        for (child in _children) {
+        if (_children == null) {
+            return;
+        }
+        if (_parent != null) {
+            _parent.removeChild(this);
+        }
+
+        var children = _children.copy();
+        for (child in children) {
             child.dispose();
         }
-        for(component in _components){
-            removeComponent(component);
+        var components = _components.copy();
+        for (component in components) {
+            if (Lambda.has(_components, component)) {
+                removeComponent(component);
+            }
             component.dispose();
         }
-        _container.dispose();
 
         _added.dispose();
         _removed.dispose();
@@ -392,14 +410,14 @@ class Node extends Enable_uuid {
         _componentAdded.dispose();
         _componentRemoved.dispose();
 
-        _children=null;
-        _components=null;
-        _container=null;
-
-        _added=null;
-        _removed=null;
-        _layoutChanged=null;
-        _componentAdded=null;
-        _componentRemoved=null;
+        _children = null;
+        _components = null;
+        _parent = null;
+        _root = null;
+        _added = null;
+        _removed = null;
+        _layoutChanged = null;
+        _componentAdded = null;
+        _componentRemoved = null;
     }
 }

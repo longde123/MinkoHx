@@ -63,13 +63,14 @@ class TransformTest extends haxe.unit.TestCase {
 
         var updated1 = false;
 
-        var _ = n1.data.getPropertyChanged("modelToWorldMatrix").connect(function(c, p, propertyName) {
+        var _ = n1Transform.modelToWorldMatrixChanged.connect(function(t:Transform) {
             updated1 = true;
         });
 
         var updated2 = false;
 
-        var __ = n2.data.getPropertyChanged("modelToWorldMatrix").connect(function(c, p, propertyName) {
+        var n2Transform:Transform = cast n2.getComponent(Transform);
+        var __ = n2Transform.modelToWorldMatrixChanged.connect(function(t:Transform) {
             updated2 = true;
         });
 
@@ -98,13 +99,13 @@ class TransformTest extends haxe.unit.TestCase {
 
         var updated1 = false;
 
-        var _ = n1.data.getPropertyChanged("modelToWorldMatrix").connect(function(c, p, propertyName) {
+        var _ = n1Transform.modelToWorldMatrixChanged.connect(function(t:Transform) {
             updated1 = true;
         });
 
         var updated2 = false;
 
-        var __ = n3.data.getPropertyChanged("modelToWorldMatrix").connect(function(c, p, propertyName) {
+        var __ = n3Transform.modelToWorldMatrixChanged.connect(function(t:Transform) {
             updated2 = true;
         });
 
@@ -133,13 +134,13 @@ class TransformTest extends haxe.unit.TestCase {
 
         var updated1 = false;
 
-        var _ = n1.data.getPropertyChanged("modelToWorldMatrix").connect(function(c, p, propertyName) {
+        var _ = n1Transform.modelToWorldMatrixChanged.connect(function(t:Transform) {
             updated1 = true;
         });
 
         var updated2 = false;
 
-        var __ = n3.data.getPropertyChanged("modelToWorldMatrix").connect(function(c, p, propertyName) {
+        var __ = n3Transform.modelToWorldMatrixChanged.connect(function(t:Transform) {
             updated2 = true;
         });
 

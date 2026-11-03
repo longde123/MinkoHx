@@ -1,11 +1,15 @@
+param(
+    [string]$Main = 'bin\PBRRendererMain.hl'
+)
+
 $ErrorActionPreference = 'Stop'
 
 $root = $PSScriptRoot
 $hashlink = if ($env:HASHLINK_HOME) { $env:HASHLINK_HOME } else { 'D:\hashlink-2.0.0-win' }
-$main = Join-Path $root 'bin\Main.hl'
+$main = if ([System.IO.Path]::IsPathRooted($Main)) { $Main } else { Join-Path $root $Main }
 
 if (-not (Test-Path $main)) {
-    throw "bin\Main.hl not found. Run: haxe build.hxml"
+    throw "$Main not found. Run: haxe build_pbr_renderer.hxml / build_pipeline.hxml / build_phong_light_test.hxml / build_pbr_light_test.hxml"
 }
 if (-not (Test-Path (Join-Path $hashlink 'hl.exe'))) {
     throw "hl.exe not found under $hashlink. Set HASHLINK_HOME to the HashLink directory."
@@ -14,7 +18,7 @@ if (-not (Test-Path (Join-Path $hashlink 'hl.exe'))) {
 $env:HL_PATH = (Join-Path $root 'bin') + ';' + $hashlink
 Push-Location $root
 try {
-    & (Join-Path $hashlink 'hl.exe') 'bin\Main.hl'
+    & (Join-Path $hashlink 'hl.exe') $main
 }
 finally {
     Pop-Location

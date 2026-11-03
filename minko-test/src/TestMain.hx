@@ -1,17 +1,11 @@
-import test.component.AmbientLightTest;
-import test.component.DirectionalLightTest;
-import test.component.PointLightTest;
-import test.component.RendererTest;
-import test.component.SpotLightTest;
-import test.component.SurfaceTest;
+import test.component.BoundingBoxTest;
+import test.component.MousePickingTest;
 import test.component.TransformTest;
-import test.data.CollectionTest;
-import test.data.ProviderTest;
-import test.data.StoreTest;
-import test.file.EffectParserTest;
-import test.file.EffectParserTestPass;
 import test.file.FileTest;
+import test.geometry.GeometryRayTest;
 import test.geometry.GeometryTest;
+import test.math.BoxTest;
+import test.scene.NodeLifecycleTest;
 import test.scene.NodeSetTest;
 import test.scene.NodeTest;
 import test.MinkoTests;
@@ -24,22 +18,16 @@ class TestMain {
 
         var r = new haxe.unit.TestRunner();
 
-        r.add(new DirectionalLightTest());
         r.add(new TransformTest());
-        r.add(new RendererTest());
-        r.add(new CollectionTest());
-        r.add(new ProviderTest());
-        r.add(new StoreTest());
+        r.add(new BoundingBoxTest());
+        r.add(new MousePickingTest());
         r.add(new FileTest());
-        r.add(new EffectParserTest());
-        r.add(new EffectParserTestPass());
-        r.add(new NodeTest());
-        r.add(new NodeSetTest());
         r.add(new GeometryTest());
-        r.add(new SurfaceTest());
-        r.add(new SpotLightTest());
-        r.add(new PointLightTest());
-        r.add(new AmbientLightTest());
+        r.add(new GeometryRayTest());
+        r.add(new BoxTest());
+        r.add(new NodeTest());
+        r.add(new NodeLifecycleTest());
+        r.add(new NodeSetTest());
 
         r.run();
     }

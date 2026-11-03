@@ -117,74 +117,53 @@ class Box extends AbstractShape {
         return Math.sqrt(squareDistance);
     }
 
+    public function intersectRay(ray:Ray):Null<Float> {
+        var origins = [ray.origin.x, ray.origin.y, ray.origin.z];
+        var directions = [ray.direction.x, ray.direction.y, ray.direction.z];
+        var minimums = [
+            Math.min(_bottomLeft.x, _topRight.x),
+            Math.min(_bottomLeft.y, _topRight.y),
+            Math.min(_bottomLeft.z, _topRight.z)
+        ];
+        var maximums = [
+            Math.max(_bottomLeft.x, _topRight.x),
+            Math.max(_bottomLeft.y, _topRight.y),
+            Math.max(_bottomLeft.z, _topRight.z)
+        ];
+        var tMin = Math.NEGATIVE_INFINITY;
+        var tMax = Math.POSITIVE_INFINITY;
+
+        for (axis in 0...3) {
+            var direction = directions[axis];
+            if (Math.abs(direction) < 1e-12) {
+                if (origins[axis] < minimums[axis] || origins[axis] > maximums[axis]) {
+                    return null;
+                }
+                continue;
+            }
+
+            var t0 = (minimums[axis] - origins[axis]) / direction;
+            var t1 = (maximums[axis] - origins[axis]) / direction;
+            if (t0 > t1) {
+                var tmp = t0;
+                t0 = t1;
+                t1 = tmp;
+            }
+            tMin = Math.max(tMin, t0);
+            tMax = Math.min(tMax, t1);
+            if (tMin > tMax) {
+                return null;
+            }
+        }
+
+        if (tMax < 0.0) {
+            return null;
+        }
+        return tMin >= 0.0 ? tMin : 0.0;
+    }
+
     override public function castRay(ray:Ray, distance) {
-        var near = new Vec3();
-        var far = new Vec3();
-
-        if (_topRight.z > _bottomLeft.z) {
-            near = _bottomLeft;
-            far = _topRight;
-        }
-        else {
-            near = _topRight;
-            far = _bottomLeft;
-        }
-
-        var t0x = (near.x - ray.origin.x) / ray.direction.x;
-        var t1x = (far.x - ray.origin.x) / ray.direction.x;
-
-        if (t0x > t1x) {
-            var tmp = t1x;
-            t1x = t0x;
-            t0x = tmp;
-        }
-
-        var tmin = t0x;
-        var tmax = t1x;
-
-        var t0y = (near.y - ray.origin.y) / ray.direction.y;
-        var t1y = (far.y - ray.origin.y) / ray.direction.y;
-
-        if (t0y > t1y) {
-            var tmp = t1y;
-            t1y = t0y;
-            t0y = tmp;
-        }
-
-        if (t0y > tmax || tmin > t1y) {
-            return false;
-        }
-
-        if (t0y > tmin) {
-            tmin = t0y;
-        }
-        if (t1y < tmax) {
-            tmax = t1y;
-        }
-
-        var t0z = (near.z - ray.origin.z) / ray.direction.z;
-        var t1z = (far.z - ray.origin.z) / ray.direction.z;
-
-        if (t0z > t1z) {
-            var tmp = t1z;
-            t1z = t0z;
-            t0z = tmp;
-        }
-
-        if (t0z > tmax || tmin > t1z) {
-            return false;
-        }
-
-        if (t0z > tmin) {
-            tmin = t0z;
-        }
-        if (t1z < tmax) {
-            tmax = t1z;
-        }
-
-        distance = tmin;
-
-        return true;
+        return intersectRay(ray) != null;
     }
 
 

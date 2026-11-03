@@ -76,10 +76,13 @@ class Animation extends AbstractAnimation {
 
     override public function update() {
         super.update();
+        var transform:Transform = cast target.getComponent(Transform);
+        if (transform == null) {
+            return;
+        }
         for (timeline in _timelines) {
             var currentTime = _currentTime % (timeline.duration + 1); // Warning: bounds!
-            timeline.update(currentTime, target.data);
-
+            timeline.update(currentTime, transform);
         }
     }
 

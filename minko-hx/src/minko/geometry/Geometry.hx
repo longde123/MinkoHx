@@ -5,39 +5,56 @@ import glm.Vec3;
 import haxe.ds.IntMap;
 import haxe.ds.ObjectMap;
 import haxe.ds.StringMap;
-import minko.data.Provider;
+import glm.Mat4;
 import minko.math.Ray;
 import minko.render.IndexBuffer;
 import minko.render.VertexAttribute;
 import minko.render.VertexBuffer;
 import minko.signal.Signal2.SignalSlot2;
-import minko.Uuid.Has_uuid;
+import minko.Uuid.Enable_uuid;
 @:expose("minko.geometry.Geometry")
-class Geometry extends Has_uuid {
-    private var _data:Provider;
+class Geometry extends Enable_uuid {
+    private var _name:String;
+    private var _attributes:StringMap<VertexAttribute>;
     private var _vertexSize:Int;
     private var _numVertices:Int;
-    private var _vertexBuffers:Array<VertexBuffer> ;
+    private var _vertexBuffers:Array<VertexBuffer>;
     private var _indexBuffer:IndexBuffer;
+    public var centerPosition:Vec3;
+    public var numBones:Int;
+    public var boneMatrices:Array<Mat4>;
+    public var boneNormalMatrices:Array<Mat4>;
+    /** Undeformed position snapshot used by software skinning. Owned by Skinning. */
+    public var skinningInputPositions:Array<Float>;
+    /** Undeformed normal snapshot used by software skinning. Owned by Skinning. */
+    public var skinningInputNormals:Array<Float>;
 
     private var _vbToVertexSizeChangedSlot:ObjectMap<VertexBuffer, SignalSlot2<VertexBuffer, Int>>;
 
     public function new(name:String) {
         super();
-        this._data = Provider.create() ;
+        enable_uuid();
+        this._name = name;
+        this._attributes = new StringMap<VertexAttribute>();
         this._vertexSize = 0;
         this._numVertices = 0;
         this._indexBuffer = null;
         this._vertexBuffers = [];
+        this.centerPosition = new Vec3();
+        this.numBones = 0;
+        this.boneMatrices = [];
+        this.boneNormalMatrices = [];
         _vbToVertexSizeChangedSlot = new ObjectMap<VertexBuffer, SignalSlot2<VertexBuffer, Int>>();
-        _data.set("name", name);
-        _data.set("uuid", _data.uuid);
     }
 
     public function dispose() {
-        _data = null;
+        _attributes = null;
         _vertexBuffers = null;
         _indexBuffer = null;
+        boneMatrices = null;
+        boneNormalMatrices = null;
+        skinningInputPositions = null;
+        skinningInputNormals = null;
     }
     public static function create():Geometry {
         return createbyName("");
@@ -46,20 +63,9 @@ class Geometry extends Has_uuid {
         return new Geometry(name);
     }
 
-    override function get_uuid() {
-        return _data.uuid;
-    }
-
     public function clone() {
         var geometry = new Geometry("").copyFrom(this) ;
-
         return geometry;
-    }
-
-    public var data(get, null):Provider;
-
-    function get_data() {
-        return _data;
     }
 
     public var vertexBuffers(get, null):Array<VertexBuffer>;
@@ -70,7 +76,7 @@ class Geometry extends Has_uuid {
     public var name(get, null):String;
 
     function get_name() {
-        return _data.get("name");
+        return _name;
     }
 
     public function vertexBuffer(vertexAttributeName:String):VertexBuffer {
@@ -91,18 +97,12 @@ class Geometry extends Has_uuid {
     }
 
     public function hasVertexAttribute(vertexAttributeName:String) {
-        return _data.hasProperty(vertexAttributeName);
+        return _attributes.exists(vertexAttributeName);
     }
     public var indices(get, set):IndexBuffer;
 
     function set_indices(__indices:IndexBuffer) {
         _indexBuffer = __indices;
-
-        if (__indices.isReady) {
-            _data.set("indices", __indices.id);
-            _data.set("firstIndex", 0);
-            _data.set("numIndices", __indices.numIndices);
-        }
         return __indices;
     }
 
@@ -119,10 +119,9 @@ class Geometry extends Has_uuid {
         var bufNumVertices = vertexBuffer.numVertices;
 
         for (attribute in vertexBuffer.attributes) {
-            _data.set(attribute.name, attribute);
+            _attributes.set(attribute.name, attribute);
         }
         _vertexSize += bufVertexSize;
-        _data.set("vertex.size", _vertexSize);
 
         if (_vertexBuffers.length > 0 && _numVertices != bufNumVertices) {
             throw ("inconsistent number of vertices between the geometry's vertex streams.");
@@ -146,11 +145,10 @@ class Geometry extends Has_uuid {
 
 
         for (attribute in vertexBuffer.attributes) {
-            _data.unset(attribute.name);
+            _attributes.remove(attribute.name);
         }
 
         _vertexSize -= vertexBuffer.vertexSize;
-        _data.set("vertex.size", _vertexSize);
 
         _vertexBuffers.remove(vertexBufferIt);
 
@@ -318,7 +316,18 @@ class Geometry extends Has_uuid {
         var uvOffset = uvBuffer.attribute("uv").offset;
         var uvData:Array<Float> = uvBuffer.data;
 
-        var tangentsData:Array<Float> = [ for (i in 0...3 * numVertices) 0.0];
+        var normalBuffer:VertexBuffer = vertexBuffer("normal");
+        var normalSize = 0;
+        var normalOffset = 0;
+        var normalData:Array<Float> = null;
+        if (normalBuffer != null) {
+            normalSize = normalBuffer.vertexSize;
+            normalOffset = normalBuffer.attribute("normal").offset;
+            normalData = normalBuffer.data;
+        }
+
+        var tangentsData:Array<Float> = [ for (i in 0...4 * numVertices) 0.0];
+        var bitangentsData:Array<Float> = [ for (i in 0...3 * numVertices) 0.0];
         var offset = 0;
         for (i in 0...numFaces) {
             for (k in 0...3) {
@@ -329,42 +338,104 @@ class Geometry extends Has_uuid {
                 uv[k] = new Vec2(uvData[index], uvData[index + 1]);
             }
 
-            //math
-            var uv02:Vec2 = uv[0] - uv[2];
-            var uv12:Vec2 = uv[1] - uv[2];
-            var denom = uv02.x * uv12.y - uv12.x * uv02.y;
-            var invDenom = Math.abs(denom) > GLM.EPSILON ? 1.0 / denom : 1.0;
+            var edge1 = xyz[1] - xyz[0];
+            var edge2 = xyz[2] - xyz[0];
+            var deltaUV1 = uv[1] - uv[0];
+            var deltaUV2 = uv[2] - uv[0];
+            var denominator = deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y;
+            var invDenom = Math.abs(denominator) > GLM.EPSILON ? 1.0 / denominator : 1.0;
 
-            var faceTangent:Vec3 = ((xyz[0] - xyz[2]) * uv12.y - (xyz[1] - xyz[2]) * uv02.y) * invDenom;
+            var faceTangent:Vec3 = (edge1 * deltaUV2.y - edge2 * deltaUV1.y) * invDenom;
+            var faceBitangent:Vec3 = (edge2 * deltaUV1.x - edge1 * deltaUV2.x) * invDenom;
 
-            for (k in 0... 3) {
-                var index = 3 * vertexIds[k];
-
-                tangentsData[index] += faceTangent.x;
-                tangentsData[index + 1] += faceTangent.y;
-                tangentsData[index + 2] += faceTangent.z;
+            for (k in 0...3) {
+                var tangentIndex = 3 * vertexIds[k];
+                tangentsData[tangentIndex] += faceTangent.x;
+                tangentsData[tangentIndex + 1] += faceTangent.y;
+                tangentsData[tangentIndex + 2] += faceTangent.z;
+                bitangentsData[tangentIndex] += faceBitangent.x;
+                bitangentsData[tangentIndex + 1] += faceBitangent.y;
+                bitangentsData[tangentIndex + 2] += faceBitangent.z;
             }
         }
-        var index = 0;
-        for (i in 0... numVertices) {
-            var x = tangentsData[index];
-            var y = tangentsData[index + 1];
-            var z = tangentsData[index + 2];
-            var lengthSquared = x * x + y * y + z * z;
-            //todo
-            var invLength = lengthSquared > GLM.EPSILON ? 1.0 / Math.sqrt(lengthSquared) : 1.0;
 
-            tangentsData[index] *= invLength;
-            tangentsData[index + 1] *= invLength;
-            tangentsData[index + 2] *= invLength;
-            index += 3;
+        for (i in 0...numVertices) {
+            var tangentIndex = 3 * i;
+            var x = tangentsData[tangentIndex];
+            var y = tangentsData[tangentIndex + 1];
+            var z = tangentsData[tangentIndex + 2];
+
+            var nx = 0.0;
+            var ny = 1.0;
+            var nz = 0.0;
+            if (normalData != null) {
+                var normalIndex = normalOffset + i * normalSize;
+                nx = normalData[normalIndex];
+                ny = normalData[normalIndex + 1];
+                nz = normalData[normalIndex + 2];
+                var normalLength = Math.sqrt(nx * nx + ny * ny + nz * nz);
+                if (normalLength > GLM.EPSILON) {
+                    nx /= normalLength;
+                    ny /= normalLength;
+                    nz /= normalLength;
+                }
+            }
+
+            var dotTN = x * nx + y * ny + z * nz;
+            x -= nx * dotTN;
+            y -= ny * dotTN;
+            z -= nz * dotTN;
+
+            var lengthSquared = x * x + y * y + z * z;
+            if (lengthSquared <= GLM.EPSILON) {
+                // Pick any axis orthogonal to the normal.
+                if (Math.abs(ny) < 0.99) {
+                    x = nz;
+                    y = 0.0;
+                    z = -nx;
+                }
+                else {
+                    x = 0.0;
+                    y = -nz;
+                    z = ny;
+                }
+                lengthSquared = x * x + y * y + z * z;
+            }
+            var invLength = lengthSquared > GLM.EPSILON ? 1.0 / Math.sqrt(lengthSquared) : 1.0;
+            x *= invLength;
+            y *= invLength;
+            z *= invLength;
+
+            var bx = bitangentsData[tangentIndex];
+            var by = bitangentsData[tangentIndex + 1];
+            var bz = bitangentsData[tangentIndex + 2];
+            var cx = ny * z - nz * y;
+            var cy = nz * x - nx * z;
+            var cz = nx * y - ny * x;
+            var handedness = (cx * bx + cy * by + cz * bz) < 0.0 ? -1.0 : 1.0;
+
+            var outputIndex = 4 * i;
+            tangentsData[outputIndex] = x;
+            tangentsData[outputIndex + 1] = y;
+            tangentsData[outputIndex + 2] = z;
+            tangentsData[outputIndex + 3] = handedness;
         }
 
         var tangentsBuffer:VertexBuffer = VertexBuffer.createbyData(xyzBuffer.context, tangentsData);
-        tangentsBuffer.addAttribute("tangent", 3, 0);
+        tangentsBuffer.addAttribute("tangent", 4, 0);
         addVertexBuffer(tangentsBuffer);
 
         return this;
+    }
+
+    /**
+     * Generates a vec4 tangent buffer (xyz + handedness). Idempotent.
+     */
+    public function computeTangents() {
+        if (hasVertexAttribute("tangent")) {
+            return this;
+        }
+        return computeTangentSpace(true);
     }
 
     public function computeCenterPosition() {
@@ -400,10 +471,7 @@ class Geometry extends Has_uuid {
         var minPosition = new Vec3(minXYZ[0], minXYZ[1], minXYZ[2]);
         var maxPosition = new Vec3(maxXYZ[0], maxXYZ[1], maxXYZ[2]);
 
-        //math
-        var centerPosition = (minPosition - maxPosition) * .5;
-
-        _data.set("centerPosition", centerPosition);
+        this.centerPosition = (minPosition + maxPosition) * .5;
 
         return this;
     }
@@ -497,101 +565,134 @@ class Geometry extends Has_uuid {
         throw ("attributeName = " + attributeName);
     }
 
-    public function castRay(ray:Ray, distance:Float, triangle:Int, hitXyz:Vec3 = null, hitUv:Vec2 = null, hitNormal:Vec3 = null) {
-        var EPSILON = 0.00001 ;
+    public function intersectRay(ray:Ray):Null<minko.math.RayHit> {
+        if (_indexBuffer == null || !hasVertexAttribute("position")) {
+            return null;
+        }
 
-        var hit = false;
-        var indicesData:Array<Int> = _indexBuffer.data;
-        var numIndices = indicesData.length;
-
-        var xyzBuffer:VertexBuffer = vertexBuffer("position");
-        var xyzData:Array<Float> = xyzBuffer.data ;
-        var xyzPtr = xyzData ;
-        var xyzVertexSize = xyzBuffer.vertexSize ;
+        var indicesData = _indexBuffer.data;
+        var xyzBuffer = vertexBuffer("position");
+        var xyzData = xyzBuffer.data;
+        var xyzVertexSize = xyzBuffer.vertexSize;
         var xyzOffset = xyzBuffer.attribute("position").offset;
-
         var minDistance = Math.POSITIVE_INFINITY;
-        var lambda = new Vec2();
-        var triangleIndice = -3;
-
-        var v0 = new Vec3();
-        var v1 = new Vec3();
-        var v2 = new Vec3();
-        var edge1 = new Vec3();
-        var edge2 = new Vec3();
-        var pvec = new Vec3();
-        var tvec = new Vec3();
-        var qvec = new Vec3();
-
-        var dot = 0.0;
-        var invDot = 0.0;
-        var u = 0.0;
-        var v = 0.0;
-        var t = 0.0;
+        var hitTriangle = -1;
+        var hitU = 0.0;
+        var hitV = 0.0;
         var i = 0;
-        while (i < numIndices) {
-            var index:Int = indicesData[i] * xyzVertexSize;
-            v0 = new Vec3(xyzPtr[index], xyzPtr[index + 1], xyzPtr[index + 2] );
-            index = indicesData[i + 1] * xyzVertexSize;
-            v1 = new Vec3(xyzPtr[index], xyzPtr[index + 1], xyzPtr[index + 2] );
-            index = indicesData[i + 2] * xyzVertexSize;
-            v2 = new Vec3(xyzPtr[index], xyzPtr[index + 1], xyzPtr[index + 2] );
 
-            //math
-            edge1 = v1 - (v0) ;
-            edge2 = v2 - (v0);
-
-            pvec = Vec3.cross(ray.direction, edge2, new Vec3()) ;
-            dot = Vec3.dot(edge1, pvec);
-
-            if (dot > -EPSILON && dot < EPSILON) {
+        while (i + 2 < indicesData.length) {
+            var i0 = indicesData[i];
+            var i1 = indicesData[i + 1];
+            var i2 = indicesData[i + 2];
+            i += 3;
+            if (i0 < 0 || i1 < 0 || i2 < 0 || i0 >= xyzBuffer.numVertices || i1 >= xyzBuffer.numVertices || i2 >= xyzBuffer.numVertices) {
                 continue;
             }
 
-            invDot = 1.0 / dot;
-            //math
-            tvec = ray.origin - v0;
-            u = Vec3.dot(tvec, pvec) * invDot;
+            var index0 = i0 * xyzVertexSize + xyzOffset;
+            var index1 = i1 * xyzVertexSize + xyzOffset;
+            var index2 = i2 * xyzVertexSize + xyzOffset;
+            var v0 = new Vec3(xyzData[index0], xyzData[index0 + 1], xyzData[index0 + 2]);
+            var v1 = new Vec3(xyzData[index1], xyzData[index1 + 1], xyzData[index1 + 2]);
+            var v2 = new Vec3(xyzData[index2], xyzData[index2 + 1], xyzData[index2 + 2]);
+            var edge1 = v1 - v0;
+            var edge2 = v2 - v0;
+            var pvec = Vec3.cross(ray.direction, edge2, new Vec3());
+            var determinant = Vec3.dot(edge1, pvec);
+            if (determinant <= 0.00001) {
+                continue;
+            }
+
+            var invDeterminant = 1.0 / determinant;
+            var tvec = ray.origin - v0;
+            var u = Vec3.dot(tvec, pvec) * invDeterminant;
             if (u < 0.0 || u > 1.0) {
                 continue;
             }
 
-            qvec = Vec3.cross(tvec, edge1, new Vec3());
-            v = Vec3.dot(ray.direction, qvec) * invDot;
+            var qvec = Vec3.cross(tvec, edge1, new Vec3());
+            var v = Vec3.dot(ray.direction, qvec) * invDeterminant;
             if (v < 0.0 || u + v > 1.0) {
                 continue;
             }
 
-            t = Vec3.dot(qvec, edge2) * invDot;
-            if (t < minDistance && t > 0) {
-                minDistance = t;
-                distance = t;
-                triangle = i;
-                hit = true;
-
-                if (hitUv != null) {
-                    lambda.x = u;
-                    lambda.y = v;
-                }
-
-                if (hitXyz != null) {
-                    hitXyz = new Vec3(ray.origin.x + minDistance * ray.direction.x,
-                    ray.origin.y + minDistance * ray.direction.y,
-                    ray.origin.z + minDistance * ray.direction.z);
-                }
+            var distance = Vec3.dot(qvec, edge2) * invDeterminant;
+            if (distance > 0.0 && distance < minDistance) {
+                minDistance = distance;
+                hitTriangle = i - 3;
+                hitU = u;
+                hitV = v;
             }
-
-            if (hitUv != null) {
-                getHitUv(triangle, lambda, hitUv);
-            }
-
-            if (hitNormal != null) {
-                getHitNormal(triangle, hitNormal);
-            }
-            i += 3;
         }
 
-        return hit;
+        if (hitTriangle < 0) {
+            return null;
+        }
+
+        var position = new Vec3(
+            ray.origin.x + minDistance * ray.direction.x,
+            ray.origin.y + minDistance * ray.direction.y,
+            ray.origin.z + minDistance * ray.direction.z
+        );
+        var w = 1.0 - hitU - hitV;
+        var uv:Vec2 = null;
+        var normal:Vec3 = null;
+        var uvBuffer = vertexBuffer("uv");
+        if (uvBuffer != null) {
+            var uvData = uvBuffer.data;
+            var uvSize = uvBuffer.vertexSize;
+            var uvOffset = uvBuffer.attribute("uv").offset;
+            var uv0 = indicesData[hitTriangle] * uvSize + uvOffset;
+            var uv1 = indicesData[hitTriangle + 1] * uvSize + uvOffset;
+            var uv2 = indicesData[hitTriangle + 2] * uvSize + uvOffset;
+            uv = new Vec2(
+                w * uvData[uv0] + hitU * uvData[uv1] + hitV * uvData[uv2],
+                w * uvData[uv0 + 1] + hitU * uvData[uv1 + 1] + hitV * uvData[uv2 + 1]
+            );
+        }
+
+        var normalBuffer = vertexBuffer("normal");
+        if (normalBuffer != null) {
+            var normalData = normalBuffer.data;
+            var normalSize = normalBuffer.vertexSize;
+            var normalOffset = normalBuffer.attribute("normal").offset;
+            var n0 = indicesData[hitTriangle] * normalSize + normalOffset;
+            var n1 = indicesData[hitTriangle + 1] * normalSize + normalOffset;
+            var n2 = indicesData[hitTriangle + 2] * normalSize + normalOffset;
+            normal = new Vec3(
+                w * normalData[n0] + hitU * normalData[n1] + hitV * normalData[n2],
+                w * normalData[n0 + 1] + hitU * normalData[n1 + 1] + hitV * normalData[n2 + 1],
+                w * normalData[n0 + 2] + hitU * normalData[n1 + 2] + hitV * normalData[n2 + 2]
+            );
+            if (normal.length() > 1e-12) {
+                normal = Vec3.normalize(normal, new Vec3());
+            }
+        }
+
+        return new minko.math.RayHit(minDistance, hitTriangle, position, uv, normal);
+    }
+
+    public function castRay(ray:Ray, distance:Float, triangle:Int, hitXyz:Vec3 = null, hitUv:Vec2 = null, hitNormal:Vec3 = null) {
+        var hit = intersectRay(ray);
+        if (hit == null) {
+            return false;
+        }
+        if (hitXyz != null) {
+            hitXyz.x = hit.position.x;
+            hitXyz.y = hit.position.y;
+            hitXyz.z = hit.position.z;
+        }
+        if (hitUv != null && hit.uv != null) {
+            hitUv.x = hit.uv.x;
+            hitUv.y = hit.uv.y;
+        }
+        if (hitNormal != null && hit.normal != null) {
+            hitNormal.x = hit.normal.x;
+            hitNormal.y = hit.normal.y;
+            hitNormal.z = hit.normal.z;
+        }
+        return true;
     }
 
     public function upload() {
@@ -618,11 +719,22 @@ class Geometry extends Has_uuid {
 
 
     public function copyFrom(geometry:Geometry) {
-        this._data = Provider.createbyProvider(geometry._data);
+        this._name = geometry._name;
+        this._attributes = new StringMap<VertexAttribute>();
+        for (key in geometry._attributes.keys()) {
+            this._attributes.set(key, geometry._attributes.get(key));
+        }
         this._vertexSize = geometry._vertexSize;
         this._numVertices = geometry._numVertices;
         this._vertexBuffers = geometry._vertexBuffers.concat([]);
         this._indexBuffer = geometry._indexBuffer;
+        this.centerPosition = geometry.centerPosition;
+        this.numBones = geometry.numBones;
+        this.boneMatrices = geometry.boneMatrices;
+        this.boneNormalMatrices = geometry.boneNormalMatrices;
+        // Snapshots are read-only inputs; sharing the reference is safe.
+        this.skinningInputPositions = geometry.skinningInputPositions;
+        this.skinningInputNormals = geometry.skinningInputNormals;
         return this;
     }
 
@@ -634,51 +746,6 @@ class Geometry extends Has_uuid {
 
     public function vertexSizeChanged(vertexBuffer:VertexBuffer, offset:Int) {
         _vertexSize += offset;
-    }
-
-    private function getHitUv(triangle:Int, lambda:Vec2, hitUv:Vec2) {
-        var uvBuffer:VertexBuffer = vertexBuffer("uv");
-        var uvData = uvBuffer.data;
-        var uvPtr = uvData[0];
-        var uvVertexSize = uvBuffer.vertexSize;
-        var uvOffset = uvBuffer.attribute("uv").offset;
-        var indicesData = _indexBuffer.data ;
-
-        var u0 = uvData[indicesData[triangle] * uvVertexSize + uvOffset];
-        var v0 = uvData[indicesData[triangle] * uvVertexSize + uvOffset + 1];
-
-        var u1 = uvData[indicesData[triangle + 1] * uvVertexSize + uvOffset];
-        var v1 = uvData[indicesData[triangle + 1] * uvVertexSize + uvOffset + 1];
-
-        var u2 = uvData[indicesData[triangle + 2] * uvVertexSize + uvOffset];
-        var v2 = uvData[indicesData[triangle + 2] * uvVertexSize + uvOffset + 1];
-
-        var z = 1.0 - lambda.x - lambda.y;
-
-        hitUv = new Vec2(z * u0 + lambda.x * u1 + lambda.y * u2, z * v0 + lambda.x * v1 + lambda.y * v2);
-    }
-
-    private function getHitNormal(triangle:Int, hitNormal:Vec3) {
-        var normalBuffer:VertexBuffer = vertexBuffer("normal");
-        var normalData:Array<Float> = normalBuffer.data;
-
-        var normalVertexSize = normalBuffer.vertexSize;
-        var normalOffset = normalBuffer.attribute("normal").offset;
-        var indicesData = _indexBuffer.data;
-
-        var index:Int = indicesData[triangle] * normalVertexSize + normalOffset;
-        var v0 = new Vec3(normalData[index], normalData[index + 1], normalData[index + 2]);
-        index = indicesData[triangle + 1] * normalVertexSize + normalOffset;
-        var v1 = new Vec3(normalData[index], normalData[index + 1], normalData[index + 2]);
-        index = indicesData[triangle + 2] * normalVertexSize + normalOffset;
-        var v2 = new Vec3(normalData[index], normalData[index + 1], normalData[index + 2]);
-
-        //math
-
-        var edge1 = Vec3.normalize(v1 - v0, new Vec3());
-        var edge2 = Vec3.normalize(v2 - v0, new Vec3());
-
-        hitNormal = Vec3.cross(edge2, edge1, new Vec3());
     }
 
 }

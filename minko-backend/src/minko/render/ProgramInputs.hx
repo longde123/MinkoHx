@@ -28,12 +28,21 @@ class UniformInput{
     public var size:Int;
     public var name:String;
     public var location:Int;
+    /**
+     * Texture unit (GL_TEXTURE0 + position) used by sampler inputs.
+     *
+     * Samplers are assigned dense slots (0, 1, 2, ...) in the order they appear
+     * in `ProgramInputs.uniforms`; non-sampler inputs and hand-built inputs keep
+     * the default value -1, meaning "no texture unit".
+     */
+    public var position:Int;
 
-    public function new(name, location, size, type) {
+    public function new(name, location, size, type, position:Int = -1) {
         this.name = name;
         this.location = location;
         this.size = size;
         this.type = (type);
+        this.position = position;
     }
 }
 @:expose("minko.render.AttributeInput")
@@ -92,6 +101,10 @@ class ProgramInputs {
             default:
                 throw ("type");
         }
+    }
+
+    public static function isSamplerType(type:InputType):Bool {
+        return type == InputType.sampler2d || type == InputType.samplerCube;
     }
 
     public var uniforms(get, null):Array<UniformInput>;

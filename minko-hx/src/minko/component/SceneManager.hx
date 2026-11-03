@@ -1,5 +1,4 @@
 package minko.component;
-import minko.data.Provider;
 import minko.file.AssetLibrary;
 import minko.render.AbstractTexture;
 import minko.scene.Node;
@@ -17,7 +16,6 @@ class SceneManager extends AbstractComponent {
     private var _renderBegin:Signal3<SceneManager, Int, AbstractTexture>;
     private var _renderEnd:Signal3<SceneManager, Int, AbstractTexture>;
 
-    private var _data:Provider;
     private var _addedSlot:SignalSlot3<Node, Node, Node>;
 
     private var _canvas:AbstractCanvas;
@@ -94,7 +92,6 @@ class SceneManager extends AbstractComponent {
         this._cullEnd = new Signal<SceneManager>();
         this._renderBegin = new Signal3<SceneManager, Int, AbstractTexture>();
         this._renderEnd = new Signal3<SceneManager, Int, AbstractTexture>();
-        this._data = Provider.create();
     }
 
     override public function targetAdded(target:Node) {
@@ -105,17 +102,11 @@ class SceneManager extends AbstractComponent {
             throw ("The same root node cannot have more than one SceneManager.");
         }
 
-        target.data.addProvider(_data);
-        target.data.addProvider(_canvas.data);
-
         _addedSlot = target.added.connect(addedHandler);
     }
 
     override public function targetRemoved(target:Node) {
         _addedSlot = null;
-
-        target.data.removeProvider(_data);
-        target.data.removeProvider(_canvas.data);
     }
 
     public function addedHandler(node:Node, target:Node, ancestor:Node) {
@@ -129,9 +120,7 @@ class SceneManager extends AbstractComponent {
     }
 
     public function nextFrame(time:Float, deltaTime:Float, renderTarget:AbstractTexture = null) {
-
         _time = time;
-        _data.set("time", _time);
 
         _frameBegin.execute((this), time, deltaTime);
         _cullBegin.execute((this));

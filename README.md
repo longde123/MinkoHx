@@ -7,25 +7,24 @@ Modules:
 
 - `minko-glm`: standalone GLM math library (`glm.*`, Apache-2.0, derived from
   haxe-glm).
-- `minko-core`: low-level foundation (signals, data, math, basic file types,
-  Timer, Tuple, Uuid). Depends only on `minko-glm`.
 - `minko-backend`: shared canvas/input/audio/context/render-resource layer plus
-  the HTML5 and HashLink implementations, and the async worker runtime. Depends
-  on `minko-core` + `minko-glm`.
-- `minko-hx`: platform-independent engine (scene, data, geometry, material,
-  file loader/parsers, high-level render pipeline). Depends on
-  `minko-backend` + `minko-core` + `minko-glm`.
-- `minko-example`: all `example.*` and `tutorial.*` sources, assets and the
-  example launcher.
+  the HTML5 and HashLink implementations, the async worker runtime, and the
+  low-level foundation (`Timer`, `Tuple`, `Uuid`, signals). Depends only on
+  `minko-glm`.
+- `minko-hx`: platform-independent engine (data model, scene, geometry,
+  material, file loader/parsers, new high-level render pipeline). Depends on
+  `minko-backend` + `minko-glm`.
 - `minko-test`: engine tests, test runner and host page.
-- `minko-sdl`: HashLink/SDL3 demo and build shell (PNG/JPEG textures, OpenAL
-  WAV/OGG audio).
+- `minko-sdl`: HashLink/SDL3 PBR demos and build shell.
+
+The legacy renderer (`Renderer` / `DrawCallPool` / `Effect` / `Pass`), its
+examples and the legacy-only serialization/particle/assimp modules have been
+removed; use `minko.render.pipeline` and `minko.component.PBRRenderer`.
 
 Typical source-root order:
 
 ```hxml
 -cp ../minko-glm/src
--cp ../minko-core/src
 -cp ../minko-backend/src
 -cp ../minko-hx/src
 ```

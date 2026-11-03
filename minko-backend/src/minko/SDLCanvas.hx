@@ -79,6 +79,9 @@ class SDLCanvas extends AbstractCanvas {
     override public function step() {
         SDLAudio.update();
         stepEvent();
+        if (_window != null) {
+            _window.renderTo();
+        }
         super.step();
     }
 
@@ -249,7 +252,10 @@ class SDLCanvas extends AbstractCanvas {
     }
 
     public function presentWindow() {
-        if (_window != null) _window.present();
+        if (_window != null) {
+            _window.renderTo();
+            _window.present();
+        }
     }
 
     public function disposeWindow() {

@@ -1,7 +1,6 @@
 package minko.render;
 import Array;
 import haxe.io.Bytes;
-import minko.utils.MathUtil;
 @:expose("minko.render.Texture")
 class Texture extends AbstractTexture {
     private var _data:Array<Bytes>;
@@ -74,9 +73,9 @@ class Texture extends AbstractTexture {
         var previousWidth = this.width;
         var previousHeight = this.height;
 
-        var previousNumMipMaps = data.length > TextureFormatInfo.textureSize(_format, previousWidth, previousHeight) ? MathUtil.getp2(previousWidth) + 1 : 1;
+        var previousNumMipMaps = data.length > TextureFormatInfo.textureSize(_format, previousWidth, previousHeight) ? TextureMath.getp2(previousWidth) + 1 : 1;
 
-        var numMipMaps = previousNumMipMaps > 1 ? MathUtil.getp2(width) + 1 : 1;
+        var numMipMaps = previousNumMipMaps > 1 ? TextureMath.getp2(width) + 1 : 1;
 
 
         var newData = [];
@@ -120,7 +119,7 @@ class Texture extends AbstractTexture {
                 id = _context.createCompressedTexture(_type, (_format), _widthGPU, _heightGPU, _mipMapping);
             }
             else {
-                id = _context.createTexture(_type, _widthGPU, _heightGPU, _mipMapping, _optimizeForRenderToTexture);
+                id = _context.createTexture(_type, _widthGPU, _heightGPU, _mipMapping, _optimizeForRenderToTexture, true, _format);
             }
         }
 

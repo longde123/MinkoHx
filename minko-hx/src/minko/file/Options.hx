@@ -1,13 +1,11 @@
 package minko.file;
 
-import minko.material.BasicMaterial;
 import haxe.ds.StringMap;
 import minko.component.Skinning.SkinningMethod;
 import minko.geometry.Geometry;
 import minko.material.Material;
 import minko.render.AbstractContext;
 import minko.render.AbstractTexture;
-import minko.render.Effect;
 import minko.render.TextureFormat;
 import minko.scene.Node;
 #if js
@@ -29,7 +27,6 @@ typedef ParserFunction = String -> ParserHandler;
 typedef UriFunction = String -> String;
 typedef NodeFunction = Node -> Node;
 
-typedef EffectFunction = Effect -> Effect;
 typedef TextureFormatFunction = Array<TextureFormat> -> TextureFormat;//todo
 typedef AttributeFunction = Node -> String -> String -> Void;
 typedef PreventLoadingFunction = String -> Bool;
@@ -66,7 +63,6 @@ class Options {
     private var _trackAssetDescriptor:Bool;
     private var _skinningFramerate:Int;
     private var _skinningMethod:SkinningMethod;
-    private var _effect:Effect;
     private var _material:Material;
     private var _textureFormats:Array<TextureFormat>;
     private var _materialFunction:MaterialFunction;
@@ -76,7 +72,6 @@ class Options {
     private var _parserFunction:ParserFunction;
     private var _uriFunction:UriFunction;
     private var _nodeFunction:NodeFunction;
-    private var _effectFunction:EffectFunction;
     private var _textureFormatFunction:TextureFormatFunction;
     private var _attributeFunction:AttributeFunction;
     private var _fileStatusFunction:FileStatusFunction;
@@ -85,7 +80,7 @@ class Options {
     private var _seekedLength:Int;
     private var _fixMipMaps:Bool;
     private static var _defaultProtocols:StringMap<ProtocolHandler> = new StringMap<ProtocolHandler>();
-    private static var _defaultMaterial:Material =BasicMaterial.create("defaultMaterial");
+    private static var _defaultMaterial:Material = Material.create("defaultMaterial");
     public var fixMipMaps(get, set):Bool;
 
     function get_fixMipMaps() {
@@ -363,17 +358,6 @@ class Options {
         return value;
     }
 
-    public var effect(get, set):Effect;
-
-    function get_effect() {
-        return _effect;
-    }
-
-    function set_effect(effect) {
-        _effect = effect;
-
-        return effect;
-    }
     public var material(get, set):Material;
 
     function get_material() {
@@ -466,17 +450,6 @@ class Options {
 
     function set_nodeFunction(func) {
         _nodeFunction = func;
-
-        return func;
-    }
-    public var effectFunction(get, set):EffectFunction;
-
-    function get_effectFunction() {
-        return _effectFunction;
-    }
-
-    function set_effectFunction(func) {
-        _effectFunction = func;
 
         return func;
     }
@@ -600,7 +573,7 @@ class Options {
         var binaryDir = "";
         var __includePaths = [];
 
-        __includePaths.push("asset/effect");
+        __includePaths.push("asset");
         #if defined(DEBUG) && !defined(EMSCRIPTEN)
              __includePaths.push(binaryDir + "/../../../asset");
         #end
@@ -637,7 +610,6 @@ class Options {
         this._skinningFramerate = 30;
         this._skinningMethod = SkinningMethod.HARDWARE;
         this._material = null;
-        this._effect = null;
         this._seekingOffset = 0;
         this._seekedLength = 0;
         this._materialFunction = null;
@@ -647,7 +619,6 @@ class Options {
         this._parserFunction = null;
         this._uriFunction = null;
         this._nodeFunction = null;
-        this._effectFunction = null;
         this._textureFormatFunction = null;
         this._attributeFunction = null;
         this._fileStatusFunction = null;
@@ -692,7 +663,6 @@ class Options {
         this._trackAssetDescriptor = copy._trackAssetDescriptor;
         this._skinningFramerate = copy._skinningFramerate;
         this._skinningMethod = copy._skinningMethod;
-        this._effect = copy._effect;
         this._textureFormats = copy._textureFormats;
         this._material = copy._material;
         this._materialFunction = copy._materialFunction;
@@ -702,7 +672,6 @@ class Options {
         this._parserFunction = copy._parserFunction;
         this._uriFunction = copy._uriFunction;
         this._nodeFunction = copy._nodeFunction;
-        this._effectFunction = copy._effectFunction;
         this._textureFormatFunction = copy._textureFormatFunction;
         this._attributeFunction = copy._attributeFunction;
         this._fileStatusFunction = copy._fileStatusFunction;
@@ -718,8 +687,8 @@ class Options {
         resetNotInheritedValues();
         initializeDefaultFunctions();
 
-        if (!_parsers.exists("effect")) {
-            registerParser("effect", function() return new EffectParser());
+        if (!_parsers.exists("peffect")) {
+            registerParser("peffect", function() return new PipelineEffectParser());
         }
 
         if (!_defaultProtocols.exists("file")) {
@@ -828,12 +797,6 @@ class Options {
         if (_nodeFunction == null) {
             _nodeFunction = function(node) {
                 return node;
-            };
-        }
-
-        if (_effectFunction == null) {
-            _effectFunction = function(effect) {
-                return effect;
             };
         }
 

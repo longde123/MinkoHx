@@ -1,24 +1,23 @@
 package minko.component;
-import glm.Vec3;
-import haxe.ds.ObjectMap;
+
 import minko.input.Mouse;
 import minko.math.Ray;
 import minko.scene.Node;
 import minko.scene.NodeSet;
 import minko.signal.Signal.SignalSlot;
-import minko.signal.Signal2.SignalSlot2;
 import minko.signal.Signal3.SignalSlot3;
+
 typedef Hit = Tuple<Node, Float>;
+
 @:expose("minko.component.MouseManager")
 class MouseManager extends AbstractComponent {
     private var _mouse:Mouse;
-    private var _previousRayOrigin:Vec3;
     private var _lastItemUnderCursor:Node;
+    private var _lastHits:Array<Hit>;
     private var _ray:Ray;
-    private var _targetAddedSlot:SignalSlot2<AbstractComponent, Node>;
-    private var _targetRemovedSlot:SignalSlot2<AbstractComponent, Node>;
     private var _mouseMoveSlot:SignalSlot3<Mouse, Int, Int>;
     private var _mouseLeftButtonDownSlot:SignalSlot<Mouse>;
+    private var _mouseLeftButtonUpSlot:SignalSlot<Mouse>;
 
     public static function create(mouse = null) {
         return new MouseManager(mouse);
@@ -30,95 +29,97 @@ class MouseManager extends AbstractComponent {
         return _mouse;
     }
 
-    public function pick(ray:Ray) {
+    public function pick(ray:Ray):Array<Hit> {
         var hits:Array<Hit> = [];
-
         var descendants:NodeSet = NodeSet.createbyNode(target.root).descendants(true).where(function(node:Node) {
             return node.hasComponent(BoundingBox);
         });
 
-        var distance:ObjectMap<Node, Float> = new ObjectMap<Node, Float>();
-        var localRay:Ray = Ray.create();
-
         for (descendant in descendants.nodes) {
-            var distance = 0.0 ;
-            var boundingBox:BoundingBox = cast descendant.getComponent(BoundingBox);
-            if (boundingBox.box.castRay(ray, distance)) {
-                hits.push(new Hit(descendant, distance));
-
-                /*
-						auto transform = descendant->component<Transform>();
-						uint triangleId = 0;
-
-						if (transform)
-						{
-							transform->worldToModel(ray->origin(), localRay->origin());
-							transform->deltaWorldToModel(ray->direction(), localRay->direction());
-						}
-
-						for (auto& surface : descendant->components<Surface>())
-						{
-							if (surface->geometry()->cast(transform ? localRay : ray, distance, triangleId))
-							{
-								hits.push_back(Hit(descendant, distance));
-							}
-						}
-						*/
+            for (component in descendant.getComponents(BoundingBox)) {
+                var boundingBox:BoundingBox = cast component;
+                var distance = boundingBox.box.intersectRay(ray);
+                if (distance != null) {
+                    hits.push(new Hit(descendant, distance));
+                }
             }
         }
 
         hits.sort(function(a:Hit, b:Hit) {
-            return Math.floor(a.second - b.second);
+            return a.second < b.second ? -1 : (a.second > b.second ? 1 : 0);
         });
 
-        if (hits.length > 0) {
-            var node:Node =cast hits[0].first;
-            var mp:MousePicking = cast node.getComponent(MousePicking) ;
+        var rayChanged = !sameRay(_ray, ray);
+        var previousPicking = currentPicking();
+        var nextNode:Node = hits.length > 0 ? hits[0].first : null;
+        if (_lastItemUnderCursor != nextNode && previousPicking != null) {
+            previousPicking.updatePicking(_lastHits, ray, rayChanged, false);
+        }
 
-            if (_previousRayOrigin != ray.origin) {
-                //_move->execute(shared_from_this(), hits, ray);
-                if (mp != null) {
-                    mp.move.execute(mp, hits, ray);
-                }
+        _lastItemUnderCursor = nextNode;
+        _lastHits = hits;
+        _ray = ray;
+        var picking = currentPicking();
+        if (picking != null) {
+            picking.updatePicking(hits, ray, rayChanged, true);
+        }
+        return hits;
+    }
 
-                _previousRayOrigin = ray.origin;
-            }
+    function currentPicking():MousePicking {
+        return _lastItemUnderCursor == null ? null : cast _lastItemUnderCursor.getComponent(MousePicking);
+    }
 
-            //_over->execute(shared_from_this(), hits, ray);
+    function sameRay(a:Ray, b:Ray):Bool {
+        return a != null && b != null
+            && a.origin.x == b.origin.x && a.origin.y == b.origin.y && a.origin.z == b.origin.z
+            && a.direction.x == b.direction.x && a.direction.y == b.direction.y && a.direction.z == b.direction.z;
+    }
+
+    function pickFromMouse(mouse:Mouse) {
+        var camera:PerspectiveCamera = cast target.getComponent(PerspectiveCamera);
+        if (camera != null) {
+            pick(camera.unproject(mouse.normalizedX, mouse.normalizedY));
+        }
+    }
+
+    function dispatchLeftButton(down:Bool) {
+        var picking = currentPicking();
+        if (picking != null) {
+            picking.dispatchLeftButton(_lastHits, _ray, down);
         }
     }
 
     override public function targetAdded(target:Node) {
-        if (_mouse == null) {
-            return;
-        }
-
-        _mouseMoveSlot = _mouse.move.connect(function(m:Mouse, dx, dy) {
-            // FIXME: should unproject from properties stored in data()
-            var cam:PerspectiveCamera = cast target.getComponent(PerspectiveCamera);
-
-            if (cam != null) {
-                pick(_ray = cam.unproject(m.normalizedX, m.normalizedY));
-            }
-        });
-        _mouseLeftButtonDownSlot = _mouse.leftButtonDown.connect(function(m:Mouse) {
-            // FIXME
-        });
+        if (_mouse == null) return;
+        _mouseMoveSlot = _mouse.move.connect(function(m:Mouse, _, _) pickFromMouse(m));
+        _mouseLeftButtonDownSlot = _mouse.leftButtonDown.connect(function(_) dispatchLeftButton(true));
+        _mouseLeftButtonUpSlot = _mouse.leftButtonUp.connect(function(_) dispatchLeftButton(false));
     }
 
     override public function targetRemoved(target:Node) {
+        if (_mouseMoveSlot != null) _mouseMoveSlot.dispose();
+        if (_mouseLeftButtonDownSlot != null) _mouseLeftButtonDownSlot.dispose();
+        if (_mouseLeftButtonUpSlot != null) _mouseLeftButtonUpSlot.dispose();
         _mouseMoveSlot = null;
         _mouseLeftButtonDownSlot = null;
+        _mouseLeftButtonUpSlot = null;
+        _lastItemUnderCursor = null;
+        _lastHits = [];
+    }
+
+    override public function dispose() {
+        if (target != null) targetRemoved(target);
+        _mouse = null;
+        _ray = null;
+        super.dispose();
     }
 
     public function new(mouse) {
         super();
-        this._mouse = mouse;
-        this._ray = Ray.create();
-        this._previousRayOrigin = new Vec3();
-        this._lastItemUnderCursor = null;
-    }
-
-    public function initialize() {
+        _mouse = mouse;
+        _ray = null;
+        _lastHits = [];
+        _lastItemUnderCursor = null;
     }
 }

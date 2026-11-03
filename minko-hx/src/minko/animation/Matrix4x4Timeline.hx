@@ -1,6 +1,6 @@
 package minko.animation;
 import glm.Mat4;
-import minko.data.Store;
+import minko.component.Transform;
 @:expose
 class TimelineLookup {
     public var timetable:Int;
@@ -126,19 +126,19 @@ class Matrix4x4Timeline extends AbstractTimeline {
         return _interpolate;
     }
 
-    override public function update(time:Int, data:Store, ?skipPropertyNameFormatting:Bool = true) {
+    override public function update(time:Int, transform:Transform, ?skipPropertyNameFormatting:Bool = true) {
         if (_isLocked || _duration == 0 || _matrices.length == 0) {
             return;
         }
 
         if (_interpolate) {
-            data.set(_propertyName, interpolateTime(time));
+            transform.matrix = interpolateTime(time);
         }
         else {
             var t = TimelineLookup.getTimeInRange(time, _duration + 1);
             var keyId = TimelineLookup.getIndexForTime(t, _matrices);
 
-            data.set(_propertyName, _matrices[keyId].mat4);
+            transform.matrix = _matrices[keyId].mat4;
         }
     }
 

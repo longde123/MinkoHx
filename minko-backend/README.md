@@ -10,33 +10,32 @@ rendering responsibilities:
 - audio: `Sound`/`SoundChannel`/`SoundTransform` and OpenAL WAV/OGG playback
   (`SDLAudio`, `SDLSound`, `SDLSoundChannel`)
 - render: `AbstractContext`, resource/texture/buffer/shader/program bases,
-  `GlContext` (WebGL), `SDLGLContext` (HashLink/OpenGL), `HLShaderTools`
+  `GlContext` (WebGL), `SDLGLContext` (HashLink/OpenGL), `HLShaderTools`,
+  `TextureMath` (power-of-two helpers for texture sizes)
 - native: `fmt.hdll` OGG bindings
 
-The high-level rendering pipeline (`DrawCall`, `DrawCallPool`, `Effect`, `Pass`)
-stays in `minko-hx`. The audio loader integration (`SDLSoundParser`) and
-`PositionalSound` also live in `minko-hx`, since they depend on the file loader
-and the component/scene layer.
+The high-level render pipeline (`RenderPipeline`, `PipelineEffect`,
+`PipelineRenderer`) lives in `minko-hx`. The audio loader integration
+(`SDLSoundParser`) and `PositionalSound` also live in `minko-hx`, since they
+depend on the file loader and the component/scene layer.
 
 ## Dependency direction
 
 ```text
 minko-glm
   ↑
-minko-core      (signals, data, math, basic file types, Timer, Tuple, Uuid)
-  ↑
-minko-backend   (this module)
+minko-backend   (this module; includes Timer/Tuple/Uuid/signals)
   ↑
 minko-hx
 ```
 
-`minko-backend` depends only on `minko-core` and `minko-glm`. It no longer
-imports `minko-hx`, so the previous source-level cycle is gone. Consumers still
-compile the source roots together:
+`minko-backend` depends only on `minko-glm`. It no longer imports `minko-hx`,
+so the previous source-level cycle is gone. The low-level `Timer`, `Tuple`,
+`Uuid` and `signal.*` sources that used to live in the removed `minko-core`
+module are part of this package. Consumers compile the source roots together:
 
 ```hxml
 -cp ../minko-glm/src
--cp ../minko-core/src
 -cp ../minko-backend/src
 ```
 
@@ -46,23 +45,17 @@ A small program that imports only backend/core types can be compiled without
 `minko-hx/src`:
 
 ```powershell
-haxe -cp minko-core/src -cp minko-backend/src -cp minko-glm/src -main BackendCheck -js BackendCheck.js
+haxe -cp minko-backend/src -cp minko-glm/src -main BackendCheck -js BackendCheck.js
 ```
 
 ## Building
 
-For the HashLink demo:
+For the HashLink demos:
 
 ```powershell
 cd ../minko-sdl
-haxe build.hxml
-```
-
-For the HTML5 module list:
-
-```powershell
-cd ../minko-hx
-haxe completion2.hxml
+haxe build_pbr_renderer.hxml
+haxe build_pipeline.hxml
 ```
 
 ## Layout
@@ -77,6 +70,10 @@ src/minko/
   WebCanvas.hx
   SDLBackend.hx
   SDLCanvas.hx
+  Timer.hx
+  Tuple.hx
+  Uuid.hx
+  signal/      (Signal, Signal2..Signal5)
   input/       (bases + SDL)
   async/       (IWorker, Worker, WorkerImpl)
   audio/       (bases + SDL/OpenAL, no file loader integration)

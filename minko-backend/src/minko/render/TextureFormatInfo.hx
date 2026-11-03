@@ -49,6 +49,13 @@ class TextureFormatInfo {
 
         m.set(TextureFormat.RGB_ATITC, new Entry("RGB_ATITC", true, 8, 16, false, false));
         m.set(TextureFormat.RGBA_ATITC, new Entry("RGBA_ATITC", true, 8, 16, true, false));
+
+        m.set(TextureFormat.RGBA16F, new Entry("RGBA16F", false, 64, 4, true, false));
+        m.set(TextureFormat.RGBA32F, new Entry("RGBA32F", false, 128, 4, true, false));
+        m.set(TextureFormat.R8, new Entry("R8", false, 8, 1, false, false));
+        m.set(TextureFormat.RG16F, new Entry("RG16F", false, 32, 2, false, false));
+        m.set(TextureFormat.Depth24, new Entry("Depth24", false, 24, 1, false, false));
+        m.set(TextureFormat.Depth32F, new Entry("Depth32F", false, 32, 1, false, false));
         return m;
     }
 

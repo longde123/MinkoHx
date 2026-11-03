@@ -34,6 +34,5 @@ uses the portable `Vec*Base`/`Mat*Base` classes.
 
 ## Relationship to the rest of the repository
 
-`minko-core`, `minko-backend`, `minko-hx`, `minko-example`, `minko-test` and
-`minko-sdl` all import `glm.*` and must include this module's `src` in their
-classpath.
+`minko-backend`, `minko-hx`, `minko-test` and `minko-sdl` all
+import `glm.*` and must include this module's `src` in their classpath.

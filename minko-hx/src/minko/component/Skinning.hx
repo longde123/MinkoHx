@@ -42,10 +42,6 @@ class Skinning extends AbstractAnimation {
 
     private var _boneVertexBuffer:VertexBuffer ; // vertex buffer storing vertex attributes
 
-    private var _targetGeometry:ObjectMap<Node, Geometry>;
-    private var _targetInputPositions:ObjectMap<Node, Array<Float>>; // only for software skinning
-    private var _targetInputNormals:ObjectMap<Node, Array<Float>>; // only for software skinning
-
     public static function create(skin, method, context, skeletonRoot, moveTargetBelowRoot = false, isLooping = true):Skinning {
         var ptr = new Skinning(skin, method, context, skeletonRoot, moveTargetBelowRoot, isLooping);
 
@@ -128,16 +124,7 @@ class Skinning extends AbstractAnimation {
         this._skeletonRoot = skinning._skeletonRoot;
         this._moveTargetBelowRoot = skinning._moveTargetBelowRoot;
         this._boneVertexBuffer = null;
-        this._targetGeometry = new ObjectMap<Node, Geometry>();
-        this._targetInputPositions = new ObjectMap<Node, Array<Float>>();
-        this._targetInputNormals = new ObjectMap<Node, Array<Float>>();
         this._skin = skinning._skin.clone();
-
-        var targetGeometry = skinning._targetGeometry;
-
-        for (it in targetGeometry.keys()) {
-            _targetGeometry.set(it, targetGeometry.get(it));
-        }
         return this;
     }
 
@@ -158,20 +145,21 @@ class Skinning extends AbstractAnimation {
             if (geometry.hasVertexAttribute(ATTRNAME_POSITION)
             && geometry.vertexBuffer(ATTRNAME_POSITION).numVertices == _skin.numVertices
             && !geometry.hasVertexBuffer(_boneVertexBuffer)) {
-                _targetGeometry.set(node, geometry);
-                _targetInputPositions.set(node, geometry.vertexBuffer(ATTRNAME_POSITION).data);
+                if (_method == SkinningMethod.SOFTWARE) {
+                    // Keep the undeformed input on the geometry itself; the
+                    // vertex buffer is overwritten on every skinned frame.
+                    geometry.skinningInputPositions = geometry.vertexBuffer(ATTRNAME_POSITION).data.copy();
 
-                if (geometry.hasVertexAttribute(ATTRNAME_NORMAL)
-                && geometry.vertexBuffer(ATTRNAME_NORMAL).numVertices == _skin.numVertices)
-                    _targetInputNormals.set(node, geometry.vertexBuffer(ATTRNAME_NORMAL).data);
-
-                if (_method != SkinningMethod.SOFTWARE) {
+                    if (geometry.hasVertexAttribute(ATTRNAME_NORMAL)
+                    && geometry.vertexBuffer(ATTRNAME_NORMAL).numVertices == _skin.numVertices)
+                        geometry.skinningInputNormals = geometry.vertexBuffer(ATTRNAME_NORMAL).data.copy();
+                }
+                else {
                     geometry.addVertexBuffer(_boneVertexBuffer);
 
-                    geometry.data.set(PNAME_BONE_MATRICES, []);
-                    geometry.data.set(PNAME_BONE_NORMAL_MATRICES, []);
-
-                    geometry.data.set(PNAME_NUM_BONES, 0);
+                    geometry.boneMatrices = [];
+                    geometry.boneNormalMatrices = [];
+                    geometry.numBones = 0;
                 }
             }
         }
@@ -180,22 +168,22 @@ class Skinning extends AbstractAnimation {
     override public function removedHandler(node:Node, target:Node, parent:Node) {
         super.removedHandler(node, target, parent);
 
-        if (_targetGeometry.exists(target)) {
-            var geometry = _targetGeometry.get(target);
+        var surface:Surface = node.hasComponent(Surface) ? cast node.getComponent(Surface) : null;
+        var geometry:Geometry = surface != null ? surface.geometry : null;
 
-            if (_method != SkinningMethod.SOFTWARE) {
-                geometry.removeVertexBuffer(_boneVertexBuffer);
-                geometry.data.unset(PNAME_BONE_MATRICES);
-                geometry.data.unset(PNAME_BONE_NORMAL_MATRICES);
-                geometry.data.unset(PNAME_NUM_BONES);
-            }
-
-            _targetGeometry.remove(target);
+        if (geometry == null) {
+            return;
         }
-        if (_targetInputPositions.exists(target))
-            _targetInputPositions.remove(target);
-        if (_targetInputNormals.exists(target))
-            _targetInputNormals.remove(target);
+
+        if (_method != SkinningMethod.SOFTWARE) {
+            geometry.removeVertexBuffer(_boneVertexBuffer);
+            geometry.boneMatrices = null;
+            geometry.boneNormalMatrices = null;
+            geometry.numBones = 0;
+        }
+
+        geometry.skinningInputPositions = null;
+        geometry.skinningInputNormals = null;
     }
 
     override public function update() {
@@ -205,46 +193,53 @@ class Skinning extends AbstractAnimation {
     }
 
     public function updateFrame(frameId:Int, target:Node) {
-        if (_targetGeometry.exists(target) == false)
+        var surface:Surface = target != null && target.hasComponent(Surface) ? cast target.getComponent(Surface) : null;
+        if (surface == null || surface.geometry == null)
             return;
 
         // assert(frameId < _skin->numFrames());
 
-        var geometry:Geometry = _targetGeometry.get(target);
+        var geometry:Geometry = surface.geometry;
         var boneMatrices:Array<Mat4> = _skin.getMatrices(frameId);
         var boneNormalMatrices:Array<Mat4> = _skin.getNormalMatrices(frameId);
         if (_method == SkinningMethod.HARDWARE) {
-            if (!geometry.data.hasProperty(PNAME_NUM_BONES) || geometry.data.get(PNAME_NUM_BONES) != _skin.numBones){
-                geometry.data.set(PNAME_NUM_BONES, _skin.numBones);
-            }
-            geometry.data.set(PNAME_BONE_MATRICES, boneMatrices);
-            geometry.data.set(PNAME_BONE_NORMAL_MATRICES, boneNormalMatrices);
-
+            geometry.numBones = _skin.numBones;
+            geometry.boneMatrices = boneMatrices;
+            geometry.boneNormalMatrices = boneNormalMatrices;
         }
         else
             performSoftwareSkinningFrame(target, boneMatrices);
     }
 
     public function performSoftwareSkinningFrame(target:Node, boneMatrices:Array<Mat4>) {
+        var surface:Surface = target != null && target.hasComponent(Surface) ? cast target.getComponent(Surface) : null;
+        if (surface == null || surface.geometry == null) {
+            return;
+        }
+
+        var geometry = surface.geometry;
+        var inputPositions = geometry.skinningInputPositions;
+        if (inputPositions == null) {
+            return;
+        }
+
 #if  DEBUG_SKINNING
-	assert(target && _targetGeometry.count(target) > 0 && _targetInputPositions.count(target) > 0);
+	assert(target && geometry.skinningInputPositions != null);
 #end
         //DEBUG_SKINNING
-
-        var geometry = _targetGeometry.get(target);
 
         // transform positions
         var xyzBuffer:VertexBuffer = geometry.vertexBuffer(ATTRNAME_POSITION);
         var xyzAttr = xyzBuffer.attribute(ATTRNAME_POSITION);
 
-        performSoftwareSkinning(xyzAttr, xyzBuffer, _targetInputPositions.get(target), boneMatrices, false);
+        performSoftwareSkinning(xyzAttr, xyzBuffer, inputPositions, boneMatrices, false);
 
         // transform normals
-        if (geometry.hasVertexAttribute(ATTRNAME_NORMAL) && _targetInputNormals.exists(target)) {
+        if (geometry.hasVertexAttribute(ATTRNAME_NORMAL) && geometry.skinningInputNormals != null) {
             var normalBuffer:VertexBuffer = geometry.vertexBuffer(ATTRNAME_NORMAL);
             var normalAttr = normalBuffer.attribute(ATTRNAME_NORMAL);
 
-            performSoftwareSkinning(normalAttr, normalBuffer, _targetInputNormals.get(target), boneMatrices, true);
+            performSoftwareSkinning(normalAttr, normalBuffer, geometry.skinningInputNormals, boneMatrices, true);
         }
     }
 
@@ -343,15 +338,30 @@ class Skinning extends AbstractAnimation {
     override public function rebindDependencies(componentsMap:ObjectMap<AbstractComponent, AbstractComponent>, nodeMap:ObjectMap<Node, Node>, option:Int) {
 
         _skeletonRoot = nodeMap.get(_skeletonRoot);
-        var oldSurface:Surface = null;
-        for (node in _targetGeometry.keys()) {
-            oldSurface = cast node.getComponent(Surface);
-            break;
+        var oldSurface:Surface = findFirstSurface(target);
+        if (oldSurface == null) {
+            return;
         }
         var oldGeometry:Geometry = oldSurface.geometry;
 
         var componentsMapSurface:Surface = cast(componentsMap.get(oldSurface), Surface);
         componentsMapSurface.geometry = oldGeometry.clone();
+    }
+
+    private function findFirstSurface(node:Node):Surface {
+        if (node == null) {
+            return null;
+        }
+        if (node.hasComponent(Surface)) {
+            return cast node.getComponent(Surface);
+        }
+        for (child in node.children) {
+            var found = findFirstSurface(child);
+            if (found != null) {
+                return found;
+            }
+        }
+        return null;
     }
 
     public function new(skin:Skin,
@@ -367,9 +377,5 @@ class Skinning extends AbstractAnimation {
         _skeletonRoot = (skeletonRoot);
         _moveTargetBelowRoot = (moveTargetBelowRoot);
         _boneVertexBuffer = (null);
-        _targetGeometry = new ObjectMap<Node, Geometry>();
-        _targetInputPositions = new ObjectMap<Node, Array<Float>>();
-        _targetInputNormals = new ObjectMap<Node, Array<Float>>();
-
     }
 }

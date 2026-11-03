@@ -3,7 +3,6 @@ import glm.Vec4;
 import haxe.ds.IntMap;
 import haxe.ds.StringMap;
 import minko.async.IWorker;
-import minko.data.Provider;
 import minko.input.Joystick;
 import minko.input.Keyboard;
 import minko.input.Mouse;
@@ -61,7 +60,7 @@ class AbstractCanvas {
     private var _y:Int;
     private var _width:Int;
     private var _height:Int;
-    private var _data:Provider;
+    private var _viewport:Vec4;
     private var _flags:Int;
 
     public var framerate(get, null):Float;
@@ -71,7 +70,7 @@ class AbstractCanvas {
     public var width(get, set):Int;
     public var height(get, set):Int;
     public var aspectRatio(get, null):Float;
-    public var data(get, null):Provider;
+    public var viewport(get, null):Vec4;
     public var context(get, null):AbstractContext;
     public var mouse(get, null):Mouse;
     public var keyboard(get, null):Keyboard;
@@ -121,7 +120,6 @@ class AbstractCanvas {
     public function new(name, width, height, flags) {
         this._name = name;
         this._flags = flags;
-        this._data = Provider.create();
         this._active = false;
 
         this._swapBuffersAtEnterFrame = true;
@@ -140,7 +138,7 @@ class AbstractCanvas {
         this._enableRendering = true;
         this._activeWorkers = [];
         this._joysticks = new IntMap<Joystick>();
-        _data.set("viewport", new Vec4(0.0, 0.0, width, height));
+        _viewport = new Vec4(0.0, 0.0, width, height);
     }
 
     public function initialize() {
@@ -158,8 +156,8 @@ class AbstractCanvas {
         return width / height;
     }
 
-    function get_data() {
-        return _data;
+    function get_viewport() {
+        return _viewport;
     }
 
     function get_context() {
@@ -229,44 +227,32 @@ class AbstractCanvas {
 
     function set_x(value) {
         if (value != _x) {
-            var viewport:Vec4 = cast _data.get("viewport");
-
             _x = value;
-            viewport.x = value;
-            _data.set("viewport", viewport);
+            _viewport.x = value;
         }
         return value;
     }
 
     function set_y(value) {
         if (value != _y) {
-            var viewport:Vec4 = cast _data.get("viewport");
-
             _y = value;
-            viewport.y = value;
-            _data.set("viewport", viewport);
+            _viewport.y = value;
         }
         return value;
     }
 
     function set_width(value) {
         if (value != _width) {
-            var viewport:Vec4 = cast _data.get("viewport");
-
             _width = value;
-            viewport.z = value;
-            _data.set("viewport", viewport);
+            _viewport.z = value;
         }
         return value;
     }
 
     function set_height(value) {
         if (value != _height) {
-            var viewport:Vec4 = cast _data.get("viewport");
-
             _height = value;
-            viewport.w = value;
-            _data.set("viewport", viewport);
+            _viewport.w = value;
         }
         return value;
     }

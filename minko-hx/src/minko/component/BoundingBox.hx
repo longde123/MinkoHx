@@ -2,12 +2,7 @@ package minko.component;
 import glm.Vec3;
 import glm.Mat4;
 import glm.Vec4;
-import minko.data.Provider;
-import minko.data.Store;
 import minko.math.Box;
-import minko.scene.Node;
-import minko.signal.Signal2.SignalSlot2;
-import minko.signal.Signal3.SignalSlot3;
 import minko.utils.MathUtil;
 @:expose("minko.component.BoundingBox")
 class BoundingBox extends AbstractComponent {
@@ -19,24 +14,18 @@ class BoundingBox extends AbstractComponent {
     private var _invalidBox:Bool;
     private var _invalidWorldSpaceBox:Bool;
 
-    private var _targetAddedSlot:SignalSlot2<AbstractComponent, Node>;
-    private var _targetRemovedSlot:SignalSlot2<AbstractComponent, Node>;
-    private var _componentAddedSlot:SignalSlot3<Node, Node, AbstractComponent>;
-    private var _componentRemovedSlot:SignalSlot3<Node, Node, AbstractComponent>;
-    private var _modelToWorldChangedSlot:SignalSlot3<Store, Provider, String>;
-
     public static function create() {
         var bb = new BoundingBox();
 
         return bb;
     }
 
-    public static function createbySize(size, center:Vec3) {
+    public static function createbySize(size:Float, center:Vec3) {
         return createbyWHDC(size, size, size, center);
     }
 
-    public static function createbyWHDC(width, height, depth, center:Vec3) {
-        return createbyVector3(new Vec3(center.x - width * .5, center.y - height * .5, center.z - depth * .5), new Vec3(center.x + width * .5, center.y + height * .5, center.z + depth * .5));
+    public static function createbyWHDC(width:Float, height:Float, depth:Float, center:Vec3) {
+        return createbyVector3(new Vec3(center.x + width * .5, center.y + height * .5, center.z + depth * .5), new Vec3(center.x - width * .5, center.y - height * .5, center.z - depth * .5));
     }
 
     public static function createbyVector3(topRight, bottomLeft) {
@@ -47,7 +36,7 @@ class BoundingBox extends AbstractComponent {
 
     override public function clone(option) {
         var bbox = new BoundingBox();
-        bbox.copyFrom(this);
+        bbox.copyFrom(this, option);
         return bbox;
     }
     public var shape(get, null):Box;
@@ -81,7 +70,7 @@ class BoundingBox extends AbstractComponent {
         var target = this.target ;
 
         if (!_fixed) {
-            var surfaces:Array<Surface> = cast target.getComponents(Surface);
+            var surfaces:Array<Surface> = target == null ? [] : cast target.getComponents(Surface);
 
             var min = new Vec3(Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY, Math.POSITIVE_INFINITY);
             var max = new Vec3(Math.NEGATIVE_INFINITY, Math.NEGATIVE_INFINITY, Math.NEGATIVE_INFINITY);
@@ -119,16 +108,21 @@ class BoundingBox extends AbstractComponent {
         this._worldSpaceBox = Box.create();
         this._invalidBox = true;
         this._invalidWorldSpaceBox = true;
-
     }
 
     public function copyFrom(bbox:BoundingBox, option:CloneOption = CloneOption.DEEP) {
         this._fixed = bbox._fixed;
-        this._box = option == CloneOption.SHALLOW != null ? bbox._box : Box.createbyVector3(bbox._box.topRight, bbox._box.bottomLeft);
-        this._worldSpaceBox = option == CloneOption.SHALLOW != null ? bbox._worldSpaceBox : Box.createbyVector3(bbox._worldSpaceBox.topRight, bbox._worldSpaceBox.bottomLeft);
+        this._box = option == CloneOption.SHALLOW ? bbox._box : cloneBox(bbox._box);
+        this._worldSpaceBox = option == CloneOption.SHALLOW ? bbox._worldSpaceBox : cloneBox(bbox._worldSpaceBox);
         this._invalidBox = bbox._invalidBox;
         this._invalidWorldSpaceBox = bbox._invalidWorldSpaceBox;
+        return this;
+    }
 
+    function cloneBox(box:Box):Box {
+        var min = box.bottomLeft;
+        var max = box.topRight;
+        return Box.createbyVector3(new Vec3(max.x, max.y, max.z), new Vec3(min.x, min.y, min.z));
     }
 
     private function updateWorldSpaceBox() {
@@ -138,12 +132,13 @@ class BoundingBox extends AbstractComponent {
 
         _invalidWorldSpaceBox = false;
 
-        if (!target.data.hasProperty("modelToWorldMatrix")) {
+        var transform:Transform = target == null ? null : cast target.getComponent(Transform);
+        if (transform == null) {
             _worldSpaceBox.topRight = (_box.topRight);
             _worldSpaceBox.bottomLeft = (_box.bottomLeft);
         }
         else {
-            var t:Mat4 = target.data.get("modelToWorldMatrix");
+            var t:Mat4 = transform.modelToWorldMatrix;
             var vertices:Array<Vec3> = _box.getVertices();
             var numVertices = vertices.length;
 

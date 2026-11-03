@@ -240,7 +240,9 @@ class Program extends AbstractResource {
         if (it != null) {
             var oldProgram = _context.currentProgram ;
 
-            _context.setTextureAt(_setTextures.length, texture.id, it.location);
+            var position = it.position >= 0 ? it.position : _setTextures.length;
+
+            _context.setTextureAt(position, texture.id, it.location);
             _context.setProgram(oldProgram);
 
             _setTextures.push(name);

@@ -1,7 +1,0 @@
-{
-    "techniques" : [{ "passes" : [
-        { "states" : {}, "attributes" : {}, "macros" : {}, "uniforms" : {}, "vertexShader" : "", "fragmentShader" : "" },
-        { "states" : {}, "attributes" : {}, "macros" : {}, "uniforms" : {}, "vertexShader" : "", "fragmentShader" : "" },
-        { "states" : {}, "attributes" : {}, "macros" : {}, "uniforms" : {}, "vertexShader" : "", "fragmentShader" : "" }
-    ] }]
-}

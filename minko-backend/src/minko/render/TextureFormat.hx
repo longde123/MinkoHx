@@ -27,4 +27,12 @@ package minko.render;
     var RGB_ETC2 = 16;
     var RGBA_ETC2 = 7;
 
+    // float / single-channel / depth render target formats
+    var RGBA16F = 20;
+    var RGBA32F = 21;
+    var R8 = 22;
+    var RG16F = 23;
+    var Depth24 = 24;
+    var Depth32F = 25;
+
 }

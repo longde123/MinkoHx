@@ -90,8 +90,8 @@ class GeometryTest extends haxe.unit.TestCase {
 
         g.addVertexBuffer(vb);
 
-        assertTrue(g.data.hasProperty("position"));
-        assertEquals(g.data.get("position"), vb.attribute("position"));
+        assertTrue(g.hasVertexAttribute("position"));
+        assertEquals(g.vertexBuffer("position").attribute("position"), vb.attribute("position"));
     }
 
 
@@ -105,7 +105,7 @@ class GeometryTest extends haxe.unit.TestCase {
         g.addVertexBuffer(vb);
         g.removeVertexBuffer(vb);
 
-        assertFalse(g.data.hasProperty("position"));
+        assertFalse(g.hasVertexAttribute("position"));
     }
 
 

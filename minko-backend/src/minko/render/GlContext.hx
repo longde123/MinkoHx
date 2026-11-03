@@ -121,7 +121,12 @@ class GlContext extends AbstractContext {
     private var _fragmentShaders:IntMap<js.html.webgl.Shader>;
     private var _shaders:IntMap<js.html.webgl.Shader>;
     private var _frameBuffers:IntMap<Framebuffer>;
+    private var _cubeFrameBuffers:IntMap<Framebuffer>;
+    private var _cubeDepthBuffers:IntMap<Renderbuffer>;
     private var _renderBuffers:IntMap<Renderbuffer>;
+    private var _nativeRenderTargets:IntMap<Framebuffer>;
+    private var _nativeRenderTargetDepths:IntMap<Renderbuffer>;
+    private var _nextRenderTargetId:Int;
     private var _scissorTest:Bool;
     private var _scissorBox:Vec4;
     private var _viewportX:Int;
@@ -140,6 +145,8 @@ class GlContext extends AbstractContext {
     private var _currentVertexOffset:IntMap<Int>;
     private var _currentBoundTexture:Int;
     private var _currentTexture:IntMap<Int>;
+    private var _activeTextureUnit:Int;
+    private var _maxTextureUnits:Int;
     private var _currentWrapMode:IntMap< WrapMode> ;
     private var _currentTextureFilter:IntMap<TextureFilter> ;
     private var _currentMipFilter:IntMap< MipFilter> ;
@@ -200,8 +207,12 @@ class GlContext extends AbstractContext {
         _currentVertexOffset = new IntMap<Int>();//(8, -1),
         for (i in 0...8) _currentVertexOffset.set(i, -1);
         _currentBoundTexture = (0);
+        _activeTextureUnit = -1;
+        _maxTextureUnits = 8;
+        var driverMaxUnits = Std.int(gl.getParameter(GL.MAX_TEXTURE_IMAGE_UNITS));
+        if (driverMaxUnits > 0) _maxTextureUnits = driverMaxUnits;
         _currentTexture = new IntMap<Int>();//(8, 0),
-        for (i in 0...8) _currentTexture.set(i, 0);
+        for (i in 0..._maxTextureUnits) _currentTexture.set(i, 0);
         _currentProgram = (0);
         _currentTriangleCulling = (TriangleCulling.BACK);
         _currentWrapMode = new IntMap< WrapMode>();
@@ -227,7 +238,12 @@ class GlContext extends AbstractContext {
         _fragmentShaders = new IntMap<js.html.webgl.Shader>();
         _shaders = new IntMap<js.html.webgl.Shader>();
         _frameBuffers = new IntMap<js.html.webgl.Framebuffer>();
+        _cubeFrameBuffers = new IntMap<Framebuffer>();
+        _cubeDepthBuffers = new IntMap<Renderbuffer>();
         _renderBuffers = new IntMap<js.html.webgl.Renderbuffer>();
+        _nativeRenderTargets = new IntMap<js.html.webgl.Framebuffer>();
+        _nativeRenderTargetDepths = new IntMap<js.html.webgl.Renderbuffer>();
+        _nextRenderTargetId = 1;
 
         gl.enable(GL.DEPTH_TEST);
         gl.enable(GL.BLEND);
@@ -408,7 +424,7 @@ class GlContext extends AbstractContext {
 
     override public function drawTriangles(firstIndex:Int, numTriangles:Int) {
         gl.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, null);
-//        _currentIndexBuffer = -1;
+        _currentIndexBuffer = -1;
         gl.drawArrays(GL.TRIANGLES, firstIndex, numTriangles * 3);
         checkForErrors();
     }
@@ -616,7 +632,7 @@ class GlContext extends AbstractContext {
         checkForErrors();
     }
 
-    override public function createTexture(type:TextureType, width:Int, height:Int, mipMapping:Bool, optimizeForRenderToTexture:Bool = false, assertPowerOfTwoSized:Bool = true) {
+    override public function createTexture(type:TextureType, width:Int, height:Int, mipMapping:Bool, optimizeForRenderToTexture:Bool = false, assertPowerOfTwoSized:Bool = true, format:TextureFormat = TextureFormat.RGBA) {
 
 
         if (assertPowerOfTwoSized) {
@@ -653,10 +669,8 @@ class GlContext extends AbstractContext {
         ? GL.TEXTURE_2D
         : GL.TEXTURE_CUBE_MAP);
 
-        gl.bindTexture(glTarget, texture);
+        var previousBinding = beginTextureUpload(texture, glTarget);
         textureCount++;
-        _currentBoundTexture = textureCount;
-        //texture;
 
         // default sampler states
         gl.texParameteri(glTarget, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
@@ -727,6 +741,8 @@ class GlContext extends AbstractContext {
             }
         }
 
+        endTextureUpload(glTarget, previousBinding);
+
         if (optimizeForRenderToTexture)
             createRTTBuffers(type, textureCount, width, height);
 
@@ -771,9 +787,8 @@ class GlContext extends AbstractContext {
         ? GL.TEXTURE_2D
         : GL.TEXTURE_CUBE_MAP);
 
-        gl.bindTexture(glTarget, texture);
+        var previousBinding2 = beginTextureUpload(texture, glTarget);
         textureCount++;
-        _currentBoundTexture = textureCount ;
 
         // default sampler states
         gl.texParameteri(glTarget, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
@@ -836,6 +851,8 @@ class GlContext extends AbstractContext {
             }
         }
 
+        endTextureUpload(glTarget, previousBinding2);
+
         checkForErrors();
 
         return textureCount;
@@ -853,18 +870,15 @@ class GlContext extends AbstractContext {
     override public function uploadTexture2dData(texture:Int, width:Int, height:Int, mipLevel:Int, data:Bytes) {
 //Debug.Assert(getTextureType(texture) == TextureType.Texture2D);
 
-        gl.bindTexture(GL.TEXTURE_2D, _textures.get(texture));
+        var previousBinding = beginTextureUpload(_textures.get(texture), GL.TEXTURE_2D);
         gl.texImage2D(GL.TEXTURE_2D, mipLevel, GL.RGBA, width, height, 0, GL.RGBA, GL.UNSIGNED_BYTE, bytesToUint8Array(data));
-
-        _currentBoundTexture = texture;
-
-        checkForErrors();
+        endTextureUpload(GL.TEXTURE_2D, previousBinding);
     }
 
     override public function uploadCubeTextureData(texture:Int, face:CubeTexture.Face, width:Int, height:Int, mipLevel:Int, data:Bytes) {
 //Debug.Assert(getTextureType(texture) == TextureType.CubeTexture);
 
-        gl.bindTexture(GL.TEXTURE_CUBE_MAP, _textures.get(texture));
+        var previousBinding = beginTextureUpload(_textures.get(texture), GL.TEXTURE_CUBE_MAP);
 
         var cubeFace:Int = 0;
         switch (face)
@@ -893,9 +907,7 @@ class GlContext extends AbstractContext {
 
         gl.texImage2D(cubeFace, mipLevel, GL.RGBA, width, height, 0, GL.RGBA, GL.UNSIGNED_BYTE, bytesToUint8Array(data));
 
-        _currentBoundTexture = texture;
-
-        checkForErrors();
+        endTextureUpload(GL.TEXTURE_CUBE_MAP, previousBinding);
     }
 
     override public function uploadCompressedTexture2dData(texture:Int, format:TextureFormat, width:Int, height:Int, size:Int, mipLevel:Int, data:Bytes) {
@@ -903,12 +915,9 @@ class GlContext extends AbstractContext {
 
         var formats = availableTextureFormats();
 
-        gl.bindTexture(GL.TEXTURE_2D, _textures.get(texture));
+        var previousBinding = beginTextureUpload(_textures.get(texture), GL.TEXTURE_2D);
         gl.compressedTexSubImage2D(GL.TEXTURE_2D, mipLevel, 0, 0, width, height, formats.get(format), bytesToUint8Array(data));
-
-        _currentBoundTexture = texture;
-
-        checkForErrors();
+        endTextureUpload(GL.TEXTURE_2D, previousBinding);
     }
 
     override public function uploadCompressedCubeTextureData(texture:Int, face:CubeTexture.Face, format:TextureFormat, width:Int, height:Int, mipLevel:Int, data:Bytes) {
@@ -941,7 +950,9 @@ class GlContext extends AbstractContext {
         _currentWrapMode.remove(texture);
         _currentTextureFilter.remove(texture);
         _currentMipFilter.remove(texture);
-        _currentTexture.set(texture, 0);
+        for (position in _currentTexture.keys()) {
+            if (_currentTexture.get(position) == texture) _currentTexture.set(position, 0);
+        }
         _currentBoundTexture = (_currentBoundTexture == texture ? 0 : _currentBoundTexture);
 
         checkForErrors();
@@ -954,7 +965,7 @@ class GlContext extends AbstractContext {
             return;
         }
 
-        if (position >= Lambda.count(_currentTexture)) {
+        if (position < 0 || position >= _maxTextureUnits) {
             return;
         }
 
@@ -962,6 +973,7 @@ class GlContext extends AbstractContext {
 
         if (_currentTexture.get(position) != texture || _currentBoundTexture != texture) {
             gl.activeTexture(GL.TEXTURE0 + position);
+            _activeTextureUnit = position;
             gl.bindTexture(glTarget, _textures.get(texture));
 
             _currentTexture.set(position, texture);
@@ -975,6 +987,60 @@ class GlContext extends AbstractContext {
         checkForErrors();
     }
 
+    /**
+     * Bind a texture for upload/mipmap work without disturbing any sampler
+     * unit: the work happens on the currently active unit and
+     * endTextureUpload restores that unit's previous binding.
+     */
+    private function beginTextureUpload(texture:js.html.webgl.Texture, target:Int):Int {
+        var unit = _activeTextureUnit >= 0 ? _activeTextureUnit : 0;
+        if (unit >= _maxTextureUnits) unit = 0;
+        gl.activeTexture(GL.TEXTURE0 + unit);
+        var previous = _currentTexture.get(unit);
+        gl.bindTexture(target, texture);
+        return previous != null ? previous : 0;
+    }
+
+    private function endTextureUpload(target:Int, previous:Int):Void {
+        var unit = _activeTextureUnit >= 0 ? _activeTextureUnit : 0;
+        if (unit >= _maxTextureUnits) unit = 0;
+        gl.activeTexture(GL.TEXTURE0 + unit);
+        gl.bindTexture(target, previous > 0 ? _textures.get(previous) : null);
+        _currentBoundTexture = -1;
+        checkForErrors();
+    }
+
+
+    override public function beginCubeFaceRender(cubeTexture:Int, face:CubeTexture.Face, size:Int) {
+        var frameBuffer = _cubeFrameBuffers.get(cubeTexture);
+        if (frameBuffer == null) {
+            frameBuffer = gl.createFramebuffer();
+            _cubeFrameBuffers.set(cubeTexture, frameBuffer);
+            var depthBuffer = gl.createRenderbuffer();
+            gl.bindRenderbuffer(GL.RENDERBUFFER, depthBuffer);
+            gl.renderbufferStorage(GL.RENDERBUFFER, GL.DEPTH_COMPONENT16, size, size);
+            _cubeDepthBuffers.set(cubeTexture, depthBuffer);
+        }
+        var target = switch (face) {
+            case CubeTexture.Face.POSITIVE_X: GL.TEXTURE_CUBE_MAP_POSITIVE_X;
+            case CubeTexture.Face.NEGATIVE_X: GL.TEXTURE_CUBE_MAP_NEGATIVE_X;
+            case CubeTexture.Face.POSITIVE_Y: GL.TEXTURE_CUBE_MAP_POSITIVE_Y;
+            case CubeTexture.Face.NEGATIVE_Y: GL.TEXTURE_CUBE_MAP_NEGATIVE_Y;
+            case CubeTexture.Face.POSITIVE_Z: GL.TEXTURE_CUBE_MAP_POSITIVE_Z;
+            case CubeTexture.Face.NEGATIVE_Z: GL.TEXTURE_CUBE_MAP_NEGATIVE_Z;
+        };
+        gl.bindFramebuffer(GL.FRAMEBUFFER, frameBuffer);
+        gl.framebufferTexture2D(GL.FRAMEBUFFER, GL.COLOR_ATTACHMENT0, target, _textures.get(cubeTexture), 0);
+        gl.framebufferRenderbuffer(GL.FRAMEBUFFER, GL.DEPTH_ATTACHMENT, GL.RENDERBUFFER, _cubeDepthBuffers.get(cubeTexture));
+        configureViewport(0, 0, size, size);
+        clear(1.0, 1.0, 1.0, 1.0, 1.0, 0);
+        checkForErrors();
+    }
+
+    override public function endCubeFaceRender() {
+        gl.bindFramebuffer(GL.FRAMEBUFFER, null);
+        checkForErrors();
+    }
     override public function setSamplerStateAt(position:Int, wrapping:WrapMode, filtering:TextureFilter, mipFiltering:MipFilter) {
         var texture = _currentTexture.get(position);
         var glTarget = getTextureType(texture) == TextureType.Texture2D ? GL.TEXTURE_2D : GL.TEXTURE_CUBE_MAP;
@@ -990,6 +1056,7 @@ class GlContext extends AbstractContext {
             _currentWrapMode.set(texture, wrapping);
 
             gl.activeTexture(GL.TEXTURE0 + position);
+            _activeTextureUnit = position;
             active = true;
             switch (wrapping)
             {
@@ -1010,6 +1077,7 @@ class GlContext extends AbstractContext {
 
             if (!active) {
                 gl.activeTexture(GL.TEXTURE0 + position);
+                _activeTextureUnit = position;
             }
 
             switch (filtering)
@@ -1238,6 +1306,7 @@ class GlContext extends AbstractContext {
         // maxUniformNameLength=gl.getProgramParameter(program, GL.ACTIVE_UNIFORM_MAX_LENGTH );
         total = gl.getProgramParameter(program, GL.ACTIVE_UNIFORMS);
 
+        var samplerPosition = 0;
         for (i in 0... total) {
 
             var activeInfo:ActiveInfo = gl.getActiveUniform(program, i);
@@ -1257,7 +1326,14 @@ class GlContext extends AbstractContext {
                     _uniformInputLocations.set(locationCount, location);
                 }
                 var location_index = _uniformInputLocationKeys.get(location);
-                inputs.push(new UniformInput(name, location_index, size, inputType));
+
+                var position = -1;
+                if (ProgramInputs.isSamplerType(inputType)) {
+                    position = samplerPosition;
+                    samplerPosition += size;
+                }
+
+                inputs.push(new UniformInput(name, location_index, size, inputType, position));
             }
         }
 
@@ -1560,6 +1636,75 @@ class GlContext extends AbstractContext {
     }
 
 
+    override public function createRenderTarget(colorTextures:Array<Int>, width:Int, height:Int, depthTexture:Int = -1):RenderTarget {
+        if (colorTextures == null || colorTextures.length == 0) {
+            throw "RenderTarget requires at least one color texture";
+        }
+        if (colorTextures.length > 1) {
+            throw "MRT is not supported by this WebGL context";
+        }
+        if (!_textures.exists(colorTextures[0])) {
+            throw "RenderTarget color texture does not exist";
+        }
+
+        var frameBuffer = gl.createFramebuffer();
+        gl.bindFramebuffer(GL.FRAMEBUFFER, frameBuffer);
+        gl.framebufferTexture2D(GL.FRAMEBUFFER, GL.COLOR_ATTACHMENT0, GL.TEXTURE_2D, _textures.get(colorTextures[0]), 0);
+
+        var depthRenderBuffer = null;
+        if (depthTexture >= 0 && _textures.exists(depthTexture)) {
+            gl.framebufferTexture2D(GL.FRAMEBUFFER, GL.DEPTH_ATTACHMENT, GL.TEXTURE_2D, _textures.get(depthTexture), 0);
+        }
+        else {
+            depthRenderBuffer = gl.createRenderbuffer();
+            gl.bindRenderbuffer(GL.RENDERBUFFER, depthRenderBuffer);
+            gl.renderbufferStorage(GL.RENDERBUFFER, GL.DEPTH_COMPONENT16, width, height);
+            gl.framebufferRenderbuffer(GL.FRAMEBUFFER, GL.DEPTH_ATTACHMENT, GL.RENDERBUFFER, depthRenderBuffer);
+        }
+
+        var status = gl.checkFramebufferStatus(GL.FRAMEBUFFER);
+        gl.bindFramebuffer(GL.FRAMEBUFFER, null);
+        gl.bindRenderbuffer(GL.RENDERBUFFER, null);
+
+        if (status != GL.FRAMEBUFFER_COMPLETE) {
+            throw "RenderTarget framebuffer is incomplete";
+        }
+
+        var target = new RenderTarget(_nextRenderTargetId++, colorTextures, depthTexture, width, height);
+        _nativeRenderTargets.set(target.id, frameBuffer);
+        if (depthRenderBuffer != null) {
+            _nativeRenderTargetDepths.set(target.id, depthRenderBuffer);
+        }
+        checkForErrors();
+        return target;
+    }
+
+    override public function deleteRenderTarget(target:RenderTarget):Void {
+        if (target == null) return;
+        if (_nativeRenderTargets.exists(target.id)) {
+            gl.deleteFramebuffer(_nativeRenderTargets.get(target.id));
+            _nativeRenderTargets.remove(target.id);
+        }
+        if (_nativeRenderTargetDepths.exists(target.id)) {
+            gl.deleteRenderbuffer(_nativeRenderTargetDepths.get(target.id));
+            _nativeRenderTargetDepths.remove(target.id);
+        }
+    }
+
+    override public function setRenderTarget(target:RenderTarget):Void {
+        if (target == null) {
+            setRenderToBackBuffer();
+            return;
+        }
+        if (!_nativeRenderTargets.exists(target.id)) {
+            throw "RenderTarget is not valid for this context";
+        }
+        gl.bindFramebuffer(GL.FRAMEBUFFER, _nativeRenderTargets.get(target.id));
+        _currentTarget = -1;
+        configureViewport(0, 0, target.width, target.height);
+        checkForErrors();
+    }
+
     public function getError() {
         return 0;
         var error = gl.getError();
@@ -1590,7 +1735,7 @@ class GlContext extends AbstractContext {
     }
 
     override public function generateMipmaps(texture:Int) {
-        gl.bindTexture(GL.TEXTURE_2D, _textures.get(texture));
+        var previousBinding = beginTextureUpload(_textures.get(texture), GL.TEXTURE_2D);
 
         // glGenerateMipmap exists in OpenGL ES 2.0+ or OpenGL 3.0+
         // https://www.khronos.org/opengles/sdk/docs/man/xhtml/glGenerateMipmap.xml
@@ -1612,9 +1757,7 @@ class GlContext extends AbstractContext {
             gl.generateMipmap(GL.TEXTURE_2D);
         }
 
-        checkForErrors();
-
-        _currentBoundTexture = texture;
+        endTextureUpload(GL.TEXTURE_2D, previousBinding);
     }
 
     override public function setUniformFloat(location:Int, count:Int, v:Array<Float>) {

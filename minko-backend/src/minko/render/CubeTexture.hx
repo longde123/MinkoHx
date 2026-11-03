@@ -1,6 +1,5 @@
 package minko.render;
 import haxe.io.Bytes;
-import minko.utils.MathUtil;
 @:expose("minko.render.Face")
 @:enum abstract Face(Int) from Int to Int {
     var POSITIVE_X = 0;
@@ -36,8 +35,8 @@ class CubeTexture extends AbstractTexture {
         );
         _data = [];//(6))
         // keep only the GPU relevant size of each face
-        _widthGPU = Math.floor(Math.min(MathUtil.clp2(width), MAX_SIZE));
-        _heightGPU = Math.floor(Math.min(MathUtil.clp2(height), MAX_SIZE));
+        _widthGPU = Math.floor(Math.min(TextureMath.clp2(width), MAX_SIZE));
+        _heightGPU = Math.floor(Math.min(TextureMath.clp2(height), MAX_SIZE));
     }
 
     public function setData(data:Bytes, face:Face, widthGPU = -1, heightGPU = -1) {
@@ -74,7 +73,7 @@ class CubeTexture extends AbstractTexture {
 
     public override function upload() {
         if (_id == -1) {
-            id = _context.createTexture(_type, _widthGPU, _heightGPU, _mipMapping, _optimizeForRenderToTexture);
+            id = _context.createTexture(_type, _widthGPU, _heightGPU, _mipMapping, _optimizeForRenderToTexture, true, _format);
         }
 
         var numFacePixels = _widthGPU * _heightGPU;
@@ -84,6 +83,11 @@ class CubeTexture extends AbstractTexture {
 
         for (faceId in 0...6) {
             var faceData:Bytes = _data[faceId];
+            // A cube map created as a render target has no CPU-side data;
+            // upload() only needs to allocate the GL texture (done above).
+            if (faceData == null) {
+                continue;
+            }
 
 //Debug.Assert(faceData.Count == (numFacePixels << 2));
 

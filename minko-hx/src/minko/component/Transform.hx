@@ -1,78 +1,76 @@
 package minko.component;
-import minko.data.UnsafePointer;
-import minko.data.UnsafePointer;
+
 import glm.Mat4;
 import haxe.ds.ObjectMap;
 import minko.component.Transform.NodeTransformCacheEntry;
-import minko.data.Provider;
-import minko.data.Store;
 import minko.render.AbstractTexture;
 import minko.scene.Node;
 import minko.scene.NodeSet;
+import minko.signal.Signal;
+import minko.signal.Signal.SignalSlot;
 import minko.signal.Signal3.SignalSlot3;
-import minko.utils.MathUtil;
+
 @:expose("minko.component.RootTransform")
 class RootTransform extends AbstractComponent {
     public static function create() {
         return new RootTransform();
     }
 
-
-    override public function dispose() {
-        _nodeTransformCache = null;
-        _nodeToId = null;
-        for(_n in _nodeToPropertyChangedSlot.keys()){
-            _nodeToPropertyChangedSlot.get(_n).dispose();
-            _n.dispose();
-        }
-
-        _nodeToPropertyChangedSlot=null;
-        for(_t in _targetSlots)
-              _t.dispose();
-        _targetSlots = null;
-        if(_renderingBeginSlot!=null)_renderingBeginSlot.dispose();
-        _renderingBeginSlot = null;
-        _nodes=null;
-        _toAdd=null;
-        _toRemove=null;
-        super.dispose();
-    }
-
-    public function setDirty(target:Node, d:Bool) {
-
-        if (!_invalidLists)
-            _nodeTransformCache[_nodeToId.get(target)]._dirty = true;
-
-    }
-
     private var _nodeTransformCache:Array<NodeTransformCacheEntry>;
-    private var _nodeToId:ObjectMap<Node, Int> ;
-    private var _nodes:Array<Node> ;
+    private var _nodeToId:ObjectMap<Node, Int>;
+    private var _nodes:Array<Node>;
     private var _invalidLists:Bool;
 
-    private var _targetSlots:Array<SignalSlot3<Dynamic,Dynamic,Dynamic>> ;
+    private var _targetSlots:Array<SignalSlot3<Dynamic, Dynamic, Dynamic>>;
     private var _renderingBeginSlot:SignalSlot3<SceneManager, Int, AbstractTexture>;
-    private var _toAdd:Array<Node> ;
-    private var _toRemove:Array<Node> ;
-    private var _nodeToPropertyChangedSlot:ObjectMap<Node, SignalSlot3<Store, Provider, String>>;
+    private var _toAdd:Array<Node>;
+    private var _toRemove:Array<Node>;
+    private var _nodeToMatrixChangedSlot:ObjectMap<Node, SignalSlot<Transform>>;
 
     public function new() {
         super();
         this._nodeTransformCache = new Array<NodeTransformCacheEntry>();
-        this._nodeToId = new ObjectMap<Node, Int> ();
-        this._nodes = new Array<Node>() ;
+        this._nodeToId = new ObjectMap<Node, Int>();
+        this._nodes = new Array<Node>();
         this._invalidLists = false;
-
-        this._targetSlots = new Array<SignalSlot3<Dynamic,Dynamic,Dynamic>>() ;
+        this._targetSlots = new Array<SignalSlot3<Dynamic, Dynamic, Dynamic>>();
         this._renderingBeginSlot = null;
-        this._toAdd = new Array<Node>() ;
-        this._toRemove = new Array<Node>() ;
-        this._nodeToPropertyChangedSlot = new ObjectMap<Node, SignalSlot3<Store, Provider, String>>();
+        this._toAdd = new Array<Node>();
+        this._toRemove = new Array<Node>();
+        this._nodeToMatrixChangedSlot = new ObjectMap<Node, SignalSlot<Transform>>();
     }
 
+    override public function dispose() {
+        _nodeTransformCache = null;
+        _nodeToId = null;
+        for (node in _nodeToMatrixChangedSlot.keys()) {
+            _nodeToMatrixChangedSlot.get(node).dispose();
+        }
+        _nodeToMatrixChangedSlot = null;
+        for (slot in _targetSlots) {
+            slot.dispose();
+        }
+        _targetSlots = null;
+        if (_renderingBeginSlot != null) {
+            _renderingBeginSlot.dispose();
+        }
+        _renderingBeginSlot = null;
+        _nodes = null;
+        _toAdd = null;
+        _toRemove = null;
+        super.dispose();
+    }
+
+    public function setDirty(target:Node, d:Bool) {
+        if (!_invalidLists) {
+            var id = _nodeToId.get(target);
+            if (id != null) {
+                _nodeTransformCache[id]._dirty = true;
+            }
+        }
+    }
 
     override public function clone(option:CloneOption) {
-
         return RootTransform.create();
     }
 
@@ -83,7 +81,6 @@ class RootTransform extends AbstractComponent {
         _targetSlots.push(target.componentRemoved.connect(componentRemovedHandler));
 
         var sceneManager:SceneManager = cast target.root.getComponent(SceneManager);
-
         if (sceneManager != null) {
             _renderingBeginSlot = sceneManager.renderingBegin.connect(renderingBeginHandler, 1000.0);
         }
@@ -92,47 +89,35 @@ class RootTransform extends AbstractComponent {
     }
 
     override public function targetRemoved(target:Node) {
-
     }
 
     public function componentAddedHandler(node:Node, target:Node, ctrl:AbstractComponent) {
-
-        if (Std.is(ctrl, SceneManager)) {
-            var sceneManager:SceneManager = cast(ctrl, SceneManager);
+        if (Std.isOfType(ctrl, SceneManager)) {
+            var sceneManager:SceneManager = cast ctrl;
             _renderingBeginSlot = sceneManager.renderingBegin.connect(renderingBeginHandler, 1000.0);
         }
-        else {
-            if (Std.is(ctrl, Transform)) {
-
-                var removeIt = Lambda.has(_toRemove, target);
-
-                if (removeIt) {
-                    _toRemove.remove(target);
-                }
-                else {
-                    _toAdd.push(target);
-                    _invalidLists = true;
-                }
+        else if (Std.isOfType(ctrl, Transform)) {
+            if (Lambda.has(_toRemove, target)) {
+                _toRemove.remove(target);
+            }
+            else {
+                _toAdd.push(target);
+                _invalidLists = true;
             }
         }
     }
 
     public function componentRemovedHandler(node:Node, target:Node, ctrl:AbstractComponent) {
-
-        if (Std.is(ctrl, SceneManager)) {
-            var sceneManager:SceneManager = cast(ctrl, SceneManager);
+        if (Std.isOfType(ctrl, SceneManager)) {
             _renderingBeginSlot = null;
         }
-        else {
-            if (Std.is(ctrl, Transform)) {
-                var addIt = Lambda.has(_toAdd, target);
-                if (addIt) {
-                    _toAdd.remove(target);
-                }
-                else {
-                    _toRemove.push(target);
-                    _invalidLists = true;
-                }
+        else if (Std.isOfType(ctrl, Transform)) {
+            if (Lambda.has(_toAdd, target)) {
+                _toAdd.remove(target);
+            }
+            else {
+                _toRemove.push(target);
+                _invalidLists = true;
             }
         }
     }
@@ -140,70 +125,72 @@ class RootTransform extends AbstractComponent {
     public function addedHandler(node:Node, target:Node, ancestor:Node) {
         if (node.root == this.target && node != target) {
             var otherRoot:RootTransform = cast target.getComponent(RootTransform);
-
             if (otherRoot != null) {
                 _toAdd = _toAdd.concat(otherRoot._nodes.concat(otherRoot._toAdd));
                 for (toRemove in _toRemove) {
                     _toAdd.remove(toRemove);
                 }
                 _invalidLists = true;
-
                 target.removeComponent(otherRoot);
                 otherRoot.dispose();
-                otherRoot=null;
+                otherRoot = null;
             }
         }
     }
 
     public function removedHandler(node:Node, target:Node, ancestor:Node) {
         _invalidLists = true;
-
         var withTransforms:NodeSet = NodeSet.createbyNode(target).descendants(true, false).where(function(n:Node) {
             return n.hasComponent(Transform);
         });
-        _toRemove = withTransforms.nodes.concat(_toRemove) ;
+        _toRemove = withTransforms.nodes.concat(_toRemove);
     }
 
     public function updateTransformsList() {
-
-        //dirty  tree  Trans list
         if (_toAdd.length == 0 && _toRemove.length == 0) {
             return;
         }
 
         for (toRemove in _toRemove) {
+            var slot = _nodeToMatrixChangedSlot.get(toRemove);
+            if (slot != null) {
+                slot.dispose();
+                _nodeToMatrixChangedSlot.remove(toRemove);
+            }
             _nodeToId.remove(toRemove);
-            _nodeToPropertyChangedSlot.get(toRemove).dispose();
-            _nodeToPropertyChangedSlot.remove(toRemove);
         }
 
-        _nodes = new Array<Node>() ;
-
+        _nodes = new Array<Node>();
         for (nodeAndId in _nodeToId.keys()) {
             _nodes.push(nodeAndId);
         }
 
         for (node in _toAdd) {
             _nodes.push(node);
-            _nodeToPropertyChangedSlot.set(node,
-            node.data.getPropertyChanged("matrix").connect(function(store:Store, provider:Provider, propertyName:String) {
-                _nodeTransformCache[_nodeToId.get(node)]._dirty = true;
-            })
-            );
+            var transform:Transform = cast node.getComponent(Transform);
+            if (transform != null) {
+                _nodeToMatrixChangedSlot.set(node, transform.matrixChanged.connect(function(_) {
+                    var id = _nodeToId.get(node);
+                    if (id != null) {
+                        _nodeTransformCache[id]._dirty = true;
+                    }
+                }));
+            }
         }
 
         _toAdd = new Array<Node>();
         _toRemove = new Array<Node>();
 
-        for(n in _nodeTransformCache){
-            n.clear();
+        for (cacheEntry in _nodeTransformCache) {
+            cacheEntry.clear();
         }
         _nodeTransformCache = [for (i in 0..._nodes.length) new NodeTransformCacheEntry()];
 
         for (node in _nodes) {
             var transform:Transform = cast node.getComponent(Transform);
-
-            transform.dirty = true;
+            if (transform != null) {
+                transform.dirty = true;
+            }
         }
 
         sortNodes();
@@ -216,7 +203,6 @@ class RootTransform extends AbstractComponent {
 
         for (node in _nodes) {
             var previousAncestor = ancestor;
-
             ancestor = node.parent;
 
             while (ancestor != null && !ancestor.hasComponent(Transform)) {
@@ -229,23 +215,17 @@ class RootTransform extends AbstractComponent {
             else if (ancestor != previousAncestor) {
                 if (previousAncestor == null) {
                     ancestorId = _nodeToId.get(ancestor);
-
                     firstSiblingId = nodeId;
                     ++numSiblings;
                 }
                 else {
                     var previousAncestorId = _nodeToId.get(previousAncestor);
-
                     var previousAncestorCacheEntry = _nodeTransformCache[previousAncestorId];
-
                     previousAncestorCacheEntry._firstChildId = firstSiblingId;
                     previousAncestorCacheEntry._numChildren = numSiblings;
-
                     firstSiblingId = nodeId;
                     numSiblings = ancestor != null ? 1 : 0;
-
                     previousAncestor = ancestor;
-
                     ancestorId = ancestor != null ? _nodeToId.get(ancestor) : -1;
                 }
             }
@@ -254,23 +234,15 @@ class RootTransform extends AbstractComponent {
             }
 
             _nodeToId.set(node, nodeId);
-
             var nodeCacheEntry = _nodeTransformCache[nodeId];
-
             nodeCacheEntry._node = node;
-
             nodeCacheEntry._parentId = ancestorId;
-
-            nodeCacheEntry._matrix = node.data.getUnsafePointer("matrix");
-            nodeCacheEntry._modelToWorldMatrix = node.data.getUnsafePointer("modelToWorldMatrix");
-            nodeCacheEntry._provider = cast( node.getComponent(Transform), Transform).data;
-
+            nodeCacheEntry._transform = cast node.getComponent(Transform);
             ++nodeId;
-      }
+        }
 
         if (ancestor != null) {
             ancestorId = _nodeToId.get(ancestor);
-
             var ancestorCacheEntry = _nodeTransformCache[ancestorId];
             ancestorCacheEntry._firstChildId = firstSiblingId;
             ancestorCacheEntry._numChildren = numSiblings;
@@ -280,73 +252,51 @@ class RootTransform extends AbstractComponent {
     }
 
     public function sortNodes() {
+        if (_nodes.length == 0) {
+            return;
+        }
 
         var sortedNodeSet:NodeSet = NodeSet.createbyNode(_nodes[0].root).descendants(true, false).where(function(descendant:Node) {
             var transform:Transform = cast descendant.getComponent(Transform);
-
             return transform != null && transform.dirty;
         });
 
-        //_nodes.assign(sortedNodeSet.nodes().begin(), sortedNodeSet.nodes().end());
         _nodes = sortedNodeSet.nodes.concat([]);
     }
 
     public function updateTransforms() {
         var modelToWorldMatrix:Mat4 = null;
         var nodeId = 0;
-        var propertyName = "modelToWorldMatrix";
 
         for (node in _nodes) {
             var nodeCacheEntry = _nodeTransformCache[nodeId];
 
             if (nodeCacheEntry._dirty) {
+                var transform = nodeCacheEntry._transform;
                 var parentId = nodeCacheEntry._parentId;
 
                 if (parentId < 0) {
-                    modelToWorldMatrix = nodeCacheEntry._matrix.value;
+                    modelToWorldMatrix = transform.matrix;
                 }
                 else {
                     var parentCacheEntry = _nodeTransformCache[parentId];
-                    //math
-                    modelToWorldMatrix = parentCacheEntry._modelToWorldMatrix.value * (nodeCacheEntry._matrix.value);
+                    modelToWorldMatrix = parentCacheEntry._transform.modelToWorldMatrix * transform.matrix;
                 }
 
-                // Because we use an unsafe pointer that gives us a direct access to the
-                // data provider internal value for "modelToWorldMatrix", we have to trigger
-                // the "property changed" signal manually.
-                // This technique completely bypasses the storeproperty name resolving
-                // mechanism and is a lot faster.
-                //todo fix !=
-                if (!nodeCacheEntry._modelToWorldMatrix.value.equals(modelToWorldMatrix)) {
-                    var nodeData:Store = node.data;
-                    var provider = nodeCacheEntry._provider;
-
-                    // manually update the data provider internal mat4 object
-                   nodeCacheEntry._modelToWorldMatrix.value= modelToWorldMatrix;
-
-                    // execute the "property changed" signal(s) manually
-                    nodeData.propertyChanged.execute(nodeData, provider, propertyName);
-                    if (nodeData.hasPropertyChangedSignal("modelToWorldMatrix")) {
-                        nodeData.getPropertyChanged("modelToWorldMatrix").execute(nodeData, provider, propertyName);
-                    }
+                if (!transform.modelToWorldMatrix.equals(modelToWorldMatrix)) {
+                    transform.setModelToWorldMatrix(modelToWorldMatrix);
 
                     var numChildren = nodeCacheEntry._numChildren;
-
                     if (numChildren > 0) {
                         var firstChildId = nodeCacheEntry._firstChildId;
                         var lastChildId = firstChildId + numChildren;
-
-                        for (childId in firstChildId... lastChildId) {
-                            var childCacheEntry = _nodeTransformCache[childId];
-                            childCacheEntry._dirty = true;
+                        for (childId in firstChildId...lastChildId) {
+                            _nodeTransformCache[childId]._dirty = true;
                         }
                     }
                 }
 
                 nodeCacheEntry._dirty = false;
-
-                var transform:Transform = cast node.getComponent(Transform);
-
                 transform.dirty = false;
             }
 
@@ -358,7 +308,6 @@ class RootTransform extends AbstractComponent {
         if (_invalidLists || updateTransformLists) {
             updateTransformsList();
         }
-
         updateTransforms();
     }
 
@@ -366,92 +315,90 @@ class RootTransform extends AbstractComponent {
         if (_invalidLists) {
             updateTransformsList();
         }
-
         updateTransforms();
     }
 }
+
 @:expose("minko.component.NodeTransformCacheEntry")
 class NodeTransformCacheEntry {
     public var _node:Node;
-    public var _matrix:UnsafePointer<Mat4>;
-    public var _modelToWorldMatrix:UnsafePointer<Mat4>;
-
+    public var _transform:Transform;
     public var _parentId:Int;
     public var _firstChildId:Int;
     public var _numChildren:Int;
-
     public var _dirty:Bool;
-    public var _provider:Provider;
 
     public function new() {
         this._node = null;
-        this._matrix = null;
-        this._modelToWorldMatrix = null;
+        this._transform = null;
         this._parentId = -1;
         this._firstChildId = -1;
         this._numChildren = 0;
         this._dirty = true;
-        this._provider = null;
     }
 
     public function clear():Void {
         this._node = null;
-        this._matrix = null;
-        this._modelToWorldMatrix = null;
+        this._transform = null;
         this._parentId = -1;
         this._firstChildId = -1;
         this._numChildren = 0;
         this._dirty = true;
-        this._provider = null;
     }
 }
+
 @:expose("minko.component.Transform")
 class Transform extends AbstractComponent {
-
-    private var _matrix:UnsafePointer<Mat4>;
-    private var _modelToWorld:UnsafePointer<Mat4>;
-    private var _data:Provider;
+    private var _matrix:Mat4;
+    private var _modelToWorld:Mat4;
     private var _addedSlot:SignalSlot3<Node, Node, Node>;
     private var _removedSlot:SignalSlot3<Node, Node, Node>;
     private var _dirty:Bool;
+    private var _matrixChanged:Signal<Transform>;
+    private var _modelToWorldChanged:Signal<Transform>;
 
     public static function create():Transform {
         var ctrl:Transform = new Transform();
-
         ctrl.matrix = Mat4.identity(new Mat4());
-
         return ctrl;
     }
 
     override public function dispose() {
         super.dispose();
-        if(_addedSlot !=null)_addedSlot.dispose();
-        _addedSlot=null;
-        if(_removedSlot!=null)_removedSlot.dispose();
-        _removedSlot=null;
-        _modelToWorld=null;
-        _matrix=null;
-        if(_data!=null) _data.dispose();
-        _data=null;
+        if (_addedSlot != null) _addedSlot.dispose();
+        _addedSlot = null;
+        if (_removedSlot != null) _removedSlot.dispose();
+        _removedSlot = null;
+        _matrix = null;
+        _modelToWorld = null;
+        if (_matrixChanged != null) _matrixChanged.dispose();
+        if (_modelToWorldChanged != null) _modelToWorldChanged.dispose();
+        _matrixChanged = null;
+        _modelToWorldChanged = null;
     }
-
 
     public static function createbyMatrix4(transform:Mat4) {
         var ctrl:Transform = create();
-
         ctrl.matrix = transform;
-
         return ctrl;
     }
 
     override public function clone(option:CloneOption) {
-        return Transform.createbyMatrix4(this.matrix.toFloatArray());
+        return Transform.createbyMatrix4(this.matrix);
     }
-    public var data(get, null):Provider;
 
-    function get_data() {
-        return _data;
+    public var matrixChanged(get, null):Signal<Transform>;
+
+    function get_matrixChanged() {
+        return _matrixChanged;
     }
+
+    public var modelToWorldMatrixChanged(get, null):Signal<Transform>;
+
+    function get_modelToWorldMatrixChanged() {
+        return _modelToWorldChanged;
+    }
+
     public var dirty(get, set):Bool;
 
     function get_dirty() {
@@ -466,14 +413,14 @@ class Transform extends AbstractComponent {
     public var matrix(get, set):Mat4;
 
     function get_matrix() {
-        return _matrix.value;
+        return _matrix;
     }
 
     function set_matrix(value:Mat4) {
-      //  if (! value.equals( _matrix.value)) {
-            //todo       this._data.set("matrix", _matrix)
-          _matrix.value= value;
-       // }
+        _matrix = value;
+        _dirty = true;
+        _matrixChanged.execute(this);
+
         if (target != null) {
             var rootTransform:RootTransform = cast target.root.getComponent(RootTransform);
             if (rootTransform != null) {
@@ -486,30 +433,28 @@ class Transform extends AbstractComponent {
     public var modelToWorldMatrix(get, null):Mat4;
 
     function get_modelToWorldMatrix() {
-        return _modelToWorldMatrix(false);
+        return _modelToWorld;
     }
 
-    public function _modelToWorldMatrix(forceUpdate) {
-        if (forceUpdate) {
-            updateModelToWorldMatrix();
+    public function setModelToWorldMatrix(value:Mat4):Void {
+        if (!_modelToWorld.equals(value)) {
+            _modelToWorld = value;
+            _modelToWorldChanged.execute(this);
         }
-
-        return _modelToWorld.value;
     }
 
     public function updateModelToWorldMatrix() {
         var rt:RootTransform = cast target.root.getComponent(RootTransform);
-        rt.forceUpdate(target, true);
+        if (rt != null) {
+            rt.forceUpdate(target, true);
+        }
     }
 
     override public function targetAdded(target:Node) {
         if (target.getComponents(Transform).length > 1) {
             throw ("A node cannot have more than one Transform.");
         }
-        target.data.addProvider(_data);
         _addedSlot = target.added.connect(addedOrRemovedHandler);
-        //_removedSlot = target->removed()->connect(callback);
-
         addedOrRemovedHandler(null, target, target.parent);
     }
 
@@ -520,7 +465,6 @@ class Transform extends AbstractComponent {
     }
 
     override public function targetRemoved(target:Node) {
-        target.data.removeProvider(_data);
         if (_addedSlot != null) {
             _addedSlot.dispose();
         }
@@ -528,22 +472,15 @@ class Transform extends AbstractComponent {
         if (_removedSlot != null) {
             _removedSlot.dispose();
         }
-
         _removedSlot = null;
     }
 
     public function new() {
         super();
-        //	_worldToModel(1.),
-
-        this._data = Provider.create();
+        this._matrix = Mat4.identity(new Mat4());
+        this._modelToWorld = Mat4.identity(new Mat4());
         this._dirty = false;
-        this._data
-        .set("matrix", Mat4.identity(new Mat4()))
-        .set("modelToWorldMatrix", Mat4.identity(new Mat4()));
-
-        this._matrix = cast this._data.getUnsafePointer("matrix") ;
-        this._modelToWorld = cast this._data.getUnsafePointer("modelToWorldMatrix") ;
+        this._matrixChanged = new Signal<Transform>();
+        this._modelToWorldChanged = new Signal<Transform>();
     }
-
 }

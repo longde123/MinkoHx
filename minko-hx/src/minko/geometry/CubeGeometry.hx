@@ -30,6 +30,7 @@ class CubeGeometry extends Geometry {
 
         indices = (IndexBuffer.createbyData(context, i));
 
+        computeTangents();
         computeCenterPosition();
     }
 

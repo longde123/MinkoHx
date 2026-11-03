@@ -1,156 +1,90 @@
 package minko.material;
-import glm.Vec4;
+
+import glm.Vec3;
 import minko.render.AbstractTexture;
-import minko.render.TextureType;
-import minko.utils.MathUtil;
+
+/**
+ * Classic Blinn-Phong material data.
+ *
+ * This class only owns material parameters. Rendering is supplied by a
+ * PipelineEffect or a future Phong render path.
+ */
 @:expose("minko.material.PhongMaterial")
-class PhongMaterial extends BasicMaterial {
-    static public function create(name = "PhongMaterial"):PhongMaterial {
-        return new PhongMaterial(name) ;
+class PhongMaterial extends Material {
+    public static inline var DIFFUSE = "diffuse";
+    public static inline var SPECULAR = "specular";
+    public static inline var SHININESS = "shininess";
+    public static inline var AMBIENT = "ambient";
+    public static inline var EMISSIVE = "emissive";
+    public static inline var DIFFUSE_MAP = "diffuseMap";
+    public static inline var SPECULAR_MAP = "specularMap";
+    public static inline var NORMAL_MAP = "normalMap";
+    public static inline var ALPHA = "alpha";
+    public static inline var DOUBLE_SIDED = "doubleSided";
+
+    public static function create(name:String = "phong-material"):PhongMaterial {
+        return new PhongMaterial(name);
     }
 
-    static public function createbyPhongMaterial(source:PhongMaterial) {
-        var pm:PhongMaterial = create(source.name);
-
-        pm.data.copyFrom(source.data);
-
-        return pm;
-    }
-
-    public var specularColor(get, set):Vec4;
-
-    function set_specularColor(color) {
-        data.set("specularColor", color);
-
-        return color;
-    }
-
-    public function specularColorRGBA(color) {
-        return specularColor = ( MathUtil.rgba(color));
-    }
-
-    function get_specularColor() {
-        return data.get("specularColor");
-    }
-    public var shininess(get, set):Float;
-
-    function set_shininess(value) {
-        data.set("shininess", value);
-
-        return value;
-    }
-
-    function get_shininess() {
-        return data.get("shininess");
-    }
-    public var normalMap(get, set):AbstractTexture;
-
-    function get_normalMap() {
-        return data.hasProperty("normalMap") ? data.get("normalMap") : null;
-    }
-
-    function set_normalMap(value:AbstractTexture) {
-        if (value.type == TextureType.CubeTexture)
-            throw ("Only 2d normal maps are currently supported.");
-        data.set("normalMap", value);
-        //sampler
-        return value;
-    }
-    public var specularMap(get, set):AbstractTexture;
-
-    function get_specularMap() {
-        return data.hasProperty("specularMap") ? data.get("specularMap") : null;
-    }
-
-    function set_specularMap(value:AbstractTexture) {
-        if (value.type == TextureType.CubeTexture)
-            throw ("Only 2d normal maps are currently supported.");
-        data.set("specularMap", value);
-        //sampler
-        return value;
-    }
-    public var environmentAlpha(get, set):Float;
-
-    function set_environmentAlpha(value) {
-        data.set("environmentAlpha", value);
-
-        return value;
-    }
-
-    function get_environmentAlpha() {
-        return data.get("environmentAlpha");
-    }
-    public var environmentCubemap(get, null):AbstractTexture;
-
-    function get_environmentCubemap() {
-        return data.hasProperty("environmentCubemap") ? data.get("environmentCubemap") : null;
-    }
-    public var environmentMap(null, set):AbstractTexture;
-
-    function set_environmentMap(value:AbstractTexture) {
-        if (value.type == TextureType.Texture2D)
-            data.set("environmentMap2d", value);
-        else
-            data.set("environmentCubemap", value);
-
-        return value;
-    }
-    public var environmentMap2d(get, null):AbstractTexture;
-
-    function get_environmentMap2d() {
-        return data.hasProperty("environmentMap2d") ? data.get("environmentMap2d") : null;
-    }
-
-    public var alphaMap(get, null):AbstractTexture;
-
-    function get_alphaMap() {
-        return data.hasProperty("alphaMap") ? data.get("alphaMap") : null;
-    }
-
-    function set_alphaMap(value:AbstractTexture) {
-        if (value.type == TextureType.CubeTexture)
-            throw ("Only 2d transparency maps are currently supported.");
-
-        data.set("alphaMap", value);
-
-        return value;
-    }
-
-    public var alphaThreshold:Float;
-
-    function set_alphaThreshold(value) {
-        data.set("alphaThreshold", value);
-
-        return value;
-    }
-
-    function get_alphaThreshold() {
-        return data.get("alphaThreshold");
-    }
-    public var fresnelReflectance:Float;
-
-    function get_fresnelReflectance() {
-        return data.get("fresnelReflectance");
-    }
-
-    function set_fresnelReflectance(value) {
-        data.set("fresnelReflectance", value);
-
-        return value;
-    }
-    public var fresnelExponent:Float;
-
-    function get_fresnelExponent() {
-        return data.get("fresnelExponent");
-    }
-
-    function set_fresnelExponent(value) {
-        data.set("fresnelExponent", value);
-
-        return value;
-    }
-
-    public function new(name) {
+    public function new(name:String = "phong-material") {
         super(name);
+
+        set(DIFFUSE, new Vec3(1.0, 1.0, 1.0));
+        set(SPECULAR, new Vec3(0.2, 0.2, 0.2));
+        set(SHININESS, 32.0);
+        set(AMBIENT, new Vec3(0.1, 0.1, 0.1));
+        set(EMISSIVE, new Vec3(0.0, 0.0, 0.0));
+        set(ALPHA, 1.0);
+        set(DOUBLE_SIDED, false);
+    }
+
+    public function setDiffuse(value:Vec3):PhongMaterial {
+        set(DIFFUSE, value);
+        return this;
+    }
+
+    public function setSpecular(value:Vec3):PhongMaterial {
+        set(SPECULAR, value);
+        return this;
+    }
+
+    public function setShininess(value:Float):PhongMaterial {
+        set(SHININESS, value);
+        return this;
+    }
+
+    public function setAmbient(value:Vec3):PhongMaterial {
+        set(AMBIENT, value);
+        return this;
+    }
+
+    public function setEmissive(value:Vec3):PhongMaterial {
+        set(EMISSIVE, value);
+        return this;
+    }
+
+    public function setDiffuseMap(value:AbstractTexture):PhongMaterial {
+        set(DIFFUSE_MAP, value);
+        return this;
+    }
+
+    public function setSpecularMap(value:AbstractTexture):PhongMaterial {
+        set(SPECULAR_MAP, value);
+        return this;
+    }
+
+    public function setNormalMap(value:AbstractTexture):PhongMaterial {
+        set(NORMAL_MAP, value);
+        return this;
+    }
+
+    public function setAlpha(value:Float):PhongMaterial {
+        set(ALPHA, value);
+        return this;
+    }
+
+    public function setDoubleSided(value:Bool):PhongMaterial {
+        set(DOUBLE_SIDED, value);
+        return this;
     }
 }
